@@ -1,6 +1,6 @@
 import { ArrowRight, Play, Zap, Users, Clock, Award, Mic, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
-import pteLogo from '@assets/pte-logo.png';
+import teacherNoBg from '@assets/teacher-nobg.png';
 
 const scores = [
   { value: "24+", label: "Beginner", color: "from-cyan-400 to-cyan-600", glow: "hsl(185 100% 55%)" },
@@ -276,20 +276,23 @@ export default function Hero() {
                 </div>
 
                 {/* Card body */}
-                <div className="p-8 flex flex-col items-center gap-6">
-                  {/* Logo with glow */}
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-primary/30 blur-2xl rounded-full scale-150" />
+                <div className="flex flex-col items-center gap-0">
+                  {/* Teacher portrait — full-width, no padding on sides */}
+                  <div className="relative w-full overflow-hidden" style={{ height: "240px" }}>
+                    {/* Pink neon glow behind */}
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-24 bg-primary/30 blur-3xl pointer-events-none" />
                     <img
-                      src={pteLogo}
-                      alt="PTE Talents"
-                      className="relative w-28 h-28 object-contain"
-                      style={{ filter: "drop-shadow(0 0 20px hsl(330 100% 65% / 0.6))" }}
+                      src={teacherNoBg}
+                      alt="Cô Nguyễn Thị Thuỷ"
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 h-full w-auto object-contain object-bottom"
+                      style={{ filter: "drop-shadow(0 0 24px hsl(330 100% 65% / 0.5))" }}
                     />
+                    {/* Fade-to-card at bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-slate-900 to-transparent pointer-events-none" />
                   </div>
 
-                  {/* Name */}
-                  <div className="text-center">
+                  {/* Name — overlapping photo bottom */}
+                  <div className="text-center px-8 pb-2 -mt-1">
                     <p className="text-slate-500 text-xs font-mono tracking-widest uppercase mb-1">Giảng viên khoá học</p>
                     <h3
                       className="text-2xl font-extrabold text-white"
