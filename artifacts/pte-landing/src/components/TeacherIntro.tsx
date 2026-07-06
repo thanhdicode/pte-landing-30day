@@ -4,7 +4,7 @@ import teacherNoBg from '@assets/teacher-nobg.png';
 
 export default function TeacherIntro() {
   const stats = [
-    { icon: <GraduationCap className="w-6 h-6 text-primary" />, value: "Đại học Hà Nội", label: "Cử nhân Tiếng Anh" },
+    { icon: <GraduationCap className="w-6 h-6 text-primary" />, value: "Đại Học Hà Nội", label: "Tiền Thân ĐH Ngoại Ngữ HN" },
     { icon: <BookOpen className="w-6 h-6 text-primary" />, value: "10 Năm", label: "Kinh nghiệm giảng dạy" },
     { icon: <Award className="w-6 h-6 text-primary" />, value: "4 Năm", label: "Chuyên luyện thi PTE" },
     { icon: <Heart className="w-6 h-6 text-primary" />, value: "Tận tâm", label: "Đồng hành sát sao" },
@@ -55,7 +55,7 @@ export default function TeacherIntro() {
                   <p className="text-primary font-semibold text-sm mt-1">Giáo viên & Chuyên gia PTE Talents</p>
                   <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full">
                     <GraduationCap className="w-3.5 h-3.5 text-primary" />
-                    <span className="text-primary text-xs font-medium">Đại học Hà Nội (ĐH Ngoại ngữ)</span>
+                    <span className="text-primary text-xs font-medium">Đại Học Hà Nội (Tiền Thân Đại Học Ngoại Ngữ Hà Nội)</span>
                   </div>
                 </div>
 
