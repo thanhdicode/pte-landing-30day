@@ -26,9 +26,17 @@ export default function Navbar() {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled || mobileOpen ? "bg-white/95 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"
+          isScrolled || mobileOpen
+            ? "bg-slate-950/90 backdrop-blur-md py-3 border-b border-primary/20"
+            : "bg-transparent py-5"
         }`}
+        style={isScrolled || mobileOpen ? { boxShadow: '0 1px 0 0 hsl(330 100% 65% / 0.15), 0 4px 24px hsl(330 100% 65% / 0.08)' } : {}}
       >
+        {/* Scrolled: top neon line */}
+        {(isScrolled || mobileOpen) && (
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-cyan-400 opacity-60 pointer-events-none" />
+        )}
+
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <a href="#" className="flex items-center gap-2">
             <img src={pteLogo} alt="PTE Talents" className="h-12 w-auto" />
@@ -39,9 +47,13 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-semibold text-foreground/80 hover:text-primary transition-colors"
+                className={`text-sm font-semibold transition-colors relative group ${
+                  isScrolled ? "text-slate-300 hover:text-primary" : "text-foreground/80 hover:text-primary"
+                }`}
               >
                 {link.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-300"
+                  style={{ boxShadow: '0 0 6px hsl(330 100% 65% / 0.8)' }} />
               </a>
             ))}
           </nav>
@@ -49,14 +61,14 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-4">
             <a
               href="#enroll"
-              className="px-6 py-2.5 bg-primary text-white rounded-full font-bold text-sm shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 hover:-translate-y-0.5 transition-all"
+              className="px-6 py-2.5 bg-primary text-white rounded-full font-bold text-sm hover:-translate-y-0.5 transition-all neon-border"
             >
               Đăng ký học
             </a>
           </div>
 
           <button
-            className="md:hidden p-2 text-foreground"
+            className={`md:hidden p-2 transition-colors ${isScrolled ? "text-slate-300 hover:text-primary" : "text-foreground hover:text-primary"}`}
             aria-label={mobileOpen ? "Đóng menu" : "Mở menu"}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
@@ -74,7 +86,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-[68px] left-0 right-0 z-40 bg-white/95 backdrop-blur-md shadow-lg border-t border-primary/10 md:hidden"
+            className="fixed top-[68px] left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-md shadow-lg border-t border-primary/20 md:hidden cyber-grid-bg"
           >
             <nav className="flex flex-col px-6 py-4 gap-1">
               {navLinks.map((link) => (
@@ -82,7 +94,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="py-3 text-base font-semibold text-foreground/80 hover:text-primary border-b border-gray-100 last:border-0 transition-colors"
+                  className="py-3 text-base font-semibold text-slate-300 hover:text-primary border-b border-primary/10 last:border-0 transition-colors"
                 >
                   {link.label}
                 </a>
@@ -90,7 +102,7 @@ export default function Navbar() {
               <a
                 href="#enroll"
                 onClick={() => setMobileOpen(false)}
-                className="mt-3 px-6 py-3 bg-primary text-white rounded-full font-bold text-sm text-center shadow-md shadow-primary/20 hover:shadow-lg transition-all"
+                className="mt-3 px-6 py-3 bg-primary text-white rounded-full font-bold text-sm text-center neon-border transition-all"
               >
                 Đăng ký học
               </a>
