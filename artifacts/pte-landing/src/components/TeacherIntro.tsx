@@ -6,7 +6,7 @@ export default function TeacherIntro() {
   const stats = [
     { icon: <GraduationCap className="w-6 h-6 text-primary" />, value: "Đại học Hà Nội", label: "Cử nhân Tiếng Anh" },
     { icon: <BookOpen className="w-6 h-6 text-primary" />, value: "10 Năm", label: "Kinh nghiệm giảng dạy" },
-    { icon: <Award className="w-6 h-6 text-primary" />, value: "5 Năm", label: "Chuyên luyện thi PTE" },
+    { icon: <Award className="w-6 h-6 text-primary" />, value: "4 Năm", label: "Chuyên luyện thi PTE" },
     { icon: <Heart className="w-6 h-6 text-primary" />, value: "Tận tâm", label: "Đồng hành sát sao" },
   ];
 
@@ -105,7 +105,7 @@ export default function TeacherIntro() {
 
             <div className="prose prose-lg text-slate-400 mb-10">
               <p>
-                Với hơn 10 năm kinh nghiệm giảng dạy tiếng Anh và 5 năm chuyên sâu nghiên cứu về PTE,
+                Với hơn 10 năm kinh nghiệm giảng dạy tiếng Anh và 4 năm chuyên sâu nghiên cứu về PTE,
                 cô Thuỷ hiểu rõ những khó khăn mà học viên Việt Nam thường gặp phải — từ việc phát âm sai,
                 thiếu phản xạ, đến việc "mất gốc" tiếng Anh nhưng lại cần điểm gấp cho mục tiêu du học và định cư.
               </p>

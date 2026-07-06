@@ -307,7 +307,7 @@ export default function Hero() {
                   <div className="w-full grid grid-cols-3 gap-3">
                     {[
                       { icon: <Award className="w-4 h-4" />, value: "10 NĂM", label: "Giảng dạy" },
-                      { icon: <BookOpen className="w-4 h-4" />, value: "5 NĂM", label: "PTE" },
+                      { icon: <BookOpen className="w-4 h-4" />, value: "4 NĂM", label: "PTE" },
                       { icon: <Mic className="w-4 h-4" />, value: "500+", label: "Học viên" },
                     ].map((item, i) => (
                       <div
