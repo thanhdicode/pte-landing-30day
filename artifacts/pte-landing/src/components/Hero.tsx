@@ -1,27 +1,24 @@
-import { ArrowRight, Play, CheckCircle2, Star, Clock, Target, CalendarDays, BookOpen, GraduationCap } from "lucide-react";
+import { ArrowRight, Play, CheckCircle2, Star, Target, CalendarDays, Mic, BookOpen, Award } from "lucide-react";
 import { motion } from "framer-motion";
-import teacherPhoto from '@assets/teacher-photo.png';
-import pteLogo from '@assets/image_1783362987710.png';
-import { Link } from "wouter";
+import pteLogo from '@assets/pte-logo.png';
 
 export default function Hero() {
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-gradient-to-b from-primary/5 via-accent/30 to-background">
       <div className="absolute inset-0 cyber-grid-bg -z-10 opacity-60" />
-      <motion.div 
-        className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent -z-10 pointer-events-none" 
-        initial={{ top: '-2px' }} 
-        animate={{ top: '110%' }} 
-        transition={{ duration: 2.5, delay: 0.5, ease: 'linear' }} 
+      <motion.div
+        className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent -z-10 pointer-events-none"
+        initial={{ top: '-2px' }}
+        animate={{ top: '110%' }}
+        transition={{ duration: 2.5, delay: 0.5, ease: 'linear' }}
       />
-      {/* Decorative background elements */}
       <div className="absolute top-20 right-0 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl -z-10 mix-blend-multiply opacity-50" />
       <div className="absolute bottom-0 left-[-10%] w-[500px] h-[500px] bg-secondary/10 rounded-full blur-3xl -z-10 mix-blend-multiply opacity-50" />
-      
+
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -48,15 +45,15 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto pt-4">
-              <a 
-                href="#enroll" 
+              <a
+                href="#enroll"
                 className="w-full sm:w-auto px-8 py-4 bg-primary text-white rounded-full font-bold text-lg shadow-[0_8px_30px_rgb(255,77,166,0.3)] hover:shadow-[0_8px_30px_rgb(255,77,166,0.5)] hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group neon-border"
               >
                 Đăng ký ngay
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
-              <a 
-                href="#roadmap" 
+              <a
+                href="#roadmap"
                 className="w-full sm:w-auto px-8 py-4 bg-white text-foreground border-2 border-muted hover:border-primary/30 rounded-full font-semibold text-lg transition-all flex items-center justify-center gap-2 group"
               >
                 <Play className="w-5 h-5 text-primary" />
@@ -67,7 +64,7 @@ export default function Hero() {
             <div className="flex items-center gap-6 pt-6 border-t border-border w-full">
               <div className="flex -space-x-4">
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className={`w-12 h-12 rounded-full border-4 border-white bg-accent flex items-center justify-center text-xs font-bold text-primary`}>
+                  <div key={i} className="w-12 h-12 rounded-full border-4 border-white bg-accent flex items-center justify-center text-xs font-bold text-primary">
                     <img src={`https://api.dicebear.com/7.x/notionists/svg?seed=${i}&backgroundColor=ffd1dc`} alt="Student" className="w-full h-full rounded-full" />
                   </div>
                 ))}
@@ -82,41 +79,50 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          <motion.div 
+          {/* Right column — decorative card composition */}
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative lg:h-[700px] flex items-center justify-center lg:justify-end"
+            className="relative lg:h-[600px] flex items-center justify-center lg:justify-end"
           >
-            {/* The Blob Image Container */}
-            <div className="relative w-full max-w-[500px] aspect-square">
-              <div className="absolute inset-0 bg-primary/20 blob-shape translate-x-4 translate-y-4" />
-              <div className="absolute inset-0 bg-secondary/30 blob-shape -translate-x-2 -translate-y-2" style={{ animationDelay: '-4s' }} />
-              
-              <div className="absolute inset-0 rounded-[3rem] overflow-hidden border-8 border-white shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500 bg-white">
-                <img 
-                  src={teacherPhoto} 
-                  alt="Cô Nguyễn Thị Thuỷ" 
-                  className="w-full h-full object-cover object-center"
-                />
-                
-                {/* Overlay gradient for better integration */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                
-                <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <div className="inline-block bg-primary px-3 py-1 rounded-full text-xs font-bold mb-2 shadow-lg">
-                    Chuyên gia PTE
+            <div className="relative w-full max-w-[460px]">
+              {/* Main card */}
+              <div className="relative rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-primary via-pink-400 to-secondary p-1 shadow-2xl neon-border">
+                <div className="rounded-[2.3rem] bg-white p-10 flex flex-col items-center gap-6">
+                  <img src={pteLogo} alt="PTE Talents" className="w-32 h-32 object-contain drop-shadow-md" />
+
+                  <div className="text-center">
+                    <h2 className="text-2xl font-extrabold text-foreground leading-tight">
+                      Cô Nguyễn Thị Thuỷ
+                    </h2>
+                    <p className="text-primary font-semibold text-sm mt-1">Chuyên gia PTE Talents</p>
                   </div>
-                  <h3 className="font-heading font-bold text-2xl">Cô Nguyễn Thị Thuỷ</h3>
-                  <p className="text-white/90 text-sm flex items-center gap-2 mt-1">
-                    <CheckCircle2 className="w-4 h-4 text-secondary" />
-                    10 năm kinh nghiệm
-                  </p>
+
+                  <div className="w-full grid grid-cols-3 gap-3">
+                    {[
+                      { icon: <Award className="w-5 h-5" />, value: "10 năm", label: "Giảng dạy" },
+                      { icon: <BookOpen className="w-5 h-5" />, value: "5 năm", label: "PTE" },
+                      { icon: <Mic className="w-5 h-5" />, value: "500+", label: "Học viên" },
+                    ].map((item, i) => (
+                      <div key={i} className="flex flex-col items-center gap-1 bg-accent/40 rounded-2xl py-3 px-2">
+                        <span className="text-primary">{item.icon}</span>
+                        <span className="font-extrabold text-foreground text-sm">{item.value}</span>
+                        <span className="text-muted-foreground text-xs">{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="w-full bg-primary/5 border border-primary/15 rounded-2xl px-5 py-4 text-center">
+                    <p className="text-primary font-bold text-sm italic">
+                      "Hiểu đúng là chìa khoá để chinh phục PTE thật nhanh."
+                    </p>
+                  </div>
                 </div>
               </div>
-              
+
               {/* Floating badges */}
-              <motion.div 
+              <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute -top-6 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 border border-primary/10"
@@ -126,11 +132,11 @@ export default function Hero() {
                 </div>
                 <div>
                   <div className="font-bold text-sm">Target</div>
-                  <div className="font-heading font-extrabold text-lg text-primary">24+ đến 79+</div>
+                  <div className="font-extrabold text-lg text-primary">24+ đến 79+</div>
                 </div>
               </motion.div>
 
-              <motion.div 
+              <motion.div
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute -bottom-6 -right-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 border border-primary/10"
@@ -140,7 +146,7 @@ export default function Hero() {
                 </div>
                 <div>
                   <div className="font-bold text-sm">Chỉ sau</div>
-                  <div className="font-heading font-extrabold text-lg text-secondary-foreground">30 Ngày</div>
+                  <div className="font-extrabold text-lg">30 Ngày</div>
                 </div>
               </motion.div>
             </div>
