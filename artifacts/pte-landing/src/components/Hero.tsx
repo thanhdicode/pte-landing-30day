@@ -6,10 +6,10 @@ import { useState } from "react";
 const PHONE = "0357930867";
 
 const scores = [
-  { value: "24+", label: "Beginner", color: "from-cyan-400 to-cyan-600", glow: "hsl(185 100% 55%)" },
-  { value: "50+", label: "Intermediate", color: "from-primary to-pink-600", glow: "hsl(330 100% 65%)" },
-  { value: "65+", label: "Upper-Int", color: "from-violet-400 to-violet-600", glow: "hsl(263 70% 65%)" },
-  { value: "79+", label: "Advanced", color: "from-yellow-400 to-orange-500", glow: "hsl(42 100% 60%)" },
+  { value: "24+", label: "Beginner", glow: "hsl(185 100% 55%)" },
+  { value: "50+", label: "Intermediate", glow: "hsl(330 100% 65%)" },
+  { value: "65+", label: "Upper-Int", glow: "hsl(263 70% 65%)" },
+  { value: "79+", label: "Advanced", glow: "hsl(42 100% 60%)" },
 ];
 
 // Ambient floating particles for a subtle, eye-catching hero
@@ -192,14 +192,9 @@ export default function Hero() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.6 + i * 0.08 }}
-                    className="flex flex-col items-center px-4 py-2 rounded-2xl bg-slate-900 border border-slate-700 relative overflow-hidden group cursor-default"
-                    style={{ boxShadow: `0 0 20px ${s.glow}30` }}
+                    className="flex flex-col items-center px-4 py-2 rounded-2xl bg-slate-900/60 border border-white/10 cursor-default"
                   >
-                    <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-10 group-hover:opacity-20 transition-opacity`} />
-                    <span
-                      className={`text-2xl font-black bg-gradient-to-br ${s.color} text-transparent bg-clip-text`}
-                      style={{ WebkitBackgroundClip: "text", textShadow: "none" }}
-                    >
+                    <span className="text-2xl font-black" style={{ color: s.glow }}>
                       {s.value}
                     </span>
                     <span className="text-slate-500 text-[10px] font-semibold uppercase tracking-wider">{s.label}</span>
@@ -216,7 +211,7 @@ export default function Hero() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.95 }}
-                  className="flex flex-col items-center justify-center px-5 py-2 rounded-2xl border-2 border-primary/50 bg-primary/5 relative"
+                  className="flex flex-col items-center justify-center px-5 py-2 rounded-2xl border border-primary/40 bg-primary/5 relative"
                   style={{ boxShadow: "0 0 20px hsl(330 100% 65% / 0.25)" }}
                 >
                   <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Xuất phát</span>
