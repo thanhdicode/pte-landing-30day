@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const scores = [
   { value: "24+", label: "Beginner", glow: "hsl(185 100% 55%)" },
+  { value: "36+", label: "Elementary", glow: "hsl(150 90% 55%)" },
   { value: "50+", label: "Intermediate", glow: "hsl(330 100% 65%)" },
   { value: "65+", label: "Upper-Int", glow: "hsl(263 70% 65%)" },
   { value: "79+", label: "Advanced", glow: "hsl(42 100% 60%)" },
