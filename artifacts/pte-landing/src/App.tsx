@@ -13,6 +13,7 @@ import Roadmap from './components/Roadmap';
 import TargetScores from './components/TargetScores';
 import FooterCTA from './components/FooterCTA';
 import Footer from './components/Footer';
+import FloatingCTA from './components/FloatingCTA';
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ function LandingPage() {
         <FooterCTA />
       </main>
       <Footer />
+      <FloatingCTA />
     </div>
   );
 }
