@@ -232,8 +232,8 @@ export default function TeacherIntro() {
                     {stat.icon}
                   </div>
                   <div>
-                    <div className="font-extrabold text-white text-sm leading-snug" style={{ fontFamily: "'Outfit', sans-serif" }}>{stat.value}</div>
-                    <div className="text-[13px] text-slate-500 mt-0.5 leading-tight">{stat.label}</div>
+                    <div className="font-extrabold text-white text-base leading-snug" style={{ fontFamily: "'Outfit', sans-serif" }}>{stat.value}</div>
+                    <div className="text-sm text-slate-500 mt-0.5 leading-tight">{stat.label}</div>
                   </div>
                 </motion.div>
               ))}
