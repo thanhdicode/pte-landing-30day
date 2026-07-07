@@ -59,12 +59,28 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden md:flex items-center gap-4">
-            <a
-              href="#enroll"
-              className="px-6 py-2.5 bg-primary text-white rounded-full font-bold text-sm hover:-translate-y-0.5 transition-all neon-border"
+            <motion.a
+              href="https://zalo.me/0357930867"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative px-5 py-2 rounded-full font-bold text-xs text-white whitespace-nowrap overflow-hidden"
+              style={{
+                background: "linear-gradient(135deg, hsl(330 100% 60%), hsl(310 100% 55%))",
+                letterSpacing: "0.03em",
+              }}
+              animate={{
+                boxShadow: [
+                  "0 0 8px hsl(330 100% 65% / 0.4)",
+                  "0 0 18px hsl(330 100% 65% / 0.75)",
+                  "0 0 8px hsl(330 100% 65% / 0.4)",
+                ],
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.96 }}
             >
-              Đăng ký học
-            </a>
+              Đăng ký ngay · Tư vấn miễn phí
+            </motion.a>
           </div>
 
           <button
@@ -100,11 +116,13 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="#enroll"
+                href="https://zalo.me/0357930867"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
                 className="mt-3 px-6 py-3 bg-primary text-white rounded-full font-bold text-sm text-center neon-border transition-all"
               >
-                Đăng ký học
+                Đăng ký ngay · Tư vấn miễn phí
               </a>
             </nav>
           </motion.div>
