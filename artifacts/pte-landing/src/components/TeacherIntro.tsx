@@ -69,7 +69,7 @@ export default function TeacherIntro() {
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   {[
                     { value: "10+", label: "Năm giảng dạy" },
-                    { value: "5+", label: "Năm chuyên PTE" },
+                    { value: "4+", label: "Năm chuyên PTE" },
                     { value: "500+", label: "Học viên" },
                     { value: "4 kỹ năng", label: "PTE toàn diện" },
                   ].map((item, i) => (
