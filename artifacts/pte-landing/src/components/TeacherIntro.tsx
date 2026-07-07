@@ -207,7 +207,7 @@ export default function TeacherIntro() {
                   </div>
 
                   {/* Text */}
-                  <p className="text-slate-400 leading-[1.85] text-[17px]"
+                  <p className="text-slate-400 leading-[1.85] text-lg"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     {text}
                   </p>

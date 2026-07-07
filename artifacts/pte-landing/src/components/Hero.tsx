@@ -343,20 +343,6 @@ export default function Hero() {
               transition={{ delay: 1 }}
               className="flex items-center gap-5 pt-4 border-t border-slate-800"
             >
-              <div className="flex -space-x-3">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-slate-900 overflow-hidden">
-                    <img
-                      src={`https://api.dicebear.com/7.x/notionists/svg?seed=${i}&backgroundColor=ffd1dc`}
-                      alt="Student"
-                      className="w-full h-full"
-                    />
-                  </div>
-                ))}
-                <div className="w-10 h-10 rounded-full border-2 border-slate-900 bg-primary flex items-center justify-center text-[10px] font-black text-white">
-                  500+
-                </div>
-              </div>
               <div className="flex gap-5 text-sm">
                 <div>
                   <span className="text-white font-bold">500+</span>
