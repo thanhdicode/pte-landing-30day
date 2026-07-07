@@ -56,12 +56,13 @@ export default function TeacherIntro() {
                   <div className="mt-2 flex flex-col items-center gap-1.5">
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full">
                       <GraduationCap className="w-3.5 h-3.5 text-primary shrink-0" />
-                      <span className="text-primary text-xs font-medium">Đại Học Hà Nội (Tiền Thân Đại Học Ngoại Ngữ Hà Nội)</span>
+                      <span className="text-primary text-xs font-medium whitespace-nowrap">Đại Học Hà Nội</span>
                     </div>
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-cyan-400/10 border border-cyan-400/25 rounded-full">
                       <BookOpen className="w-3.5 h-3.5 text-cyan-300 shrink-0" />
-                      <span className="text-cyan-200 text-xs font-medium">Chuyên ngành Ngôn Ngữ Anh</span>
+                      <span className="text-cyan-200 text-xs font-medium whitespace-nowrap">Chuyên ngành Ngôn Ngữ Anh</span>
                     </div>
+                    <p className="text-[11px] text-slate-400 italic mt-0.5">(Tiền Thân Đại Học Ngoại Ngữ Hà Nội)</p>
                   </div>
                 </div>
 

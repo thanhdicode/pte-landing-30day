@@ -38,7 +38,6 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-[#120A2E]">
       {/* ── Background layers ── */}
       <div className="absolute inset-0 cyber-grid-bg opacity-40 pointer-events-none" />
-
       {/* Radial glow blobs — gentle breathing */}
       <motion.div
         className="absolute top-1/4 left-1/3 w-[600px] h-[600px] rounded-full bg-primary/10 blur-[120px] pointer-events-none"
@@ -50,7 +49,6 @@ export default function Hero() {
         animate={{ scale: [1, 1.22, 1], opacity: [0.45, 0.9, 0.45] }}
         transition={{ duration: 10, delay: 1, repeat: Infinity, ease: "easeInOut" }}
       />
-
       {/* Floating neon particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {particles.map((p, i) => (
@@ -70,7 +68,6 @@ export default function Hero() {
           />
         ))}
       </div>
-
       {/* Scanline sweep */}
       <motion.div
         className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/70 to-transparent pointer-events-none z-10"
@@ -78,7 +75,6 @@ export default function Hero() {
         animate={{ top: "110%" }}
         transition={{ duration: 3, delay: 0.8, ease: "linear" }}
       />
-
       {/* HUD corner brackets */}
       <div className="absolute top-24 left-6 w-12 h-12 border-t-2 border-l-2 border-primary/60"
         style={{ boxShadow: "0 0 12px hsl(330 100% 65% / 0.4)" }} />
@@ -86,10 +82,8 @@ export default function Hero() {
         style={{ boxShadow: "0 0 12px hsl(180 100% 60% / 0.3)" }} />
       <div className="absolute bottom-6 left-6 w-12 h-12 border-b-2 border-l-2 border-primary/40" />
       <div className="absolute bottom-6 right-6 w-12 h-12 border-b-2 border-r-2 border-cyan-400/40" />
-
       {/* ── Top neon line ── */}
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-cyan-400 opacity-70 pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
         <div className="grid lg:grid-cols-[1fr_420px] gap-10 xl:gap-16 items-center">
 
@@ -133,7 +127,7 @@ export default function Hero() {
                   }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  30 <span className="text-primary">NGÀY</span>
+                  30 <span className="font-thin text-primary-foreground">NGÀY</span>
                 </motion.h1>
                 {/* HUD underline */}
                 <div className="h-[3px] w-3/4 mt-1 bg-gradient-to-r from-primary via-primary/60 to-transparent"

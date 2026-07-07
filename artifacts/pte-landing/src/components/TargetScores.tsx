@@ -121,7 +121,7 @@ export default function TargetScores() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-2 mb-3">
-            <span className="text-slate-600 text-xs font-mono tracking-widest">▶ RESULT.SYSTEM</span>
+            <span className="text-slate-400 text-xs font-mono tracking-widest">▶ RESULT.SYSTEM</span>
             <motion.span className="w-2 h-2 rounded-full bg-primary"
               animate={{ opacity: [1, 0, 1], scale: [1, 1.4, 1] }}
               transition={{ duration: 1.2, repeat: Infinity }}

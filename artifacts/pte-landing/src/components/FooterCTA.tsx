@@ -185,57 +185,39 @@ export default function FooterCTA() {
         {/* Main heading — staggered lines */}
         <div className="mb-6">
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-5xl md:text-7xl font-extrabold leading-tight text-white block mb-1"
-            style={{ textShadow: "0 0 40px rgba(255,255,255,0.2)" }}
+            className="text-4xl md:text-6xl font-extrabold leading-[1.15] text-white block"
           >
             Sẵn sàng
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="text-5xl md:text-7xl font-extrabold leading-tight block mb-1"
+            transition={{ duration: 0.6, delay: 0.12 }}
+            className="text-4xl md:text-6xl font-extrabold leading-[1.15] block"
             style={{
-              background: "linear-gradient(90deg, hsl(330 100% 65%), hsl(300 100% 72%), hsl(330 100% 65%))",
-              backgroundSize: "200% auto",
+              background: "linear-gradient(90deg, hsl(330 100% 68%), hsl(300 100% 74%))",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              filter: "drop-shadow(0 0 24px hsl(330 100% 65% / 0.7))",
+              filter: "drop-shadow(0 0 18px hsl(330 100% 65% / 0.35))",
             }}
           >
-            <motion.span
-              style={{ backgroundSize: "200% auto", display: "inline-block",
-                background: "inherit", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-              animate={{ backgroundPosition: ["0% center", "200% center"] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            >
-              BỨT PHÁ PTE
-            </motion.span>
+            BỨT PHÁ PTE
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-5xl md:text-7xl font-extrabold leading-tight block"
-            style={{ textShadow: "0 0 40px rgba(255,255,255,0.2)" }}
+            transition={{ duration: 0.6, delay: 0.24 }}
+            className="text-4xl md:text-6xl font-extrabold leading-[1.15] text-white block"
           >
-            trong{" "}
-            <motion.span
-              style={{ display: "inline-block" }}
-              animate={{ textShadow: ["0 0 16px hsl(180 100% 60% / 0.8)", "0 0 40px hsl(180 100% 60%)", "0 0 16px hsl(180 100% 60% / 0.8)"] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="text-cyan-400"
-            >
-              30 ngày?
-            </motion.span>
+            trong <span className="text-primary">30 ngày?</span>
           </motion.div>
         </div>
 
@@ -353,7 +335,7 @@ export default function FooterCTA() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-8 text-slate-600 text-xs font-mono tracking-wider"
+          className="mt-8 text-slate-400 text-xs font-mono tracking-wider"
         >
           ▶ Cô Thuỷ đã sẵn sàng đồng hành — bạn chỉ cần bước đầu tiên.
         </motion.p>

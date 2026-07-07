@@ -6,3 +6,9 @@ id = "l0XwCujeOfIfuw0MOW5Oc"
 uri = "file://screenshots/bg-demo.png"
 type = "image"
 title = "Demo phông nền — 6 lựa chọn (Hero thật)"
+
+[[outputs]]
+id = "gQ-sEe-ReSiZqjV4rniU2"
+uri = "file://attached_assets/teacher-preview.png"
+type = "image"
+title = "Cô Thuỷ — đã tách nền & sửa lại bàn tay (mặt giữ nguyên)"

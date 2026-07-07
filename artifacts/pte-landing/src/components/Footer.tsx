@@ -24,7 +24,7 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="text-sm text-slate-600">
+        <div className="text-sm text-slate-400">
           © {new Date().getFullYear()} PTE Talents. All rights reserved.
         </div>
       </div>
