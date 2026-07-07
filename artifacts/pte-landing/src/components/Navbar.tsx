@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import pteLogo from '@assets/pte-logo.png';
+import pteLogo from '@assets/pte-logo-nobg.png';
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 

@@ -1,4 +1,4 @@
-import pteLogo from '@assets/image_1783362987710.png';
+import pteLogo from '@assets/pte-logo-nobg.png';
 
 export default function Footer() {
   return (
