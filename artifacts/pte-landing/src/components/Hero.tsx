@@ -1,6 +1,6 @@
 import { ArrowRight, Play, Zap, Users, Clock, Award, Mic, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import teacherNoBg from '@assets/teacher-nobg.png';
+import teacherWelcome from '@assets/teacher-welcome-nobg.png';
 import PaymentModal from "./PaymentModal";
 import { useState } from "react";
 
@@ -322,14 +322,14 @@ export default function Hero() {
 
                 {/* Card body */}
                 <div className="flex flex-col items-center gap-0">
-                  {/* Teacher portrait — full-width, no padding on sides */}
-                  <div className="relative w-full overflow-hidden" style={{ height: "240px" }}>
+                  {/* Teacher portrait — welcoming pose */}
+                  <div className="relative w-full overflow-hidden" style={{ height: "300px" }}>
                     {/* Pink neon glow behind */}
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-24 bg-primary/30 blur-3xl pointer-events-none" />
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-56 h-32 bg-primary/25 blur-3xl pointer-events-none" />
                     <img
-                      src={teacherNoBg}
+                      src={teacherWelcome}
                       alt="Cô Nguyễn Thị Thuỷ"
-                      className="absolute bottom-0 left-1/2 -translate-x-1/2 h-full w-auto object-contain object-bottom"
+                      className="absolute inset-0 w-full h-full object-contain object-bottom"
                       style={{ filter: "drop-shadow(0 0 24px hsl(330 100% 65% / 0.5))" }}
                     />
                     {/* Fade-to-card at bottom */}
