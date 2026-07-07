@@ -292,7 +292,7 @@ export default function FooterCTA() {
         >
           <motion.button
             onClick={() => setModalOpen(true)}
-            className="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full font-extrabold text-lg relative overflow-hidden group cursor-pointer"
+            className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-extrabold text-base whitespace-nowrap relative overflow-hidden group cursor-pointer"
             style={{
               background: "linear-gradient(135deg, hsl(330 100% 65%), hsl(310 100% 60%))",
               color: "#fff",
