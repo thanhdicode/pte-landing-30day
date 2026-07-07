@@ -98,21 +98,30 @@ export default function TeacherIntro() {
               <span>Người đồng hành cùng bạn</span>
             </div>
 
-            <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 text-white"
+            <h2 className="text-4xl lg:text-5xl font-extrabold mb-8 text-white leading-tight"
               style={{ textShadow: "0 0 30px hsl(330 100% 65% / 0.3)" }}>
-              Gặp gỡ <span className="text-primary">Cô Nguyễn Thị Thuỷ</span>
+              CÔ <span className="text-primary">NGUYỄN THUỶ</span>
             </h2>
 
-            <div className="prose prose-lg text-slate-400 mb-10">
-              <p>
-                Với hơn 10 năm kinh nghiệm giảng dạy tiếng Anh và 4 năm chuyên sâu nghiên cứu về PTE,
-                cô Thuỷ hiểu rõ những khó khăn mà học viên Việt Nam thường gặp phải — từ việc phát âm sai,
-                thiếu phản xạ, đến việc "mất gốc" tiếng Anh nhưng lại cần điểm gấp cho mục tiêu du học và định cư.
+            <div className="space-y-5 mb-10">
+              <p className="text-slate-300 leading-relaxed">
+                Với hơn <strong className="text-white">10 năm giảng dạy tiếng Anh</strong> và hơn{" "}
+                <strong className="text-white">4 năm nghiên cứu chuyên sâu về PTE</strong>, cô Thuỷ nhận ra rằng
+                nhiều học viên chưa đạt mục tiêu không phải vì thiếu cố gắng, mà vì chưa có{" "}
+                <span className="text-primary">lộ trình học đúng</span> và{" "}
+                <span className="text-primary">phương pháp luyện tập hiệu quả</span>.
               </p>
-              <p>
-                Không chỉ là một giáo viên, cô Thuỷ là <strong className="text-slate-200">người đồng hành</strong> — hướng dẫn bạn từng bước,
-                chỉ ra những lỗi sai nhỏ nhất, và giúp bạn lấy lại sự tự tin. Khóa học này không chỉ truyền đạt kiến thức,
-                mà còn truyền cảm hứng để bạn yêu tiếng Anh hơn.
+              <p className="text-slate-300 leading-relaxed">
+                Từ trải nghiệm đồng hành cùng học viên ở nhiều trình độ, cô xây dựng hệ thống học{" "}
+                <strong className="text-white">PTE Talents</strong> nhằm giúp người học đi từ mất gốc đến tự học được
+                thông qua lộ trình rõ ràng, video bài giảng, website luyện tập, bộ đề trọng điểm và quá trình{" "}
+                <span className="text-cyan-400">chữa bài chi tiết</span>.
+              </p>
+              <p className="text-slate-300 leading-relaxed">
+                Khóa học không chỉ hướng đến điểm số PTE mong muốn, mà còn trang bị cho học viên{" "}
+                <strong className="text-white">phương pháp học bền vững</strong>: hiểu cách Pearson chấm điểm, biết học
+                đúng trọng tâm, tự luyện với PTE Talents và APEUni, tự nhận diện lỗi sai, tự cải thiện điểm số và
+                tiếp tục nâng cao tiếng Anh sau khóa học.
               </p>
             </div>
 
