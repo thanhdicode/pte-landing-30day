@@ -35,7 +35,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-slate-950">
+    <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-[#120A2E]">
       {/* ── Background layers ── */}
       <div className="absolute inset-0 cyber-grid-bg opacity-40 pointer-events-none" />
 
@@ -100,23 +100,6 @@ export default function Hero() {
             transition={{ duration: 0.7 }}
             className="flex flex-col gap-7"
           >
-            {/* Launch badge */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2.5 self-start"
-            >
-              <span className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-bold tracking-widest uppercase"
-                style={{ boxShadow: "0 0 12px hsl(330 100% 65% / 0.2)" }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                Đang tuyển sinh khoá mới
-              </span>
-              <span className="px-3 py-1 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-xs font-bold rounded-full">
-                🔥 Hot
-              </span>
-            </motion.div>
-
             {/* ── Main title ── */}
             <div className="flex flex-col gap-1">
               {/* Row 1: Rocket + label */}
