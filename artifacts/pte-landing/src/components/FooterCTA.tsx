@@ -310,7 +310,7 @@ export default function FooterCTA() {
               animate={{ x: ["-100%", "200%"] }}
               transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }}
             />
-            <span className="relative z-10">Tư vấn miễn phí</span>
+            <span className="relative z-10">Đăng ký ngay</span>
             <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-2 transition-transform" />
           </motion.button>
 
