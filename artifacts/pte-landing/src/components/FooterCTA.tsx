@@ -310,8 +310,7 @@ export default function FooterCTA() {
               animate={{ x: ["-100%", "200%"] }}
               transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }}
             />
-            <Zap className="w-5 h-5 relative z-10" style={{ filter: "drop-shadow(0 0 6px #fff)" }} />
-            <span className="relative z-10">ĐĂNG KÝ NGAY — MIỄN PHÍ TƯ VẤN</span>
+            <span className="relative z-10">Tư vấn miễn phí</span>
             <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-2 transition-transform" />
           </motion.button>
 
