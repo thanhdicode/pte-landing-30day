@@ -2,7 +2,7 @@ import pteLogo from '@assets/pte-logo-clean.png';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#120A2E] py-12 border-t border-primary/20 relative overflow-hidden cyber-grid-bg">
+    <footer className="bg-[#25101B] py-12 border-t border-primary/20 relative overflow-hidden cyber-grid-bg">
       {/* Top neon line */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 pointer-events-none" />
 

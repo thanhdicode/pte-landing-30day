@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "l0XwCujeOfIfuw0MOW5Oc"
+uri = "file://screenshots/bg-demo.png"
+type = "image"
+title = "Demo phông nền — 6 lựa chọn (Hero thật)"

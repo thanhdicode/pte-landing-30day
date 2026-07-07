@@ -47,7 +47,7 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled || mobileOpen
-            ? "bg-[#120A2E]/90 backdrop-blur-md py-3 border-b border-primary/20"
+            ? "bg-[#25101B]/90 backdrop-blur-md py-3 border-b border-primary/20"
             : "bg-transparent py-5"
         }`}
         style={isScrolled || mobileOpen ? { boxShadow: '0 1px 0 0 hsl(330 100% 65% / 0.15), 0 4px 24px hsl(330 100% 65% / 0.08)' } : {}}
@@ -177,7 +177,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-[68px] left-0 right-0 z-40 bg-[#120A2E]/95 backdrop-blur-md shadow-lg border-t border-primary/20 md:hidden cyber-grid-bg"
+            className="fixed top-[68px] left-0 right-0 z-40 bg-[#25101B]/95 backdrop-blur-md shadow-lg border-t border-primary/20 md:hidden cyber-grid-bg"
           >
             <nav className="flex flex-col px-6 py-4 gap-1">
               {navLinks.map((link) => (

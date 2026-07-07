@@ -35,7 +35,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-[#120A2E]">
+    <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-[#25101B]">
       {/* ── Background layers ── */}
       <div className="absolute inset-0 cyber-grid-bg opacity-40 pointer-events-none" />
 
