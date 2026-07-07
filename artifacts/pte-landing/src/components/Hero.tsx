@@ -1,9 +1,8 @@
-import { ArrowRight, Play, Zap, Users, Clock, Award, Mic, BookOpen, Phone, MessageCircle, Copy, CheckCheck } from "lucide-react";
+import { ArrowRight, Play, Zap, Users, Clock, Award, Mic, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import teacherNoBg from '@assets/teacher-nobg.png';
+import PaymentModal from "./PaymentModal";
 import { useState } from "react";
-
-const PHONE = "0357930867";
 
 const scores = [
   { value: "24+", label: "Beginner", glow: "hsl(185 100% 55%)" },
@@ -25,14 +24,7 @@ const particles = [
 ];
 
 export default function Hero() {
-  const [popupOpen, setPopupOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
-
-  const copyPhone = () => {
-    navigator.clipboard.writeText(PHONE);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  const [payOpen, setPayOpen] = useState(false);
 
   return (
     <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-[#120A2E]">
@@ -234,74 +226,38 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col gap-4"
             >
-              <div className="relative">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-x-5 gap-y-3">
                 <button
-                  onClick={() => setPopupOpen(v => !v)}
-                  className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-black text-lg text-white overflow-hidden transition-all hover:-translate-y-1 cursor-pointer"
+                  onClick={() => setPayOpen(true)}
+                  className="group relative inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-black text-base sm:text-lg text-white overflow-hidden transition-all hover:-translate-y-1 cursor-pointer"
                   style={{
                     background: "linear-gradient(135deg, hsl(330 100% 55%), hsl(330 100% 70%))",
                     boxShadow: "0 0 0 1px hsl(330 100% 65% / 0.5), 0 8px 32px hsl(330 100% 65% / 0.4)",
                   }}
                 >
-                  <Phone className="w-5 h-5" />
-                  Tư vấn miễn phí
+                  <Zap className="w-5 h-5" />
+                  <span>Đăng Ký Ngay</span>
+                  <span className="font-extrabold whitespace-nowrap">– 5.999.000₫</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                 </button>
 
-                {/* Phone popup */}
-                <AnimatePresence>
-                  {popupOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ duration: 0.18 }}
-                      className="absolute left-0 top-[calc(100%+10px)] z-50 rounded-2xl p-4 w-64"
-                      style={{
-                        background: "hsl(222 47% 7%)",
-                        border: "1px solid hsl(330 100% 65% / 0.35)",
-                        boxShadow: "0 0 40px hsl(330 100% 65% / 0.2), 0 16px 32px rgba(0,0,0,0.5)",
-                      }}
-                    >
-                      <div className="absolute top-0 left-4 right-4 h-[1.5px] rounded-full"
-                        style={{ background: "linear-gradient(90deg, transparent, hsl(330 100% 65%), hsl(180 100% 60%), transparent)" }} />
-
-                      <p className="text-xs text-slate-500 font-mono tracking-widest mb-2">LIÊN HỆ TƯ VẤN</p>
-
-                      <div className="flex items-center gap-2 mb-3">
-                        <Phone className="w-4 h-4 text-primary flex-shrink-0"
-                          style={{ filter: "drop-shadow(0 0 6px hsl(330 100% 65%))" }} />
-                        <span className="text-lg font-extrabold text-white tracking-wider"
-                          style={{ textShadow: "0 0 14px hsl(330 100% 65% / 0.5)" }}>
-                          {PHONE}
-                        </span>
-                        <button onClick={copyPhone} className="ml-auto text-slate-400 hover:text-white transition-colors">
-                          {copied ? <CheckCheck className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
-                        </button>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <a href={`tel:${PHONE}`}
-                          className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full text-xs font-semibold text-white"
-                          style={{ background: "hsl(330 100% 60% / 0.25)", border: "1px solid hsl(330 100% 65% / 0.4)" }}>
-                          <Phone className="w-3.5 h-3.5" /> Gọi ngay
-                        </a>
-                        <a href={`https://zalo.me/${PHONE}`} target="_blank" rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full text-xs font-semibold text-cyan-300"
-                          style={{ background: "hsl(180 100% 60% / 0.1)", border: "1px solid hsl(180 100% 60% / 0.35)" }}>
-                          <MessageCircle className="w-3.5 h-3.5" /> Zalo
-                        </a>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div className="flex flex-col gap-1">
+                  <span className="text-sm text-slate-400">
+                    Giá gốc{" "}
+                    <span className="line-through decoration-primary/70 decoration-2 text-slate-500">10.500.000₫</span>
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-primary font-semibold text-sm">
+                    <Clock className="w-4 h-4" style={{ filter: "drop-shadow(0 0 6px hsl(330 100% 65% / 0.7))" }} />
+                    Ưu đãi giới hạn
+                  </span>
+                </div>
               </div>
               <a
                 href="#roadmap"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-base text-slate-300 border border-slate-600 hover:border-primary/50 hover:text-white transition-all"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-base text-slate-300 border border-slate-600 hover:border-primary/50 hover:text-white transition-all self-start"
               >
                 <Play className="w-4 h-4 text-primary" />
                 Xem lộ trình 30 ngày
@@ -493,6 +449,11 @@ export default function Hero() {
 
         </div>
       </div>
+
+      {/* Payment QR modal */}
+      <AnimatePresence>
+        {payOpen && <PaymentModal onClose={() => setPayOpen(false)} />}
+      </AnimatePresence>
     </section>
   );
 }

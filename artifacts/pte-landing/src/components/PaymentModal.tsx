@@ -5,7 +5,10 @@ import { useState } from "react";
 const ACCOUNT = "19027789210035";
 const BANK_ID  = "TCB";
 const NAME     = "NGUYEN THI THUY";
-const QR_URL   = `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT}-compact2.png?accountName=${encodeURIComponent(NAME)}&addInfo=${encodeURIComponent("Khoa Dong Hanh 30 Ngay PTE")}`;
+const AMOUNT      = 5999000;
+const AMOUNT_TEXT = "5.999.000₫";
+const ORIG_TEXT   = "10.500.000₫";
+const QR_URL   = `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT}-compact2.png?accountName=${encodeURIComponent(NAME)}&amount=${AMOUNT}&addInfo=${encodeURIComponent("Khoa Dong Hanh 30 Ngay PTE")}`;
 
 interface Props { onClose: () => void; }
 
@@ -29,6 +32,9 @@ export default function PaymentModal({ onClose }: Props) {
       <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
 
       <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Đăng ký Khoá Đồng Hành 30 Ngày"
         className="relative z-10 w-full max-w-sm rounded-2xl overflow-hidden"
         initial={{ opacity: 0, scale: 0.88, y: 24 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -57,6 +63,7 @@ export default function PaymentModal({ onClose }: Props) {
         {/* Close */}
         <button
           onClick={onClose}
+          aria-label="Đóng"
           className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors z-20"
         >
           <X className="w-5 h-5" />
@@ -67,10 +74,23 @@ export default function PaymentModal({ onClose }: Props) {
             <CreditCard className="w-4 h-4 text-primary" style={{ filter: "drop-shadow(0 0 6px hsl(330 100% 65%))" }} />
             <span className="text-xs font-mono text-slate-500 tracking-widest uppercase">Thanh toán học phí</span>
           </div>
-          <h2 className="text-lg font-extrabold text-white mb-5"
+          <h2 className="text-lg font-extrabold text-white mb-3"
             style={{ textShadow: "0 0 20px hsl(330 100% 65% / 0.4)" }}>
             Đăng ký Khoá Đồng Hành 30 Ngày
           </h2>
+
+          {/* Giá ưu đãi */}
+          <div className="flex items-center gap-3 mb-5">
+            <span className="text-2xl font-extrabold text-primary"
+              style={{ textShadow: "0 0 18px hsl(330 100% 65% / 0.5)" }}>
+              {AMOUNT_TEXT}
+            </span>
+            <span className="text-sm text-slate-500 line-through decoration-primary/50">{ORIG_TEXT}</span>
+            <span className="ml-auto inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold text-primary"
+              style={{ background: "hsl(330 100% 60% / 0.12)", border: "1px solid hsl(330 100% 65% / 0.35)" }}>
+              Ưu đãi giới hạn
+            </span>
+          </div>
 
           <div className="flex justify-center mb-5">
             <div className="rounded-xl overflow-hidden p-2 bg-white"
@@ -89,6 +109,7 @@ export default function PaymentModal({ onClose }: Props) {
             {[
               { label: "Ngân hàng",     value: "Techcombank (TCB)" },
               { label: "Chủ tài khoản", value: "Nguyễn Thị Thuỷ" },
+              { label: "Số tiền",       value: AMOUNT_TEXT },
               { label: "Nội dung CK",   value: "Khoa Dong Hanh 30 Ngay PTE" },
             ].map(row => (
               <div key={row.label} className="flex justify-between items-center text-sm">

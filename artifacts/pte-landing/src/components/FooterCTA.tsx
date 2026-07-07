@@ -1,4 +1,4 @@
-import { motion, useAnimationControls, animate, AnimatePresence } from "framer-motion";
+import { motion, animate, AnimatePresence } from "framer-motion";
 import { ArrowRight, Zap, Shield, Star } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import PaymentModal from "./PaymentModal";
@@ -80,7 +80,7 @@ const particles = Array.from({ length: 20 }, (_, i) => ({
   x: Math.random() * 100,
   y: Math.random() * 100,
   size: Math.random() * 5 + 2,
-  color: i % 2 === 0 ? "hsl(330 100% 65%)" : "hsl(180 100% 60%)",
+  color: i % 2 === 0 ? "hsl(180 100% 60%)" : "hsl(205 95% 66%)",
   duration: Math.random() * 4 + 3,
   delay: Math.random() * 3,
 }));
@@ -106,7 +106,7 @@ export default function FooterCTA() {
       {/* Neon blobs — animated */}
       <motion.div
         className="absolute top-[-15%] left-1/2 -translate-x-1/2 rounded-full pointer-events-none"
-        style={{ width: 700, height: 400, background: "hsl(330 100% 65% / 0.18)", filter: "blur(90px)" }}
+        style={{ width: 700, height: 400, background: "hsl(200 100% 60% / 0.14)", filter: "blur(90px)" }}
         animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -118,7 +118,7 @@ export default function FooterCTA() {
       />
       <motion.div
         className="absolute bottom-[-10%] right-[5%] rounded-full pointer-events-none"
-        style={{ width: 300, height: 300, background: "hsl(330 100% 65% / 0.12)", filter: "blur(70px)" }}
+        style={{ width: 300, height: 300, background: "hsl(190 100% 60% / 0.10)", filter: "blur(70px)" }}
         animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.9, 0.5] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
@@ -126,21 +126,21 @@ export default function FooterCTA() {
       {/* Animated scanline sweep */}
       <motion.div
         className="absolute left-0 right-0 h-[2px] pointer-events-none"
-        style={{ background: "linear-gradient(90deg, transparent, hsl(330 100% 65% / 0.8), hsl(180 100% 60% / 0.8), transparent)" }}
+        style={{ background: "linear-gradient(90deg, transparent, hsl(180 100% 60% / 0.7), hsl(200 100% 65% / 0.5), transparent)" }}
         animate={{ top: ["0%", "100%"] }}
         transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
       />
 
       {/* Top neon line */}
       <div className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
-        style={{ background: "linear-gradient(90deg, transparent, hsl(330 100% 65%), hsl(180 100% 60%), hsl(330 100% 65%), transparent)", boxShadow: "0 0 20px hsl(330 100% 65% / 0.8)" }} />
+        style={{ background: "linear-gradient(90deg, transparent, hsl(180 100% 60%), hsl(200 100% 65%), hsl(180 100% 60%), transparent)", boxShadow: "0 0 20px hsl(190 100% 60% / 0.6)" }} />
 
       {/* Corner brackets */}
       {[
-        "top-6 left-6 border-t-2 border-l-2 border-primary/60",
-        "top-6 right-6 border-t-2 border-r-2 border-cyan-400/60",
-        "bottom-6 left-6 border-b-2 border-l-2 border-cyan-400/60",
-        "bottom-6 right-6 border-b-2 border-r-2 border-primary/60",
+        "top-6 left-6 border-t-2 border-l-2 border-cyan-400/50",
+        "top-6 right-6 border-t-2 border-r-2 border-cyan-400/50",
+        "bottom-6 left-6 border-b-2 border-l-2 border-cyan-400/50",
+        "bottom-6 right-6 border-b-2 border-r-2 border-cyan-400/50",
       ].map((cls, i) => (
         <motion.div key={i} className={`absolute w-16 h-16 pointer-events-none ${cls}`}
           animate={{ opacity: [0.4, 1, 0.4] }}
@@ -159,10 +159,10 @@ export default function FooterCTA() {
         >
           <span className="text-slate-500 text-xs font-mono tracking-widest">▶ SYSTEM.ENROLL</span>
           <motion.span
-            className="w-2 h-2 rounded-full bg-primary"
+            className="w-2 h-2 rounded-full bg-cyan-400"
             animate={{ opacity: [1, 0, 1], scale: [1, 1.4, 1] }}
             transition={{ duration: 1.2, repeat: Infinity }}
-            style={{ boxShadow: "0 0 8px hsl(330 100% 65%)" }}
+            style={{ boxShadow: "0 0 8px hsl(180 100% 60%)" }}
           />
           <span className="text-slate-500 text-xs font-mono tracking-widest">SỐ LƯỢNG GIỚI HẠN</span>
         </motion.div>
@@ -173,13 +173,13 @@ export default function FooterCTA() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-primary/40 mb-10"
-          style={{ background: "hsl(330 100% 65% / 0.1)", boxShadow: "0 0 20px hsl(330 100% 65% / 0.2)" }}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-cyan-400/40 mb-10"
+          style={{ background: "hsl(190 100% 60% / 0.08)", boxShadow: "0 0 20px hsl(190 100% 60% / 0.15)" }}
         >
           <motion.div animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-            <Zap className="w-4 h-4 text-primary" style={{ filter: "drop-shadow(0 0 6px hsl(330 100% 65%))" }} />
+            <Zap className="w-4 h-4 text-cyan-300" style={{ filter: "drop-shadow(0 0 6px hsl(190 100% 60%))" }} />
           </motion.div>
-          <span className="text-primary font-semibold text-sm tracking-wide">Đăng ký ngay hôm nay</span>
+          <span className="text-cyan-200 font-semibold text-sm tracking-wide">Đăng ký ngay hôm nay</span>
         </motion.div>
 
         {/* Main heading — staggered lines */}
@@ -201,10 +201,11 @@ export default function FooterCTA() {
             transition={{ duration: 0.6, delay: 0.12 }}
             className="text-4xl md:text-6xl font-extrabold leading-[1.15] block"
             style={{
-              background: "linear-gradient(90deg, hsl(330 100% 68%), hsl(300 100% 74%))",
+              background: "linear-gradient(90deg, hsl(185 100% 62%), hsl(205 100% 70%))",
               WebkitBackgroundClip: "text",
+              backgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              filter: "drop-shadow(0 0 18px hsl(330 100% 65% / 0.35))",
+              color: "transparent",
             }}
           >
             BỨT PHÁ PTE
@@ -217,7 +218,7 @@ export default function FooterCTA() {
             transition={{ duration: 0.6, delay: 0.24 }}
             className="text-4xl md:text-6xl font-extrabold leading-[1.15] text-white block"
           >
-            trong <span className="text-primary">30 ngày?</span>
+            trong <span className="text-cyan-300">30 ngày?</span>
           </motion.div>
         </div>
 
@@ -232,8 +233,7 @@ export default function FooterCTA() {
           <p className="text-lg md:text-xl text-slate-300 mb-2 max-w-2xl mx-auto leading-relaxed">
             Đừng để tiếng Anh là rào cản ngăn bạn đến với ước mơ —
           </p>
-          <p className="text-xl md:text-2xl font-bold max-w-2xl mx-auto leading-relaxed"
-            style={{ color: "hsl(330 100% 78%)", textShadow: "0 0 20px hsl(330 100% 65% / 0.4)" }}>
+          <p className="text-xl md:text-2xl font-bold text-white max-w-2xl mx-auto leading-relaxed">
             visa · định cư · tốt nghiệp đang chờ bạn phía trước.
           </p>
         </motion.div>
@@ -252,8 +252,8 @@ export default function FooterCTA() {
             { to: 4.9, suffix: "★", label: "Đánh giá", isFloat: true },
           ].map((s, i) => (
             <div key={i} className="text-center">
-              <div className="text-3xl font-extrabold text-primary"
-                style={{ textShadow: "0 0 16px hsl(330 100% 65% / 0.7)" }}>
+              <div className="text-3xl font-extrabold text-cyan-300"
+                style={{ textShadow: "0 0 16px hsl(190 100% 60% / 0.5)" }}>
                 {s.isFloat
                   ? <span>4.9★</span>
                   : <Counter to={s.to} suffix={s.suffix} />}
@@ -279,7 +279,7 @@ export default function FooterCTA() {
               color: "#fff",
               letterSpacing: "0.05em",
             }}
-            animate={{ boxShadow: ["0 0 30px hsl(330 100% 65% / 0.5)", "0 0 60px hsl(330 100% 65% / 0.9)", "0 0 30px hsl(330 100% 65% / 0.5)"] }}
+            animate={{ boxShadow: ["0 0 20px hsl(330 100% 65% / 0.35)", "0 0 32px hsl(330 100% 65% / 0.5)", "0 0 20px hsl(330 100% 65% / 0.35)"] }}
             transition={{ duration: 2, repeat: Infinity }}
             whileHover={{ scale: 1.07 }}
             whileTap={{ scale: 0.97 }}
@@ -323,7 +323,7 @@ export default function FooterCTA() {
               viewport={{ once: true }}
               transition={{ delay: 0.6 + i * 0.1 }}
             >
-              <span className="text-primary">{item.icon}</span>
+              <span className="text-cyan-400">{item.icon}</span>
               <span className="text-slate-400 text-sm font-medium">{item.text}</span>
             </motion.div>
           ))}

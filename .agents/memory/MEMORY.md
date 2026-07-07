@@ -1,2 +1,4 @@
 - [ImageMagick fonts on Replit](imagemagick-fonts.md) — montage/convert have no default font; pass `-font` via `fc-match`, never `find /nix` (times out).
 - [Screenshot below-the-fold](screenshot-below-fold.md) — appPreview tool can't scroll past a `min-h-screen` hero; SPA `#anchor` paths don't scroll either. Verify lower sections another way.
+- [rembg on Replit](rembg-python-version.md) — rembg needs Python <3.10 (`uv venv --python 3.9`); no AI image-edit callback, use rembg+opencv deterministically for editing existing photos.
+- [Gradient-text clip bar](css-gradient-text-clip.md) — `background-clip:text` renders as a solid bar if the element also has a `filter` (e.g. drop-shadow); move/remove the filter.
