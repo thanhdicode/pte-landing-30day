@@ -131,7 +131,7 @@ const personas = [
 
 export default function WhoIsThisFor() {
   return (
-    <section id="who" className="py-24 bg-[#25101B] relative overflow-hidden cyber-scanlines">
+    <section id="who" className="py-24 bg-[#1C0B22] relative overflow-hidden cyber-scanlines">
       {/* Cyber grid */}
       <div className="absolute inset-0 cyber-grid-bg opacity-30 pointer-events-none" />
 

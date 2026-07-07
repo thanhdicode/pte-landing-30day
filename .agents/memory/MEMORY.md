@@ -1,0 +1,1 @@
+- [ImageMagick fonts on Replit](imagemagick-fonts.md) — montage/convert have no default font; pass `-font` via `fc-match`, never `find /nix` (times out).

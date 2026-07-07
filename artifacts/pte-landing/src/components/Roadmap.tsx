@@ -57,7 +57,7 @@ const phases = [
 
 export default function Roadmap() {
   return (
-    <section id="roadmap" className="py-24 bg-[#25101B] cyber-grid-bg relative">
+    <section id="roadmap" className="py-24 bg-[#1C0B22] cyber-grid-bg relative">
       <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent pointer-events-none" />
       
       <div className="max-w-4xl mx-auto px-6 relative z-10">

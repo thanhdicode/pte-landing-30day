@@ -11,7 +11,7 @@ export default function TeacherIntro() {
   ];
 
   return (
-    <section id="about" className="py-24 bg-[#25101B] relative overflow-hidden cyber-scanlines">
+    <section id="about" className="py-24 bg-[#1C0B22] relative overflow-hidden cyber-scanlines">
       <div className="absolute inset-0 cyber-grid-bg opacity-40 pointer-events-none" />
       <div className="absolute top-0 left-0 w-40 h-40 border-t-2 border-l-2 border-primary/40 pointer-events-none"
         style={{ boxShadow: "0 0 16px hsl(330 100% 65% / 0.2)" }} />

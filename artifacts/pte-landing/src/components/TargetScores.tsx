@@ -87,7 +87,7 @@ function ScoreCard({ target, idx }: { target: typeof targets[0]; idx: number }) 
 
 export default function TargetScores() {
   return (
-    <section id="results" className="py-28 bg-[#25101B] text-white relative overflow-hidden">
+    <section id="results" className="py-28 bg-[#1C0B22] text-white relative overflow-hidden">
       {/* Grid bg */}
       <div className="absolute inset-0 cyber-grid-bg opacity-40 pointer-events-none" />
 
