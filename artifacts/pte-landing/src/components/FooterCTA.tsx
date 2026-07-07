@@ -1,5 +1,5 @@
 import { motion, useAnimationControls, animate, AnimatePresence } from "framer-motion";
-import { ArrowRight, Zap, Clock, Shield, Star } from "lucide-react";
+import { ArrowRight, Zap, Shield, Star } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import PaymentModal from "./PaymentModal";
 
@@ -86,7 +86,6 @@ const particles = Array.from({ length: 20 }, (_, i) => ({
 }));
 
 const urgencyItems = [
-  { icon: <Clock className="w-4 h-4" />, text: "Khai giảng hàng tuần" },
   { icon: <Shield className="w-4 h-4" />, text: "Cam kết đầu ra" },
   { icon: <Star className="w-4 h-4" />, text: "Hơn 500+ học viên" },
 ];
@@ -180,7 +179,7 @@ export default function FooterCTA() {
           <motion.div animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 2, repeat: Infinity }}>
             <Zap className="w-4 h-4 text-primary" style={{ filter: "drop-shadow(0 0 6px hsl(330 100% 65%))" }} />
           </motion.div>
-          <span className="text-primary font-semibold text-sm tracking-wide">Khai giảng hàng tuần — Đăng ký ngay hôm nay</span>
+          <span className="text-primary font-semibold text-sm tracking-wide">Đăng ký ngay hôm nay</span>
         </motion.div>
 
         {/* Main heading — staggered lines */}
