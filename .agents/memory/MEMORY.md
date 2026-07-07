@@ -1,1 +1,2 @@
 - [ImageMagick fonts on Replit](imagemagick-fonts.md) — montage/convert have no default font; pass `-font` via `fc-match`, never `find /nix` (times out).
+- [Screenshot below-the-fold](screenshot-below-fold.md) — appPreview tool can't scroll past a `min-h-screen` hero; SPA `#anchor` paths don't scroll either. Verify lower sections another way.

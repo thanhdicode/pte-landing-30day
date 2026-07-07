@@ -4,7 +4,7 @@ import teacherNoBg from '@assets/teacher-nobg.png';
 
 export default function TeacherIntro() {
   const stats = [
-    { icon: <GraduationCap className="w-6 h-6 text-primary" />, value: "Đại Học Hà Nội", label: "Tiền Thân ĐH Ngoại Ngữ HN" },
+    { icon: <GraduationCap className="w-6 h-6 text-primary" />, value: "Đại Học Hà Nội", label: "Chuyên ngành Ngôn Ngữ Anh" },
     { icon: <BookOpen className="w-6 h-6 text-primary" />, value: "10 Năm", label: "Kinh nghiệm giảng dạy" },
     { icon: <Award className="w-6 h-6 text-primary" />, value: "4 Năm", label: "Chuyên luyện thi PTE" },
     { icon: <Heart className="w-6 h-6 text-primary" />, value: "Tận tâm", label: "Đồng hành sát sao" },
@@ -53,9 +53,15 @@ export default function TeacherIntro() {
                     Nguyễn Thị Thuỷ
                   </h3>
                   <p className="text-primary font-semibold text-sm mt-1">Giáo viên & Chuyên gia PTE Talents</p>
-                  <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full">
-                    <GraduationCap className="w-3.5 h-3.5 text-primary" />
-                    <span className="text-primary text-xs font-medium">Đại Học Hà Nội (Tiền Thân Đại Học Ngoại Ngữ Hà Nội)</span>
+                  <div className="mt-2 flex flex-col items-center gap-1.5">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full">
+                      <GraduationCap className="w-3.5 h-3.5 text-primary shrink-0" />
+                      <span className="text-primary text-xs font-medium">Đại Học Hà Nội (Tiền Thân Đại Học Ngoại Ngữ Hà Nội)</span>
+                    </div>
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-cyan-400/10 border border-cyan-400/25 rounded-full">
+                      <BookOpen className="w-3.5 h-3.5 text-cyan-300 shrink-0" />
+                      <span className="text-cyan-200 text-xs font-medium">Chuyên ngành Ngôn Ngữ Anh</span>
+                    </div>
                   </div>
                 </div>
 
