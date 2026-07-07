@@ -93,50 +93,152 @@ export default function TeacherIntro() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-medium text-sm mb-6">
-              <Heart className="w-4 h-4 fill-primary" />
-              <span>Người đồng hành cùng bạn</span>
+            {/* ── Headline block ── */}
+            <div className="mb-10">
+              {/* Eyebrow */}
+              <div className="flex items-center gap-3 mb-4">
+                <motion.div className="h-[1px] w-8 rounded-full bg-primary"
+                  style={{ boxShadow: "0 0 6px hsl(330 100% 65%)" }}
+                  animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 2, repeat: Infinity }} />
+                <span className="text-[11px] font-mono tracking-[0.25em] text-primary uppercase">Giáo viên &amp; Chuyên gia PTE</span>
+                <motion.div className="h-[1px] flex-1 rounded-full"
+                  style={{ background: "linear-gradient(90deg, hsl(330 100% 65% / 0.4), transparent)" }}
+                  animate={{ opacity: [0.4, 0.9, 0.4] }} transition={{ duration: 2.5, repeat: Infinity }} />
+              </div>
+
+              {/* "CÔ" label */}
+              <div className="flex items-baseline gap-3 mb-1">
+                <span
+                  className="font-mono font-black tracking-[0.3em] text-slate-500 text-sm select-none"
+                  style={{ letterSpacing: "0.3em" }}
+                >
+                  CÔ
+                </span>
+                <div className="h-px flex-1 bg-slate-800" />
+              </div>
+
+              {/* Main name */}
+              <h2 className="font-heading font-black leading-[0.95] mb-2" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                <span className="block text-5xl lg:text-6xl text-white tracking-tight"
+                  style={{ textShadow: "0 0 40px hsl(330 100% 65% / 0.2)" }}>
+                  NGUYỄN
+                </span>
+                <motion.span
+                  className="block text-6xl lg:text-7xl tracking-tight"
+                  style={{
+                    background: "linear-gradient(100deg, hsl(330 100% 68%), hsl(300 100% 72%), hsl(330 100% 60%))",
+                    backgroundSize: "200% auto",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    filter: "drop-shadow(0 0 24px hsl(330 100% 65% / 0.5))",
+                  }}
+                  animate={{ backgroundPosition: ["0% center", "200% center"] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                >
+                  THUỶ
+                </motion.span>
+              </h2>
+
+              {/* Bottom rule */}
+              <div className="mt-4 h-[2px] rounded-full w-3/4"
+                style={{ background: "linear-gradient(90deg, hsl(330 100% 65%), hsl(180 100% 60%), transparent)", boxShadow: "0 0 8px hsl(330 100% 65% / 0.4)" }} />
             </div>
 
-            <h2 className="text-4xl lg:text-5xl font-extrabold mb-8 text-white leading-tight"
-              style={{ textShadow: "0 0 30px hsl(330 100% 65% / 0.3)" }}>
-              CÔ <span className="text-primary">NGUYỄN THUỶ</span>
-            </h2>
+            {/* ── Paragraphs ── */}
+            <div className="space-y-6 mb-10">
+              {[
+                {
+                  num: "01",
+                  color: "hsl(330 100% 65%)",
+                  text: (
+                    <>
+                      Với hơn <mark className="bg-transparent font-bold text-white not-italic">10 năm giảng dạy tiếng Anh</mark> và hơn{" "}
+                      <mark className="bg-transparent font-bold text-white not-italic">4 năm nghiên cứu chuyên sâu về PTE</mark>, cô Thuỷ nhận ra rằng
+                      nhiều học viên chưa đạt mục tiêu không phải vì thiếu cố gắng, mà vì chưa có{" "}
+                      <span style={{ color: "hsl(330 100% 70%)", fontWeight: 600 }}>lộ trình học đúng</span> và{" "}
+                      <span style={{ color: "hsl(330 100% 70%)", fontWeight: 600 }}>phương pháp luyện tập hiệu quả</span>.
+                    </>
+                  ),
+                },
+                {
+                  num: "02",
+                  color: "hsl(180 100% 60%)",
+                  text: (
+                    <>
+                      Từ trải nghiệm đồng hành cùng học viên ở nhiều trình độ, cô xây dựng hệ thống học{" "}
+                      <mark className="bg-transparent font-bold text-white not-italic">PTE Talents</mark> nhằm giúp người học đi từ mất gốc đến tự học được
+                      thông qua lộ trình rõ ràng, video bài giảng, website luyện tập, bộ đề trọng điểm và quá trình{" "}
+                      <span style={{ color: "hsl(180 100% 62%)", fontWeight: 600 }}>chữa bài chi tiết</span>.
+                    </>
+                  ),
+                },
+                {
+                  num: "03",
+                  color: "hsl(263 70% 70%)",
+                  text: (
+                    <>
+                      Khóa học không chỉ hướng đến điểm số PTE mong muốn, mà còn trang bị cho học viên{" "}
+                      <mark className="bg-transparent font-bold text-white not-italic">phương pháp học bền vững</mark>: hiểu cách Pearson chấm điểm, biết học
+                      đúng trọng tâm, tự luyện với PTE Talents và APEUni, tự nhận diện lỗi sai, tự cải thiện điểm số
+                      và tiếp tục nâng cao tiếng Anh sau khóa học.
+                    </>
+                  ),
+                },
+              ].map(({ num, color, text }, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.12 }}
+                  className="flex gap-4"
+                >
+                  {/* Number + vertical line */}
+                  <div className="flex flex-col items-center shrink-0 pt-0.5">
+                    <span className="font-mono font-black text-xs tracking-widest"
+                      style={{ color, textShadow: `0 0 10px ${color}` }}>
+                      {num}
+                    </span>
+                    {i < 2 && (
+                      <motion.div className="w-px flex-1 mt-1 rounded-full"
+                        style={{ background: `linear-gradient(180deg, ${color}50, transparent)` }}
+                        initial={{ scaleY: 0, originY: 0 }}
+                        whileInView={{ scaleY: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.3 + i * 0.12 }}
+                      />
+                    )}
+                  </div>
 
-            <div className="space-y-5 mb-10">
-              <p className="text-slate-300 leading-relaxed">
-                Với hơn <strong className="text-white">10 năm giảng dạy tiếng Anh</strong> và hơn{" "}
-                <strong className="text-white">4 năm nghiên cứu chuyên sâu về PTE</strong>, cô Thuỷ nhận ra rằng
-                nhiều học viên chưa đạt mục tiêu không phải vì thiếu cố gắng, mà vì chưa có{" "}
-                <span className="text-primary">lộ trình học đúng</span> và{" "}
-                <span className="text-primary">phương pháp luyện tập hiệu quả</span>.
-              </p>
-              <p className="text-slate-300 leading-relaxed">
-                Từ trải nghiệm đồng hành cùng học viên ở nhiều trình độ, cô xây dựng hệ thống học{" "}
-                <strong className="text-white">PTE Talents</strong> nhằm giúp người học đi từ mất gốc đến tự học được
-                thông qua lộ trình rõ ràng, video bài giảng, website luyện tập, bộ đề trọng điểm và quá trình{" "}
-                <span className="text-cyan-400">chữa bài chi tiết</span>.
-              </p>
-              <p className="text-slate-300 leading-relaxed">
-                Khóa học không chỉ hướng đến điểm số PTE mong muốn, mà còn trang bị cho học viên{" "}
-                <strong className="text-white">phương pháp học bền vững</strong>: hiểu cách Pearson chấm điểm, biết học
-                đúng trọng tâm, tự luyện với PTE Talents và APEUni, tự nhận diện lỗi sai, tự cải thiện điểm số và
-                tiếp tục nâng cao tiếng Anh sau khóa học.
-              </p>
+                  {/* Text */}
+                  <p className="text-slate-400 leading-[1.85] text-[15px]"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    {text}
+                  </p>
+                </motion.div>
+              ))}
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            {/* ── Stats grid ── */}
+            <div className="grid grid-cols-2 gap-4">
               {stats.map((stat, idx) => (
-                <div key={idx} className="flex gap-4 p-4 rounded-2xl bg-slate-900/60 border border-primary/15 transition-all hover:border-primary/40">
-                  <div className="shrink-0 w-12 h-12 bg-slate-800 border border-primary/20 rounded-xl flex items-center justify-center"
-                    style={{ boxShadow: "0 0 10px hsl(330 100% 65% / 0.15)" }}>
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: idx * 0.08 }}
+                  className="flex gap-3 p-4 rounded-2xl bg-slate-900/60 border border-primary/10 transition-all hover:border-primary/35 group"
+                >
+                  <div className="shrink-0 w-10 h-10 bg-slate-800/80 border border-primary/15 rounded-xl flex items-center justify-center group-hover:border-primary/40 transition-all"
+                    style={{ boxShadow: "0 0 10px hsl(330 100% 65% / 0.1)" }}>
                     {stat.icon}
                   </div>
                   <div>
-                    <div className="font-bold text-white">{stat.value}</div>
-                    <div className="text-sm text-slate-400">{stat.label}</div>
+                    <div className="font-extrabold text-white text-sm leading-snug" style={{ fontFamily: "'Outfit', sans-serif" }}>{stat.value}</div>
+                    <div className="text-[11px] text-slate-500 mt-0.5 leading-tight">{stat.label}</div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </motion.div>
