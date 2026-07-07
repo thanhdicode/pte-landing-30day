@@ -148,8 +148,6 @@ export default function TeacherIntro() {
             <div className="space-y-6 mb-10">
               {[
                 {
-                  num: "01",
-                  color: "hsl(330 100% 65%)",
                   text: (
                     <>
                       Với hơn <mark className="bg-transparent font-bold text-white not-italic">10 năm giảng dạy tiếng Anh</mark> và hơn{" "}
@@ -161,20 +159,16 @@ export default function TeacherIntro() {
                   ),
                 },
                 {
-                  num: "02",
-                  color: "hsl(180 100% 60%)",
                   text: (
                     <>
                       Từ trải nghiệm đồng hành cùng học viên ở nhiều trình độ, cô xây dựng hệ thống học{" "}
                       <mark className="bg-transparent font-bold text-white not-italic">PTE Talents</mark> nhằm giúp người học đi từ mất gốc đến tự học được
                       thông qua lộ trình rõ ràng, video bài giảng, website luyện tập, bộ đề trọng điểm và quá trình{" "}
-                      <span style={{ color: "hsl(180 100% 62%)", fontWeight: 600 }}>chữa bài chi tiết</span>.
+                      <span style={{ color: "hsl(330 100% 70%)", fontWeight: 600 }}>chữa bài chi tiết</span>.
                     </>
                   ),
                 },
                 {
-                  num: "03",
-                  color: "hsl(263 70% 70%)",
                   text: (
                     <>
                       Khóa học không chỉ hướng đến điểm số PTE mong muốn, mà còn trang bị cho học viên{" "}
@@ -184,7 +178,9 @@ export default function TeacherIntro() {
                     </>
                   ),
                 },
-              ].map(({ num, color, text }, i) => (
+              ].map(({ text }, i) => {
+                const color = "hsl(330 100% 65%)";
+                return (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 12 }}
@@ -193,11 +189,11 @@ export default function TeacherIntro() {
                   transition={{ duration: 0.5, delay: i * 0.12 }}
                   className="flex gap-4"
                 >
-                  {/* Number + vertical line */}
+                  {/* Marker + vertical line */}
                   <div className="flex flex-col items-center shrink-0 pt-0.5">
-                    <span className="font-mono font-black text-xs tracking-widest"
+                    <span className="text-sm leading-none"
                       style={{ color, textShadow: `0 0 10px ${color}` }}>
-                      {num}
+                      ◆
                     </span>
                     {i < 2 && (
                       <motion.div className="w-px flex-1 mt-1 rounded-full"
@@ -211,12 +207,13 @@ export default function TeacherIntro() {
                   </div>
 
                   {/* Text */}
-                  <p className="text-slate-400 leading-[1.85] text-[15px]"
+                  <p className="text-slate-400 leading-[1.85] text-[17px]"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     {text}
                   </p>
                 </motion.div>
-              ))}
+                );
+              })}
             </div>
 
             {/* ── Stats grid ── */}
@@ -236,7 +233,7 @@ export default function TeacherIntro() {
                   </div>
                   <div>
                     <div className="font-extrabold text-white text-sm leading-snug" style={{ fontFamily: "'Outfit', sans-serif" }}>{stat.value}</div>
-                    <div className="text-[11px] text-slate-500 mt-0.5 leading-tight">{stat.label}</div>
+                    <div className="text-[13px] text-slate-500 mt-0.5 leading-tight">{stat.label}</div>
                   </div>
                 </motion.div>
               ))}

@@ -12,6 +12,18 @@ const scores = [
   { value: "79+", label: "Advanced", color: "from-yellow-400 to-orange-500", glow: "hsl(42 100% 60%)" },
 ];
 
+// Ambient floating particles for a subtle, eye-catching hero
+const particles = [
+  { left: "12%", top: "30%", size: 6, color: "hsl(330 100% 65%)", dur: 7, delay: 0 },
+  { left: "22%", top: "72%", size: 4, color: "hsl(180 100% 60%)", dur: 9, delay: 1.5 },
+  { left: "44%", top: "18%", size: 5, color: "hsl(330 100% 65%)", dur: 8, delay: 0.8 },
+  { left: "58%", top: "82%", size: 4, color: "hsl(180 100% 60%)", dur: 10, delay: 2 },
+  { left: "77%", top: "34%", size: 6, color: "hsl(330 100% 65%)", dur: 7.5, delay: 1 },
+  { left: "88%", top: "62%", size: 4, color: "hsl(263 70% 65%)", dur: 9.5, delay: 0.4 },
+  { left: "34%", top: "88%", size: 5, color: "hsl(330 100% 65%)", dur: 8.5, delay: 2.5 },
+  { left: "67%", top: "14%", size: 4, color: "hsl(180 100% 60%)", dur: 11, delay: 1.8 },
+];
+
 export default function Hero() {
   const [popupOpen, setPopupOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -27,9 +39,37 @@ export default function Hero() {
       {/* ── Background layers ── */}
       <div className="absolute inset-0 cyber-grid-bg opacity-40 pointer-events-none" />
 
-      {/* Radial glow blobs */}
-      <div className="absolute top-1/4 left-1/3 w-[600px] h-[600px] rounded-full bg-primary/10 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] rounded-full bg-cyan-500/8 blur-[100px] pointer-events-none" />
+      {/* Radial glow blobs — gentle breathing */}
+      <motion.div
+        className="absolute top-1/4 left-1/3 w-[600px] h-[600px] rounded-full bg-primary/10 blur-[120px] pointer-events-none"
+        animate={{ scale: [1, 1.18, 1], opacity: [0.55, 1, 0.55] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 right-0 w-[400px] h-[400px] rounded-full bg-cyan-500/8 blur-[100px] pointer-events-none"
+        animate={{ scale: [1, 1.22, 1], opacity: [0.45, 0.9, 0.45] }}
+        transition={{ duration: 10, delay: 1, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* Floating neon particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {particles.map((p, i) => (
+          <motion.span
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              left: p.left,
+              top: p.top,
+              width: p.size,
+              height: p.size,
+              background: p.color,
+              boxShadow: `0 0 ${p.size * 2}px ${p.color}`,
+            }}
+            animate={{ y: [0, -26, 0], opacity: [0, 0.7, 0] }}
+            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
+          />
+        ))}
+      </div>
 
       {/* Scanline sweep */}
       <motion.div
@@ -99,12 +139,19 @@ export default function Hero() {
                 transition={{ delay: 0.35, duration: 0.6 }}
                 className="relative"
               >
-                <h1
+                <motion.h1
                   className="text-[5.5rem] lg:text-[7rem] xl:text-[8rem] font-black leading-none tracking-tight text-white"
-                  style={{ textShadow: "0 0 60px hsl(330 100% 65% / 0.5)" }}
+                  animate={{
+                    textShadow: [
+                      "0 0 60px hsl(330 100% 65% / 0.45)",
+                      "0 0 90px hsl(330 100% 65% / 0.8)",
+                      "0 0 60px hsl(330 100% 65% / 0.45)",
+                    ],
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 >
                   30 <span className="text-primary">NGÀY</span>
-                </h1>
+                </motion.h1>
                 {/* HUD underline */}
                 <div className="h-[3px] w-3/4 mt-1 bg-gradient-to-r from-primary via-primary/60 to-transparent"
                   style={{ boxShadow: "0 0 10px hsl(330 100% 65% / 0.6)" }} />
@@ -115,13 +162,36 @@ export default function Hero() {
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.45, duration: 0.6 }}
+                className="mt-1"
               >
-                <h2 className="text-3xl lg:text-4xl xl:text-5xl font-extrabold leading-tight">
-                  <span
-                    className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-primary to-violet-400"
-                    style={{ WebkitBackgroundClip: "text" }}
-                  >
-                    CHINH PHỤC MỤC TIÊU PTE
+                <h2 className="text-[1.75rem] lg:text-[2.4rem] xl:text-[2.9rem] font-extrabold leading-[1.15] tracking-tight flex flex-wrap items-baseline gap-x-3.5">
+                  <span className="text-white/95">CHINH PHỤC MỤC TIÊU</span>
+                  <span className="relative inline-block">
+                    <motion.span
+                      className="font-black text-transparent bg-clip-text"
+                      style={{
+                        backgroundImage:
+                          "linear-gradient(100deg, hsl(180 100% 62%), hsl(330 100% 68%), hsl(330 100% 78%), hsl(180 100% 62%))",
+                        backgroundSize: "200% auto",
+                        WebkitBackgroundClip: "text",
+                        filter: "drop-shadow(0 0 22px hsl(330 100% 65% / 0.55))",
+                      }}
+                      animate={{ backgroundPosition: ["0% center", "200% center"] }}
+                      transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                    >
+                      PTE
+                    </motion.span>
+                    {/* neon underline accent */}
+                    <motion.span
+                      className="absolute -bottom-1.5 left-0 h-[3px] rounded-full"
+                      style={{
+                        background: "linear-gradient(90deg, hsl(180 100% 60%), hsl(330 100% 65%))",
+                        boxShadow: "0 0 10px hsl(330 100% 65% / 0.75)",
+                      }}
+                      initial={{ scaleX: 0, originX: 0, width: "100%" }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ delay: 0.9, duration: 0.5, ease: "easeOut" }}
+                    />
                   </span>
                 </h2>
               </motion.div>
