@@ -1,4 +1,4 @@
-import { motion, useAnimationControls, animate } from "framer-motion";
+import { motion, useAnimationControls, animate, AnimatePresence } from "framer-motion";
 import { ArrowRight, Zap, Clock, Shield, Star } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import PaymentModal from "./PaymentModal";
@@ -95,7 +95,7 @@ export default function FooterCTA() {
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <>
-    {modalOpen && <PaymentModal onClose={() => setModalOpen(false)} />}
+    <AnimatePresence>{modalOpen && <PaymentModal onClose={() => setModalOpen(false)} />}</AnimatePresence>
     <section id="enroll" className="py-32 relative overflow-hidden bg-slate-950 text-white text-center cyber-scanlines">
 
       {/* Floating particles */}

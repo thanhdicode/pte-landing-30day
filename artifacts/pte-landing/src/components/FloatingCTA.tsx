@@ -46,7 +46,7 @@ export default function FloatingCTA() {
         )}
       </AnimatePresence>
 
-      {open && <PaymentModal onClose={() => setOpen(false)} />}
+      <AnimatePresence>{open && <PaymentModal onClose={() => setOpen(false)} />}</AnimatePresence>
     </>
   );
 }
