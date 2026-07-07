@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { MessageCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import PaymentModal from "./PaymentModal";
 
 export default function FloatingCTA() {
@@ -8,7 +8,7 @@ export default function FloatingCTA() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 120);
+    const onScroll = () => setVisible(window.scrollY > 300);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -19,38 +19,32 @@ export default function FloatingCTA() {
         {visible && (
           <motion.button
             onClick={() => setOpen(true)}
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, y: 24, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 24, scale: 0.9 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-20 right-0 z-40 flex items-center gap-2 pl-4 pr-3 py-3 rounded-l-full font-bold text-sm text-white cursor-pointer group"
+            className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-full font-bold text-sm text-white cursor-pointer group overflow-hidden"
             style={{
               background: "linear-gradient(135deg, hsl(330 100% 60%), hsl(310 100% 55%))",
             }}
-            animate={{
-              boxShadow: [
-                "-4px 0 20px hsl(330 100% 65% / 0.4)",
-                "-4px 0 36px hsl(330 100% 65% / 0.75)",
-                "-4px 0 20px hsl(330 100% 65% / 0.4)",
-              ],
-            }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            whileHover={{ x: -4 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.96 }}
           >
+            {/* Pulse glow */}
             <motion.span
-              className="absolute inset-0 rounded-l-full pointer-events-none overflow-hidden"
-              aria-hidden
-            >
-              <motion.span
-                className="absolute inset-0"
-                style={{ background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%)" }}
-                animate={{ x: ["-100%", "200%"] }}
-                transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 1.5 }}
-              />
-            </motion.span>
-            <MessageCircle className="relative z-10 w-4 h-4 flex-shrink-0" />
-            <span className="relative z-10 whitespace-nowrap">Tư vấn miễn phí</span>
+              className="absolute inset-0 rounded-full pointer-events-none"
+              animate={{ boxShadow: ["0 0 16px hsl(330 100% 65% / 0.5)", "0 0 36px hsl(330 100% 65% / 0.9)", "0 0 16px hsl(330 100% 65% / 0.5)"] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            {/* Shimmer */}
+            <motion.span
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%)" }}
+              animate={{ x: ["-100%", "200%"] }}
+              transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 1.2 }}
+            />
+            <span className="relative z-10 whitespace-nowrap">Đăng ký ngay</span>
+            <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </motion.button>
         )}
       </AnimatePresence>

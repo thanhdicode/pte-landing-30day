@@ -97,7 +97,7 @@ export default function Navbar() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.96 }}
             >
-              Đăng ký ngay · Tư vấn miễn phí
+              Tư vấn miễn phí
             </motion.button>
 
             {/* Phone popup */}
