@@ -1,6 +1,7 @@
 import { motion, useAnimationControls, animate } from "framer-motion";
 import { ArrowRight, Zap, Clock, Shield, Star } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import PaymentModal from "./PaymentModal";
 
 /* ── Floating particle ── */
 function Particle({ x, y, size, color, duration, delay }: {
@@ -91,7 +92,10 @@ const urgencyItems = [
 ];
 
 export default function FooterCTA() {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
+    <>
+    {modalOpen && <PaymentModal onClose={() => setModalOpen(false)} />}
     <section id="enroll" className="py-32 relative overflow-hidden bg-slate-950 text-white text-center cyber-scanlines">
 
       {/* Floating particles */}
@@ -286,11 +290,9 @@ export default function FooterCTA() {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
         >
-          <motion.a
-            href="https://ptetalents.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full font-extrabold text-lg relative overflow-hidden group"
+          <motion.button
+            onClick={() => setModalOpen(true)}
+            className="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full font-extrabold text-lg relative overflow-hidden group cursor-pointer"
             style={{
               background: "linear-gradient(135deg, hsl(330 100% 65%), hsl(310 100% 60%))",
               color: "#fff",
@@ -311,7 +313,7 @@ export default function FooterCTA() {
             <Zap className="w-5 h-5 relative z-10" style={{ filter: "drop-shadow(0 0 6px #fff)" }} />
             <span className="relative z-10">ĐĂNG KÝ NGAY — MIỄN PHÍ TƯ VẤN</span>
             <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-2 transition-transform" />
-          </motion.a>
+          </motion.button>
 
           <motion.a
             href="#roadmap"
@@ -359,5 +361,6 @@ export default function FooterCTA() {
         </motion.p>
       </div>
     </section>
+    </>
   );
 }
