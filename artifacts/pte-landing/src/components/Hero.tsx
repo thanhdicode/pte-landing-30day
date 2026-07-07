@@ -201,7 +201,7 @@ export default function Hero() {
                   className="flex flex-col items-center justify-center px-5 py-2 rounded-2xl border border-primary/40 bg-primary/5 relative"
                   style={{ boxShadow: "0 0 20px hsl(330 100% 65% / 0.25)" }}
                 >
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Xuất phát</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Xuất phát từ</span>
                   <span className="text-xl font-black text-primary"
                     style={{ textShadow: "0 0 16px hsl(330 100% 65% / 0.8)" }}>
                     CON SỐ 0
