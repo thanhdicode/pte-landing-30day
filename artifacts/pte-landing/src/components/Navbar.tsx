@@ -1,7 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import pteLogo from '@assets/pte-logo-nobg.png';
-import { Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Menu, X, Phone, Copy, CheckCheck, MessageCircle } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+
+const PHONE = "0357930867";
 
 const navLinks = [
   { href: "#about", label: "Về Cô Thuỷ" },
@@ -13,14 +15,32 @@ const navLinks = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const popupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!popupOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
+        setPopupOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [popupOpen]);
+
+  const copyPhone = () => {
+    navigator.clipboard.writeText(PHONE);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <>
@@ -58,12 +78,10 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <div className="hidden md:flex items-center gap-4">
-            <motion.a
-              href="https://zalo.me/0357930867"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative px-5 py-2 rounded-full font-bold text-xs text-white whitespace-nowrap overflow-hidden"
+          <div className="hidden md:flex items-center gap-4 relative" ref={popupRef}>
+            <motion.button
+              onClick={() => setPopupOpen(v => !v)}
+              className="relative px-5 py-2 rounded-full font-bold text-xs text-white whitespace-nowrap overflow-hidden cursor-pointer"
               style={{
                 background: "linear-gradient(135deg, hsl(330 100% 60%), hsl(310 100% 55%))",
                 letterSpacing: "0.03em",
@@ -80,7 +98,64 @@ export default function Navbar() {
               whileTap={{ scale: 0.96 }}
             >
               Đăng ký ngay · Tư vấn miễn phí
-            </motion.a>
+            </motion.button>
+
+            {/* Phone popup */}
+            <AnimatePresence>
+              {popupOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                  transition={{ duration: 0.18 }}
+                  className="absolute top-[calc(100%+10px)] right-0 z-50 rounded-2xl p-4 w-64"
+                  style={{
+                    background: "hsl(222 47% 7%)",
+                    border: "1px solid hsl(330 100% 65% / 0.35)",
+                    boxShadow: "0 0 40px hsl(330 100% 65% / 0.2), 0 16px 32px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  {/* Top neon line */}
+                  <div className="absolute top-0 left-4 right-4 h-[1.5px] rounded-full"
+                    style={{ background: "linear-gradient(90deg, transparent, hsl(330 100% 65%), hsl(180 100% 60%), transparent)" }} />
+
+                  <p className="text-xs text-slate-500 font-mono tracking-widest mb-2">LIÊN HỆ TƯ VẤN</p>
+
+                  <div className="flex items-center gap-2 mb-3">
+                    <Phone className="w-4 h-4 text-primary flex-shrink-0"
+                      style={{ filter: "drop-shadow(0 0 6px hsl(330 100% 65%))" }} />
+                    <span className="text-lg font-extrabold text-white tracking-wider"
+                      style={{ textShadow: "0 0 14px hsl(330 100% 65% / 0.5)" }}>
+                      {PHONE}
+                    </span>
+                    <button onClick={copyPhone} className="ml-auto text-slate-400 hover:text-white transition-colors" title="Sao chép">
+                      {copied
+                        ? <CheckCheck className="w-4 h-4 text-green-400" />
+                        : <Copy className="w-4 h-4" />}
+                    </button>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <a
+                      href={`tel:${PHONE}`}
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full text-xs font-semibold text-white transition-all"
+                      style={{ background: "hsl(330 100% 60% / 0.25)", border: "1px solid hsl(330 100% 65% / 0.4)" }}
+                    >
+                      <Phone className="w-3.5 h-3.5" /> Gọi ngay
+                    </a>
+                    <a
+                      href={`https://zalo.me/${PHONE}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-full text-xs font-semibold text-cyan-300 transition-all"
+                      style={{ background: "hsl(180 100% 60% / 0.1)", border: "1px solid hsl(180 100% 60% / 0.35)" }}
+                    >
+                      <MessageCircle className="w-3.5 h-3.5" /> Zalo
+                    </a>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           <button
