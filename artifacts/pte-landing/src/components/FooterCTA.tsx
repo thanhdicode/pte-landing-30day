@@ -95,7 +95,7 @@ export default function FooterCTA() {
   return (
     <>
     <AnimatePresence>{modalOpen && <PaymentModal onClose={() => setModalOpen(false)} />}</AnimatePresence>
-    <section id="enroll" className="py-32 relative overflow-hidden bg-[#1C0B22] text-white text-center cyber-scanlines">
+    <section id="enroll" className="py-32 relative overflow-hidden bg-[#120A2E] text-white text-center cyber-scanlines">
 
       {/* Floating particles */}
       {particles.map(p => <Particle key={p.id} {...p} />)}
