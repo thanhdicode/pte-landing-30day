@@ -1,8 +1,7 @@
 import { ArrowRight, Play, Zap, Users, Clock, Award, Mic, BookOpen, Video } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import teacherWelcome from '@assets/teacher-welcome-nobg.png';
-import PaymentModal from "./PaymentModal";
-import { useState } from "react";
+import { CHECKOUT_URL } from "@/lib/links";
 
 const scores = [
   { value: "24+", label: "Beginner", glow: "hsl(185 100% 55%)" },
@@ -25,8 +24,6 @@ const particles = [
 ];
 
 export default function Hero() {
-  const [payOpen, setPayOpen] = useState(false);
-
   return (
     <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-[#120A2E]">
       {/* ── Background layers ── */}
@@ -255,8 +252,8 @@ export default function Hero() {
               className="flex flex-col gap-4"
             >
               <div className="flex flex-col sm:flex-row sm:items-center gap-x-5 gap-y-3">
-                <button
-                  onClick={() => setPayOpen(true)}
+                <a
+                  href={CHECKOUT_URL}
                   className="group relative inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-black text-base sm:text-lg text-white overflow-hidden transition-all hover:-translate-y-1 cursor-pointer"
                   style={{
                     background: "linear-gradient(135deg, hsl(330 100% 55%), hsl(330 100% 70%))",
@@ -268,7 +265,7 @@ export default function Hero() {
                   <span className="font-extrabold whitespace-nowrap">– 5.999.000₫</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                </button>
+                </a>
 
                 <div className="flex flex-col gap-1">
                   <span className="text-sm text-slate-400">
@@ -476,10 +473,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Payment QR modal */}
-      <AnimatePresence>
-        {payOpen && <PaymentModal onClose={() => setPayOpen(false)} />}
-      </AnimatePresence>
     </section>
   );
 }

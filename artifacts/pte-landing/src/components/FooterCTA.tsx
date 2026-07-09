@@ -1,7 +1,7 @@
-import { motion, animate, AnimatePresence } from "framer-motion";
+import { motion, animate } from "framer-motion";
 import { ArrowRight, Zap, Shield, Star } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import PaymentModal from "./PaymentModal";
+import { CHECKOUT_URL } from "@/lib/links";
 
 /* ── Floating particle ── */
 function Particle({ x, y, size, color, duration, delay }: {
@@ -91,10 +91,8 @@ const urgencyItems = [
 ];
 
 export default function FooterCTA() {
-  const [modalOpen, setModalOpen] = useState(false);
   return (
     <>
-    <AnimatePresence>{modalOpen && <PaymentModal onClose={() => setModalOpen(false)} />}</AnimatePresence>
     <section id="enroll" className="py-32 relative overflow-hidden bg-[#120A2E] text-white text-center cyber-scanlines">
 
       {/* Floating particles */}
@@ -271,8 +269,8 @@ export default function FooterCTA() {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
         >
-          <motion.button
-            onClick={() => setModalOpen(true)}
+          <motion.a
+            href={CHECKOUT_URL}
             className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-extrabold text-base whitespace-nowrap relative overflow-hidden group cursor-pointer"
             style={{
               background: "linear-gradient(135deg, hsl(330 100% 65%), hsl(310 100% 60%))",
@@ -293,7 +291,7 @@ export default function FooterCTA() {
             />
             <span className="relative z-10">Đăng ký ngay</span>
             <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-2 transition-transform" />
-          </motion.button>
+          </motion.a>
 
           <motion.a
             href="#roadmap"
