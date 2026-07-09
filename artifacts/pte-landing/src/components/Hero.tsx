@@ -1,4 +1,4 @@
-import { ArrowRight, Play, Zap, Users, Clock, Award, Mic, BookOpen } from "lucide-react";
+import { ArrowRight, Play, Zap, Users, Clock, Award, Mic, BookOpen, Video } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import teacherWelcome from '@assets/teacher-welcome-nobg.png';
 import PaymentModal from "./PaymentModal";
@@ -94,11 +94,18 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25, duration: 0.6 }}
-                className="flex items-center gap-3 mb-1"
+                className="flex items-center flex-wrap gap-3 mb-1"
               >
                 <span className="text-4xl drop-shadow-[0_0_16px_hsl(330,100%,65%)]">🚀</span>
                 <span className="text-slate-400 text-sm font-bold tracking-[0.25em] uppercase">
                   KHÓA ĐỒNG HÀNH
+                </span>
+                <span
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/40 text-cyan-300 text-xs font-bold tracking-wide"
+                  style={{ boxShadow: "0 0 14px hsl(180 100% 60% / 0.2)" }}
+                >
+                  <Video className="w-3.5 h-3.5" />
+                  Khoá học qua video
                 </span>
               </motion.div>
 
@@ -220,6 +227,24 @@ export default function Hero() {
               Lộ trình 30 ngày bám sát từng học viên — từ người chưa biết gì
               đến tự tin chinh phục chứng chỉ PTE cho{" "}
               <span className="text-white font-semibold">visa · định cư · tốt nghiệp</span>.
+            </motion.p>
+
+            {/* ── Format note — video course ── */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.85 }}
+              className="flex items-start gap-2 text-slate-400 text-sm lg:text-base max-w-xl -mt-4"
+            >
+              <Video
+                className="w-4 h-4 text-cyan-300 shrink-0 mt-1"
+                style={{ filter: "drop-shadow(0 0 6px hsl(180 100% 60% / 0.6))" }}
+              />
+              <span>
+                <span className="text-white font-semibold">Học qua video</span>, chủ động mọi lúc ·
+                xem lại không giới hạn — vẫn được cô Thuỷ{" "}
+                <span className="text-white font-semibold">chữa bài &amp; đồng hành 1-1</span>.
+              </span>
             </motion.p>
 
             {/* ── CTA buttons ── */}

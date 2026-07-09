@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, Sparkles, Target, ChevronRight, CheckCircle2, Trophy } from "lucide-react";
+import { Check, Sparkles, Target, ChevronRight, CheckCircle2, Trophy, Video, RotateCcw, PenLine } from "lucide-react";
 
 type PhaseItem = { text: string; sub?: string[] };
 type PhaseGroup = { heading?: string; cols?: number; items: PhaseItem[] };
@@ -167,7 +167,7 @@ export default function Roadmap() {
       <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <div className="inline-block px-4 py-1.5 bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 font-bold text-xs tracking-wider rounded-full mb-5 uppercase">
             Khoá đồng hành 30 ngày
           </div>
@@ -180,6 +180,56 @@ export default function Roadmap() {
             tinh gọn, thực chiến — mỗi ngày bạn đều biết chính xác cần học gì, làm gì. Không lan man.
           </p>
         </div>
+
+        {/* ── Cách học — định dạng khoá video ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5 }}
+          className="mb-16"
+        >
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <span className="h-px w-8 bg-gradient-to-r from-transparent to-cyan-400/60" />
+            <span className="text-cyan-300 text-xs font-bold uppercase tracking-widest">
+              Cách học qua video
+            </span>
+            <span className="h-px w-8 bg-gradient-to-l from-transparent to-cyan-400/60" />
+          </div>
+          <div className="grid sm:grid-cols-3 gap-4">
+            {[
+              {
+                icon: <Video className="w-5 h-5" />,
+                title: "Bài giảng video",
+                desc: "Học theo lộ trình, chủ động mọi lúc mọi nơi.",
+              },
+              {
+                icon: <RotateCcw className="w-5 h-5" />,
+                title: "Xem lại không giới hạn",
+                desc: "Học theo tốc độ của bạn, ôn lại bao nhiêu lần tuỳ thích.",
+              },
+              {
+                icon: <PenLine className="w-5 h-5" />,
+                title: "Chữa bài & đồng hành 1-1",
+                desc: "Nộp bài, nhận phản hồi trực tiếp từ team cô Thuỷ.",
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="flex flex-col items-center text-center gap-2 bg-slate-900/70 border border-primary/20 rounded-2xl p-5 neon-border"
+              >
+                <span
+                  className="flex items-center justify-center w-11 h-11 rounded-xl bg-primary/10 border border-primary/30 text-primary mb-1"
+                  style={{ boxShadow: "0 0 16px hsl(330 100% 65% / 0.25)" }}
+                >
+                  {item.icon}
+                </span>
+                <span className="text-white font-bold">{item.title}</span>
+                <span className="text-slate-400 text-sm leading-snug">{item.desc}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
 
         <div className="relative border-l-2 border-primary/60 ml-4 md:ml-0 md:space-y-16">
           <div
