@@ -11,4 +11,4 @@ Passing a hash path like `"/#about"` does **not** help: it's a client-rendered S
 
 **Why:** wasted a screenshot trying to confirm an edit in the About section; it just re-showed the Hero.
 
-**How to apply:** don't rely on `Screenshot` to visually confirm edits below the hero on this landing page. Instead: trust HMR compile success in the workflow/browser logs for validity, eyeball the JSX, or render the specific component in isolation via the mockup-sandbox if a real visual check is needed. Let the user look at the live preview for final sign-off.
+**How to apply:** don't rely on `Screenshot` to visually confirm edits below the hero on this landing page. For a quick *real* visual check, temporarily reorder the target section above `<Hero />` in `App.tsx` (so it renders at the top, in-frame), screenshot `"/"`, then revert the reorder — this worked cleanly for verifying the TeacherIntro card and is faster than the mockup-sandbox. Otherwise: trust HMR compile success in the workflow/browser logs for validity, eyeball the JSX, or render the component in isolation via the mockup-sandbox. Let the user look at the live preview for final sign-off.

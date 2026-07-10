@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Award, BookOpen, GraduationCap, Heart, Quote } from "lucide-react";
-import teacherNoBg from '@assets/teacher-nobg.png';
+import teacherNoBg from '@assets/teacher-formal-nobg.png';
 
 export default function TeacherIntro() {
   const stats = [
