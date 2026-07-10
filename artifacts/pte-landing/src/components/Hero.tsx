@@ -1,6 +1,6 @@
 import { ArrowRight, Play, Zap, Users, Clock, Award, Mic, BookOpen, Video } from "lucide-react";
 import { motion } from "framer-motion";
-import teacherWelcome from '@assets/teacher-welcome-nobg.png';
+import teacherWelcome from '@assets/teacher-welcome-formal-nobg.png';
 import { CHECKOUT_URL } from "@/lib/links";
 
 const scores = [
