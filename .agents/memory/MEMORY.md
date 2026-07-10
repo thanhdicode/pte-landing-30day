@@ -4,4 +4,4 @@
 - [Gradient-text clip bar](css-gradient-text-clip.md) — `background-clip:text` renders as a solid bar if the element also has a `filter` (e.g. drop-shadow); move/remove the filter.
 - [Non-ASCII upload filenames](nonascii-upload-filenames.md) — accented/Vietnamese uploads may be NFD on disk; don't hardcode the name in Python — glob by the ASCII timestamp suffix.
 - [PTE landing URLs & deployments](pte-landing-urls.md) — live preview vs stale publish (thuys-30-day) vs separate external checkout (landing-page-sync); re-Publish to sync, don't assume lost content.
-- [Cyberpunk portrait treatment](cyberpunk-portrait-treatment.md) — pte-landing teacher photos: rembg cutout + neon rim (cyan L/pink R) + bloom/scanlines + smoothstep alpha fade to dissolve hands/nails; keep face ungraded.
+- [Cyberpunk portrait treatment](cyberpunk-portrait-treatment.md) — pte-landing teacher photos: rembg cutout + neon rim (cyan L/pink R) + bloom/scanlines + LIGHT bottom fade; keep hands/nails clear & face sharp unless heavy dissolve requested.

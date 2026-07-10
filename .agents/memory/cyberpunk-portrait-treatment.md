@@ -11,8 +11,8 @@ The pte-landing theme is dark neon cyberpunk (pink/cyan HUD). Teacher photos are
 - rembg remove bg → crop to alpha bbox → pad canvas (~70px) so the glow can breathe.
 - Neon rim: Gaussian-blur the alpha silhouette, colorize with a horizontal cyan→pink gradient (cyan left, pink right = theme palette); use it as a soft outer aura + an inner edge (erosion via `MinFilter`, screen-blend).
 - Subtle bloom (screen-blend a blurred bright-mask) + faint scanlines (dim every 3rd row).
-- Ethereal hand/nail fade: smoothstep alpha ramp — vertical from ~0.60·H → bottom, plus (for an outstretched hand) a horizontal ramp over the far edge — dissolves hands/fingernails into mist ("mờ ảo").
+- Bottom fade: smoothstep alpha ramp, **vertical only**, starting LOW (~0.80·H → bottom) for a light blend. Keep hands/nails **clear by default** — an early start (~0.60) and/or a horizontal fade into an outstretched hand over-dissolves them. The card's own bottom gradient overlay already hides ~bottom 20%, so a gentle baked fade suffices. Only dissolve a hand fully into neon mist if the user explicitly asks.
 
-**Why:** user asked for a cyberpunk look on the photo itself and for the fingernails to fade dreamily; this deterministic pipeline matches the site palette and the card's existing bottom fade.
+**Why:** user wanted the cyberpunk look on the photo, but after seeing a strong dissolve said the hands were too faded ("tay hơi mờ, cho rõ hơn... chỉ cần mờ nhẹ, giữ mặt nét") — so default to a LIGHT fade with clear hands and a sharp face; this deterministic pipeline matches the site palette and the card's existing bottom overlay.
 
 **How to apply / gotcha:** keep the **face essentially ungraded** (only a tiny cool/contrast tweak) — heavy color-tinting makes skin look sickly; the cyberpunk feel must come from rim-light + bloom + dark background, not from recoloring the face. Save as a NEW filename (don't overwrite) for reversibility, then repoint the import. Verify in the real Hero card via a `"/"` screenshot (Hero is section 1, so it's directly capturable — unlike lower sections behind the min-h-screen hero).
