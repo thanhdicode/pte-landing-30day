@@ -156,29 +156,22 @@ const phases: Phase[] = [
       {
         heading: "Nội dung chính",
         items: [
-          { text: "Thực hiện bài thi thử mô phỏng theo chuẩn Pearson." },
-          { text: "Được review chi tiết từng kỹ năng và từng dạng bài." },
-          { text: "Xác định điểm mạnh, điểm yếu và các lỗi còn tồn tại." },
-          {
-            text: "Xây dựng chiến lược làm bài cá nhân theo mục tiêu:",
-            sub: ["PTE 24+", "PTE 50+", "PTE 65+", "PTE 79+"],
-          },
-          { text: "Tối ưu chiến lược phân bổ thời gian cho từng phần thi." },
-          {
-            text: "Hướng dẫn những lưu ý quan trọng trước ngày thi:",
-            sub: ["Đặt và điều chỉnh micro.", "Quản lý tâm lý phòng thi.", "Các lỗi thường gặp khiến mất điểm."],
-          },
-          { text: "Hoàn thiện phương pháp tự học và tiếp tục nâng điểm sau khóa học." },
+          { text: "Thực hiện bài Mock Test mô phỏng theo chuẩn Pearson." },
+          { text: "Nhận review chi tiết từng kỹ năng, từng dạng bài từ cô Thuỷ — xác định điểm mạnh, điểm yếu và các lỗi còn tồn tại." },
+          { text: "Xây dựng chiến lược làm bài cá nhân theo mục tiêu 24+ / 50+ / 65+ / 79+ — tối ưu phân bổ thời gian cho từng phần thi." },
+          { text: "Những lưu ý quan trọng trước ngày thi: đặt & điều chỉnh micro · quản lý tâm lý phòng thi · các lỗi thường gặp khiến mất điểm." },
         ],
       },
     ],
-    results: [
-      "Hiểu rõ trình độ hiện tại và khả năng đạt mục tiêu điểm số.",
-      "Biết cần tập trung cải thiện dạng bài nào trước ngày thi.",
-      "Có chiến lược làm bài phù hợp với mục tiêu PTE của bản thân.",
-      "Tự tin bước vào kỳ thi thật với tâm lý và chiến lược rõ ràng.",
-      "Có thể tiếp tục tự học, tự luyện và nâng điểm ngay cả sau khi kết thúc khóa học.",
+    details: [
+      { text: "Hoàn thiện phương pháp tự học và tiếp tục nâng điểm sau khoá học." },
     ],
+    results: [
+      "Biết chính xác mình đang ở đâu và cần dồn lực vào dạng nào những ngày cuối.",
+      "Tự tin bước vào phòng thi với chiến lược và tâm lý rõ ràng.",
+      "Tự học, tự luyện và tự nâng điểm được cả sau khi khoá kết thúc.",
+    ],
+    resultMilestone: "Sẵn sàng chinh phục kỳ thi thật",
   },
 ];
 
