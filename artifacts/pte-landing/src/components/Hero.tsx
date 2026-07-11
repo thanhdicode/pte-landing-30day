@@ -12,6 +12,7 @@ const MUTED = "#6e3a52";      // chevrons + neutral pill borders
 
 // Score journey — 24+ first → 79+ last
 const journey = [
+  { value: "CON SỐ 0", label: "XUẤT PHÁT", kind: "start" as const },
   { value: "24+", label: "Beginner", kind: "mid" as const },
   { value: "36+", label: "Elementary", kind: "mid" as const },
   { value: "50+", label: "Intermediate", kind: "mid" as const },
@@ -41,6 +42,27 @@ const panelParticles = [
 
 function JourneyPill({ p }: { p: (typeof journey)[number] }) {
   const isEnd = p.kind === "end";
+  const isStart = p.kind === "start";
+
+  if (isStart) {
+    return (
+      <div
+        className="flex flex-col items-center px-3 py-1.5 rounded-xl border"
+        style={{ borderColor: "rgba(255,77,166,0.45)", background: "rgba(255,77,166,0.12)" }}
+      >
+        <span className="text-[9px] font-semibold uppercase tracking-wider" style={{ color: GRAY }}>
+          {p.label}
+        </span>
+        <span
+          className="font-black leading-none whitespace-nowrap mt-1"
+          style={{ color: PINK_TEXT, fontSize: "1.05rem", textShadow: `0 0 14px ${PINK_TEXT}66` }}
+        >
+          {p.value}
+        </span>
+      </div>
+    );
+  }
+
   const valColor = isEnd ? GOLD : "#ffffff";
   return (
     <div
@@ -213,30 +235,30 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="text-base lg:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0"
-              style={{ color: GRAY }}
+              className="text-base lg:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0 lg:border-l-2 lg:pl-4"
+              style={{ color: GRAY, borderColor: PINK }}
             >
-              Từ mất gốc đến tự tin chinh phục mục tiêu PTE — cho{" "}
-              <span className="text-white font-semibold">visa · định cư · du học · tốt&nbsp;nghiệp</span>.
+              Từ mất gốc đến tự tin chinh phục mục tiêu PTE —<br />
+              cho <span className="text-white font-semibold">visa · định cư · du học · tốt&nbsp;nghiệp</span>.
             </motion.p>
 
-            {/* ── Learning-method lines ── */}
+            {/* ── Learning-method bullets (◆ diamond list) ── */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.85 }}
-              className="flex flex-col gap-2.5 max-w-2xl -mt-2 mx-auto lg:mx-0"
+              className="flex flex-col gap-3 w-full max-w-2xl -mt-2 mx-auto lg:mx-0 items-start text-left"
             >
-              <p className="text-base lg:text-lg leading-relaxed" style={{ color: GRAY }}>
-                🎥 <span className="text-white font-semibold">Học qua video theo lộ trình mỗi ngày</span>
-                <span style={{ color: MUTED }}> · </span>
-                📞 <span className="text-white font-semibold">1 buổi Zoom/tuần cùng cô Thuỷ</span>
-                <span style={{ color: MUTED }}> · </span>
-                ✍️ <span className="text-white font-semibold">Chữa bài 1-1</span>
-              </p>
-              <p className="text-base lg:text-lg leading-relaxed" style={{ color: GRAY }}>
-                📅 <span className="text-white font-semibold">Học 30 ngày — truy cập trọn 100 ngày.</span> Xem lại không giới hạn, ôn đến tận ngày thi.
-              </p>
+              {[
+                { dc: PINK_TEXT, node: (<><span className="text-white font-semibold">Học qua video</span> theo lộ trình mỗi ngày</>) },
+                { dc: PINK_TEXT, node: (<><span className="text-white font-semibold">1 buổi Zoom/tuần cùng cô Thuỷ</span> — chữa bài 1-1</>) },
+                { dc: GOLD, node: (<><span className="font-semibold" style={{ color: GOLD }}>Học 30 ngày — truy cập trọn 100 ngày</span>, ôn đến tận ngày thi</>) },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <span className="text-sm leading-none shrink-0 mt-1.5" style={{ color: item.dc, textShadow: `0 0 10px ${item.dc}` }}>◆</span>
+                  <p className="text-base lg:text-lg leading-relaxed" style={{ color: GRAY }}>{item.node}</p>
+                </div>
+              ))}
             </motion.div>
 
             {/* ── CTA block ── */}
@@ -269,7 +291,7 @@ export default function Hero() {
                     <span className="line-through decoration-2" style={{ color: "rgba(169,156,192,0.55)", textDecorationColor: "rgba(255,77,166,0.7)" }}>10.500.000đ</span>
                   </span>
                   <span className="text-sm" style={{ color: GRAY }}>
-                    Tiết kiệm <span className="text-white font-semibold">4.501.000đ (43%)</span>
+                    Tiết kiệm <span className="text-white font-bold">4.501.000đ (43%)</span>
                   </span>
                 </div>
               </div>
@@ -325,7 +347,7 @@ export default function Hero() {
             <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 rounded-br-3xl pointer-events-none z-20"
               style={{ borderColor: "rgba(255,77,166,0.5)", boxShadow: "0 0 16px rgba(255,77,166,0.28)" }} />
 
-            <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden neon-border cyber-corner"
+            <div className="relative w-full h-[320px] lg:h-[460px] rounded-[2rem] overflow-hidden neon-border cyber-corner"
               style={{ background: "#0d0722", border: "1px solid rgba(255,77,166,0.25)" }}>
               {/* grid */}
               <div className="absolute inset-0 cyber-grid-bg opacity-60 pointer-events-none" />
@@ -360,25 +382,24 @@ export default function Hero() {
                 transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}
               />
 
-              {/* portrait */}
+              {/* portrait — tight crop, fills width */}
               <img
                 src={teacherCyber}
                 alt="Cô Nguyễn Thị Thuỷ — chuyên gia luyện thi PTE"
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[97%] w-auto object-contain object-bottom z-10"
+                className="absolute inset-0 w-full h-full object-cover object-top z-10"
                 style={{ filter: "drop-shadow(0 10px 34px rgba(255,77,166,0.35))" }}
               />
 
-              {/* name plate */}
-              <div className="absolute inset-x-0 bottom-0 z-20 p-5 pt-16 pointer-events-none"
-                style={{ background: "linear-gradient(to top, #0d0722 12%, rgba(13,7,34,0.7) 55%, transparent)" }}>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="h-[2px] w-6 rounded-full" style={{ background: PINK, boxShadow: "0 0 8px rgba(255,77,166,0.8)" }} />
-                  <span className="text-[10px] font-mono tracking-[0.2em] uppercase" style={{ color: PINK_TEXT }}>Giảng viên</span>
-                </div>
-                <p className="text-xl font-extrabold text-white leading-tight" style={{ textShadow: "0 0 20px rgba(255,77,166,0.4)" }}>
-                  Cô Nguyễn Thị Thuỷ
-                </p>
-              </div>
+            </div>
+
+            {/* name below photo */}
+            <div className="mt-6 text-center lg:text-left">
+              <span className="text-[11px] font-mono font-semibold tracking-[0.25em] uppercase" style={{ color: PINK_TEXT }}>
+                — Giảng viên
+              </span>
+              <p className="text-2xl font-extrabold text-white leading-tight mt-1" style={{ textShadow: "0 0 20px rgba(255,77,166,0.4)" }}>
+                Cô Nguyễn Thị Thuỷ
+              </p>
             </div>
           </motion.div>
         </div>
