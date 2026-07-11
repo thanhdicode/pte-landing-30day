@@ -1,4 +1,22 @@
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import type { ReactNode } from "react";
+
+const PINK = "#D4537E";
+const PINK_TEXT = "#ED93B1";
+
+// Render **bold** segments as white emphasis; other text stays unchanged.
+function renderRich(text: string): ReactNode {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
+    part.startsWith("**") && part.endsWith("**") ? (
+      <strong key={i} className="text-white font-semibold">
+        {part.slice(2, -2)}
+      </strong>
+    ) : (
+      <span key={i}>{part}</span>
+    ),
+  );
+}
 
 /* ── Custom illustrated SVG icons ── */
 const IconLostFoundation = () => (
@@ -114,8 +132,8 @@ const personas = [
     badgeColor: "from-orange-500/20 to-red-500/10 border-orange-500/30 text-orange-400",
     glowColor: "hsl(25 100% 60%)",
     title: "Điểm số\nchưa bứt phá",
-    desc: "Đã tự học hoặc học nhiều nơi nhưng điểm vẫn chưa đạt mục tiêu. Bạn cần biết mình mất điểm ở đâu và cách cải thiện hiệu quả.",
-    tags: ["Điểm chững", "Chưa đạt mục tiêu", "Cần chiến lược"],
+    desc: "Đã tự học, học nhiều nơi — thậm chí **đã thi 1–2 lần** nhưng vẫn thiếu vài điểm. Bạn cần biết chính xác mình mất điểm ở đâu để **lần thi tới là lần cuối**.",
+    tags: ["Điểm chững", "Thi lại", "Cần chiến lược"],
   },
   {
     id: "confused",
@@ -162,8 +180,9 @@ export default function WhoIsThisFor() {
             <span className="text-primary glitch-text" data-text="dành cho ai?">dành cho ai?</span>
           </h2>
           <p className="text-lg text-slate-400">
-            Nếu bạn đang ở trong một trong những tình trạng dưới đây,<br className="hidden md:block" />
-            khoá đồng hành 30 ngày chính là giải pháp được thiết kế riêng cho bạn.
+            Hầu hết học viên của cô Thuỷ bắt đầu từ một trong 4 tình huống này.{" "}
+            <br className="hidden md:block" />
+            Nếu bạn thấy mình ở đây — khoá đồng hành 30 ngày được thiết kế riêng cho bạn.
           </p>
         </motion.div>
 
@@ -224,7 +243,7 @@ export default function WhoIsThisFor() {
 
                   {/* Description */}
                   <p className="text-slate-400 text-sm leading-relaxed">
-                    {persona.desc}
+                    {renderRich(persona.desc)}
                   </p>
                 </div>
               </div>
@@ -244,20 +263,36 @@ export default function WhoIsThisFor() {
           ))}
         </div>
 
-        {/* Bottom CTA hint */}
+        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="text-center mt-12"
+          className="flex flex-col items-center gap-5 mt-12"
         >
-          <p className="text-slate-500 text-sm">
-            Bạn thấy mình trong những trường hợp trên?{" "}
-            <a href="#roadmap" className="text-primary font-semibold hover:underline underline-offset-2">
-              Xem lộ trình 30 ngày →
-            </a>
+          <p className="text-slate-300 text-base md:text-lg text-center max-w-xl">
+            Dù bạn ở tình huống nào — lộ trình 30 ngày đều được thiết kế cho bạn.
           </p>
+          <a
+            href="#roadmap"
+            onClick={(e) => {
+              const target = document.getElementById("roadmap");
+              if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+            className="group relative inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-black text-base sm:text-lg text-white overflow-hidden transition-all hover:-translate-y-1 cursor-pointer w-full sm:w-auto"
+            style={{
+              background: `linear-gradient(135deg, ${PINK}, ${PINK_TEXT})`,
+              boxShadow: "0 0 0 1px rgba(212,83,126,0.5), 0 8px 32px rgba(212,83,126,0.4)",
+            }}
+          >
+            <span>Xem lộ trình 30 ngày</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+          </a>
         </motion.div>
 
       </div>
