@@ -11,6 +11,7 @@ import TeacherIntro from './components/TeacherIntro';
 import WhoIsThisFor from './components/WhoIsThisFor';
 import Roadmap from './components/Roadmap';
 import TargetScores from './components/TargetScores';
+import StudentResults from './components/StudentResults';
 import FooterCTA from './components/FooterCTA';
 import Footer from './components/Footer';
 import FloatingCTA from './components/FloatingCTA';
@@ -27,6 +28,7 @@ function LandingPage() {
         <WhoIsThisFor />
         <Roadmap />
         <TargetScores />
+        <StudentResults />
         <FooterCTA />
       </main>
       <Footer />
