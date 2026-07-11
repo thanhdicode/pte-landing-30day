@@ -242,25 +242,6 @@ export default function Hero() {
               cho <span className="text-white font-semibold">visa · định cư · du học · tốt&nbsp;nghiệp</span>.
             </motion.p>
 
-            {/* ── Learning-method bullets (◆ diamond list) ── */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.85 }}
-              className="flex flex-col gap-3 w-full max-w-2xl -mt-2 mx-auto lg:mx-0 items-start text-left"
-            >
-              {[
-                { dc: PINK_TEXT, node: (<><span className="text-white font-semibold">Học qua video</span> theo lộ trình mỗi ngày</>) },
-                { dc: PINK_TEXT, node: (<><span className="text-white font-semibold">1 buổi Zoom/tuần cùng cô Thuỷ</span> — chữa bài 1-1</>) },
-                { dc: GOLD, node: (<><span className="font-semibold" style={{ color: GOLD }}>Học 30 ngày — truy cập trọn 100 ngày</span>, ôn đến tận ngày thi</>) },
-              ].map((item, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <span className="text-sm leading-none shrink-0 mt-1.5" style={{ color: item.dc, textShadow: `0 0 10px ${item.dc}` }}>◆</span>
-                  <p className="text-base lg:text-lg leading-relaxed" style={{ color: GRAY }}>{item.node}</p>
-                </div>
-              ))}
-            </motion.div>
-
             {/* ── CTA block ── */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -299,18 +280,32 @@ export default function Hero() {
               {/* Gift line (gold) */}
               <p className="flex items-start justify-center lg:justify-start gap-1.5 text-sm font-medium" style={{ color: GOLD }}>
                 <span className="shrink-0">🎁</span>
-                <span>Đăng ký trong tháng 7 — tặng quyền truy cập web chữa bộ tủ PTE Talents (trị giá 500.000đ)</span>
+                <span>Đăng ký trong tháng 7 — tặng quyền truy cập web chữa bộ tủ PTE Talents, dùng không giới hạn 90 ngày (trị giá 2.999.000đ)</span>
               </p>
 
-              {/* Secondary button */}
-              <a
+              {/* Secondary button — cyberpunk neon with blinking glow */}
+              <motion.a
                 href="#roadmap"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-base border transition-all self-center lg:self-start hover:text-white"
-                style={{ color: GRAY, borderColor: "rgba(169,156,192,0.35)" }}
+                className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-base text-white overflow-hidden self-center lg:self-start cursor-pointer"
+                style={{
+                  background: "linear-gradient(135deg, rgba(255,77,166,0.14), rgba(255,77,166,0.03))",
+                  border: `1.5px solid ${PINK}`,
+                  textShadow: "0 0 8px rgba(255,77,166,0.45)",
+                }}
+                animate={{
+                  boxShadow: [
+                    "0 0 5px rgba(255,77,166,0.3), inset 0 0 6px rgba(255,77,166,0.10)",
+                    "0 0 28px rgba(255,77,166,0.85), inset 0 0 16px rgba(255,77,166,0.32)",
+                    "0 0 5px rgba(255,77,166,0.3), inset 0 0 6px rgba(255,77,166,0.10)",
+                  ],
+                }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                whileHover={{ scale: 1.04 }}
               >
-                <Play className="w-4 h-4" style={{ color: PINK_TEXT }} />
-                Xem lộ trình 30 ngày
-              </a>
+                <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                <Play className="w-4 h-4 relative" style={{ color: PINK_TEXT }} />
+                <span className="relative">Xem lộ trình 30 ngày</span>
+              </motion.a>
             </motion.div>
 
             {/* ── Trust bar ── */}
