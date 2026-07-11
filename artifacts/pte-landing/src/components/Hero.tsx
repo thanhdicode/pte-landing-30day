@@ -1,10 +1,11 @@
 import { ArrowRight, Play, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import { CHECKOUT_URL } from "@/lib/links";
+import teacherCyber from "@assets/teacher-hero-cyber.png";
 
-// ── 2-color accent system ──
-const PINK = "#D4537E";       // primary buttons / strong pink
-const PINK_TEXT = "#ED93B1";  // pink text accents
+// ── 2-color accent system (unified with sections below) ──
+const PINK = "#FF4DA6";       // primary buttons / strong pink  (hsl 330 100% 65%)
+const PINK_TEXT = "#FF87C7";  // pink text accents
 const GOLD = "#FAC775";       // value / achievement only
 const GRAY = "#a99cc0";       // regular body text
 const MUTED = "#6e3a52";      // chevrons + neutral pill borders
@@ -31,21 +32,29 @@ const particles = [
   { left: "67%", top: "14%", size: 4, color: PINK_TEXT, dur: 11, delay: 1.8 },
 ];
 
+// Particles inside the portrait panel
+const panelParticles = [
+  { left: "16%", top: "24%", size: 4, color: PINK, dur: 6, delay: 0 },
+  { left: "80%", top: "36%", size: 5, color: PINK_TEXT, dur: 7.5, delay: 1 },
+  { left: "24%", top: "64%", size: 4, color: PINK, dur: 8, delay: 0.6 },
+  { left: "72%", top: "70%", size: 3, color: PINK_TEXT, dur: 9, delay: 1.8 },
+];
+
 function JourneyPill({ p }: { p: (typeof journey)[number] }) {
   const isStart = p.kind === "start";
   const isEnd = p.kind === "end";
   const valColor = isStart ? PINK_TEXT : isEnd ? GOLD : "#ffffff";
   return (
     <div
-      className="flex flex-col items-center px-3.5 py-1.5 rounded-xl border"
+      className="flex flex-col items-center px-3 py-1.5 rounded-xl border"
       style={{
-        borderColor: isStart ? "rgba(212,83,126,0.4)" : isEnd ? "rgba(250,199,117,0.4)" : MUTED,
-        background: isStart ? "rgba(212,83,126,0.10)" : isEnd ? "rgba(250,199,117,0.10)" : "transparent",
+        borderColor: isStart ? "rgba(255,77,166,0.4)" : isEnd ? "rgba(250,199,117,0.4)" : MUTED,
+        background: isStart ? "rgba(255,77,166,0.10)" : isEnd ? "rgba(250,199,117,0.10)" : "transparent",
       }}
     >
       <span
         className="font-black leading-none whitespace-nowrap"
-        style={{ color: valColor, fontSize: isStart ? "0.9rem" : "1.15rem", textShadow: isStart || isEnd ? `0 0 14px ${valColor}66` : "none" }}
+        style={{ color: valColor, fontSize: isStart ? "0.85rem" : "1.05rem", textShadow: isStart || isEnd ? `0 0 14px ${valColor}66` : "none" }}
       >
         {p.value}
       </span>
@@ -61,16 +70,16 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-[#120A2E]">
       {/* ── Background layers ── */}
       <div className="absolute inset-0 cyber-grid-bg opacity-40 pointer-events-none" />
-      {/* Radial glow blobs — gentle breathing (pink + gold) */}
+      {/* Radial glow blobs — gentle breathing (pink) */}
       <motion.div
         className="absolute top-1/4 left-1/3 w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none"
-        style={{ background: "rgba(212,83,126,0.10)" }}
+        style={{ background: "rgba(255,77,166,0.10)" }}
         animate={{ scale: [1, 1.18, 1], opacity: [0.55, 1, 0.55] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         className="absolute bottom-1/4 right-0 w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none"
-        style={{ background: "rgba(212,83,126,0.08)" }}
+        style={{ background: "rgba(255,77,166,0.08)" }}
         animate={{ scale: [1, 1.22, 1], opacity: [0.45, 0.9, 0.45] }}
         transition={{ duration: 10, delay: 1, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -99,28 +108,28 @@ export default function Hero() {
         style={{ background: `linear-gradient(90deg, transparent, ${PINK}b3, transparent)` }}
         initial={{ top: "-2px" }}
         animate={{ top: "110%" }}
-        transition={{ duration: 3, delay: 0.8, ease: "linear" }}
+        transition={{ duration: 6, delay: 0.8, repeat: Infinity, ease: "linear" }}
       />
-      {/* HUD corner brackets (pink + gold) */}
+      {/* HUD corner brackets (pink) */}
       <div className="absolute top-24 left-6 w-12 h-12 border-t-2 border-l-2"
-        style={{ borderColor: "rgba(212,83,126,0.6)", boxShadow: "0 0 12px rgba(212,83,126,0.4)" }} />
+        style={{ borderColor: "rgba(255,77,166,0.6)", boxShadow: "0 0 12px rgba(255,77,166,0.4)" }} />
       <div className="absolute top-24 right-6 w-12 h-12 border-t-2 border-r-2"
-        style={{ borderColor: "rgba(212,83,126,0.5)", boxShadow: "0 0 12px rgba(212,83,126,0.3)" }} />
-      <div className="absolute bottom-6 left-6 w-12 h-12 border-b-2 border-l-2" style={{ borderColor: "rgba(212,83,126,0.4)" }} />
-      <div className="absolute bottom-6 right-6 w-12 h-12 border-b-2 border-r-2" style={{ borderColor: "rgba(212,83,126,0.4)" }} />
+        style={{ borderColor: "rgba(255,77,166,0.5)", boxShadow: "0 0 12px rgba(255,77,166,0.3)" }} />
+      <div className="absolute bottom-6 left-6 w-12 h-12 border-b-2 border-l-2" style={{ borderColor: "rgba(255,77,166,0.4)" }} />
+      <div className="absolute bottom-6 right-6 w-12 h-12 border-b-2 border-r-2" style={{ borderColor: "rgba(255,77,166,0.4)" }} />
       {/* ── Top neon line ── */}
       <div className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
         style={{ background: `linear-gradient(90deg, transparent, ${PINK}, ${PINK_TEXT}, transparent)`, opacity: 0.75 }} />
 
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-        <div className="flex justify-center">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-8 items-center">
 
           {/* ══ LEFT — course title block ══ */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="flex flex-col gap-7 items-center text-center max-w-4xl"
+            className="flex flex-col gap-6 items-center text-center lg:items-start lg:text-left max-w-2xl mx-auto lg:mx-0"
           >
             {/* ── Main title ── */}
             <div className="flex flex-col gap-1">
@@ -129,10 +138,10 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25, duration: 0.6 }}
-                className="flex items-center justify-center flex-wrap gap-3 mb-1"
+                className="flex items-center justify-center lg:justify-start flex-wrap gap-3 mb-1"
               >
                 <span className="inline-flex items-center gap-2">
-                  <span className="text-3xl" style={{ filter: "drop-shadow(0 0 16px rgba(212,83,126,0.7))" }}>🚀</span>
+                  <span className="text-3xl" style={{ filter: "drop-shadow(0 0 16px rgba(255,77,166,0.7))" }}>🚀</span>
                   <span className="text-sm font-bold tracking-[0.25em] uppercase" style={{ color: PINK_TEXT }}>
                     KHOÁ ĐỒNG HÀNH
                   </span>
@@ -153,12 +162,12 @@ export default function Hero() {
                 className="relative"
               >
                 <motion.h1
-                  className="text-[5.5rem] lg:text-[7rem] xl:text-[8rem] font-black leading-none tracking-tight text-white"
+                  className="text-[3.5rem] sm:text-[5rem] lg:text-[4.5rem] xl:text-[5.5rem] font-black leading-none tracking-tight text-white"
                   animate={{
                     textShadow: [
-                      "0 0 60px rgba(212,83,126,0.45)",
-                      "0 0 90px rgba(212,83,126,0.8)",
-                      "0 0 60px rgba(212,83,126,0.45)",
+                      "0 0 60px rgba(255,77,166,0.45)",
+                      "0 0 90px rgba(255,77,166,0.8)",
+                      "0 0 60px rgba(255,77,166,0.45)",
                     ],
                   }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -166,8 +175,8 @@ export default function Hero() {
                   30 <span className="font-thin text-primary-foreground">NGÀY</span>
                 </motion.h1>
                 {/* pink underline bar */}
-                <div className="h-[3px] w-3/4 mt-1 mx-auto"
-                  style={{ background: `linear-gradient(90deg, transparent, ${PINK}, transparent)`, boxShadow: "0 0 10px rgba(212,83,126,0.6)" }} />
+                <div className="h-[3px] w-3/4 mt-1 mx-auto lg:mx-0"
+                  style={{ background: `linear-gradient(90deg, transparent, ${PINK}, transparent)`, boxShadow: "0 0 10px rgba(255,77,166,0.6)" }} />
               </motion.div>
 
               {/* Row 3: "CHINH PHỤC MỤC TIÊU PTE" — only PTE pink */}
@@ -177,14 +186,14 @@ export default function Hero() {
                 transition={{ delay: 0.45, duration: 0.6 }}
                 className="mt-1"
               >
-                <h2 className="text-[1.75rem] lg:text-[2.4rem] xl:text-[2.9rem] font-extrabold leading-[1.15] tracking-tight flex flex-wrap justify-center items-baseline gap-x-3.5">
+                <h2 className="text-[1.5rem] sm:text-[2rem] lg:text-[1.95rem] xl:text-[2.4rem] font-extrabold leading-[1.15] tracking-tight flex flex-wrap justify-center lg:justify-start items-baseline gap-x-3">
                   <span className="text-white/95">CHINH PHỤC MỤC TIÊU</span>
                   <span className="relative inline-block">
-                    <span className="font-black" style={{ color: PINK_TEXT, filter: "drop-shadow(0 0 22px rgba(212,83,126,0.55))" }}>
+                    <span className="font-black" style={{ color: PINK_TEXT, filter: "drop-shadow(0 0 22px rgba(255,77,166,0.55))" }}>
                       PTE
                     </span>
                     <span className="absolute -bottom-1.5 left-0 h-[3px] w-full rounded-full"
-                      style={{ background: PINK, boxShadow: "0 0 10px rgba(212,83,126,0.75)" }} />
+                      style={{ background: PINK, boxShadow: "0 0 10px rgba(255,77,166,0.75)" }} />
                   </span>
                 </h2>
               </motion.div>
@@ -194,7 +203,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.55, duration: 0.6 }}
-                className="flex flex-wrap justify-center items-center gap-x-1.5 gap-y-2.5 mt-3"
+                className="flex flex-wrap justify-center lg:justify-start items-center gap-x-1.5 gap-y-2.5 mt-3"
               >
                 {journey.map((p, i) => (
                   <div key={p.value} className="flex items-center gap-x-1.5">
@@ -207,12 +216,12 @@ export default function Hero() {
               </motion.div>
             </div>
 
-            {/* ── Subheadline (left pink border) ── */}
+            {/* ── Subheadline ── */}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="text-base lg:text-lg leading-relaxed max-w-2xl mx-auto"
+              className="text-base lg:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0"
               style={{ color: GRAY }}
             >
               Từ mất gốc đến tự tin chinh phục mục tiêu PTE — cho{" "}
@@ -224,7 +233,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.85 }}
-              className="flex flex-col gap-2 max-w-xl -mt-2 mx-auto"
+              className="flex flex-col gap-2 max-w-xl -mt-2 mx-auto lg:mx-0"
             >
               <p className="text-sm lg:text-[15px] leading-relaxed" style={{ color: GRAY }}>
                 🎥 <span className="text-white font-semibold">Học qua video theo lộ trình mỗi ngày</span>
@@ -243,16 +252,16 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
-              className="flex flex-col gap-4 items-center"
+              className="flex flex-col gap-4 items-center lg:items-start"
             >
               {/* CTA row: button + price */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-center gap-x-5 gap-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-center lg:justify-start gap-x-5 gap-y-3">
                 <a
                   href={CHECKOUT_URL}
                   className="group relative inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-black text-base sm:text-lg text-white overflow-hidden transition-all hover:-translate-y-1 cursor-pointer w-full sm:w-auto"
                   style={{
                     background: `linear-gradient(135deg, ${PINK}, ${PINK_TEXT})`,
-                    boxShadow: "0 0 0 1px rgba(212,83,126,0.5), 0 8px 32px rgba(212,83,126,0.4)",
+                    boxShadow: "0 0 0 1px rgba(255,77,166,0.5), 0 8px 32px rgba(255,77,166,0.4)",
                   }}
                 >
                   <Zap className="w-5 h-5" />
@@ -265,7 +274,7 @@ export default function Hero() {
                 <div className="flex flex-col gap-1">
                   <span className="text-sm" style={{ color: GRAY }}>
                     Giá gốc{" "}
-                    <span className="line-through decoration-2" style={{ color: "rgba(169,156,192,0.55)", textDecorationColor: "rgba(212,83,126,0.7)" }}>10.500.000đ</span>
+                    <span className="line-through decoration-2" style={{ color: "rgba(169,156,192,0.55)", textDecorationColor: "rgba(255,77,166,0.7)" }}>10.500.000đ</span>
                   </span>
                   <span className="text-sm" style={{ color: GRAY }}>
                     Tiết kiệm <span className="text-white font-semibold">4.501.000đ (43%)</span>
@@ -274,7 +283,7 @@ export default function Hero() {
               </div>
 
               {/* Gift line (gold) */}
-              <p className="flex items-start justify-center gap-1.5 text-sm font-medium" style={{ color: GOLD }}>
+              <p className="flex items-start justify-center lg:justify-start gap-1.5 text-sm font-medium" style={{ color: GOLD }}>
                 <span className="shrink-0">🎁</span>
                 <span>Đăng ký trong tháng 7 — tặng quyền truy cập web chữa bộ tủ PTE Talents (trị giá 500.000đ)</span>
               </p>
@@ -282,7 +291,7 @@ export default function Hero() {
               {/* Secondary button */}
               <a
                 href="#roadmap"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-base border transition-all self-center hover:text-white"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-base border transition-all self-center lg:self-start hover:text-white"
                 style={{ color: GRAY, borderColor: "rgba(169,156,192,0.35)" }}
               >
                 <Play className="w-4 h-4" style={{ color: PINK_TEXT }} />
@@ -295,7 +304,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
-              className="flex items-center justify-center flex-wrap gap-x-4 gap-y-2 pt-4 border-t border-white/10 text-sm"
+              className="flex items-center justify-center lg:justify-start flex-wrap gap-x-4 gap-y-2 pt-4 border-t border-white/10 text-sm w-full max-w-xl"
             >
               <span>
                 <span className="text-white font-bold">500+</span> <span style={{ color: GRAY }}>học viên</span>
@@ -309,6 +318,100 @@ export default function Hero() {
                 Hỗ trợ <span className="text-white font-bold">24/7</span> qua Zalo
               </span>
             </motion.div>
+          </motion.div>
+
+          {/* ══ RIGHT — cyberpunk portrait panel ══ */}
+          <motion.div
+            initial={{ opacity: 0, x: 40, scale: 0.96 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
+            className="relative w-full max-w-sm sm:max-w-md mx-auto lg:max-w-none"
+          >
+            {/* offset frame accents */}
+            <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 rounded-tl-3xl pointer-events-none z-20"
+              style={{ borderColor: "rgba(255,77,166,0.55)", boxShadow: "0 0 16px rgba(255,77,166,0.3)" }} />
+            <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 rounded-br-3xl pointer-events-none z-20"
+              style={{ borderColor: "rgba(255,77,166,0.5)", boxShadow: "0 0 16px rgba(255,77,166,0.28)" }} />
+
+            <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden neon-border cyber-corner"
+              style={{ background: "#0d0722", border: "1px solid rgba(255,77,166,0.25)" }}>
+              {/* grid */}
+              <div className="absolute inset-0 cyber-grid-bg opacity-60 pointer-events-none" />
+              {/* radial glow */}
+              <motion.div
+                className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[380px] h-[380px] rounded-full blur-[90px] pointer-events-none"
+                style={{ background: "rgba(255,77,166,0.28)" }}
+                animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* floating particles */}
+              {panelParticles.map((p, i) => (
+                <motion.span
+                  key={i}
+                  className="absolute rounded-full pointer-events-none z-10"
+                  style={{
+                    left: p.left, top: p.top, width: p.size, height: p.size,
+                    background: p.color, boxShadow: `0 0 ${p.size * 2}px ${p.color}`,
+                  }}
+                  animate={{ y: [0, -20, 0], opacity: [0, 0.8, 0] }}
+                  transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
+                />
+              ))}
+
+              {/* scanline sweep */}
+              <motion.div
+                className="absolute left-0 right-0 h-[2px] pointer-events-none z-20"
+                style={{ background: `linear-gradient(90deg, transparent, ${PINK}cc, transparent)` }}
+                initial={{ top: "0%" }}
+                animate={{ top: "100%" }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}
+              />
+
+              {/* portrait */}
+              <img
+                src={teacherCyber}
+                alt="Cô Nguyễn Thị Thuỷ — chuyên gia luyện thi PTE"
+                className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[97%] w-auto object-contain object-bottom z-10"
+                style={{ filter: "drop-shadow(0 10px 34px rgba(255,77,166,0.35))" }}
+              />
+
+              {/* top-left floating chip */}
+              <motion.div
+                className="absolute top-5 left-5 z-20 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold backdrop-blur-sm"
+                style={{ color: PINK_TEXT, background: "rgba(255,77,166,0.16)", border: "1px solid rgba(255,77,166,0.4)", boxShadow: "0 0 16px rgba(255,77,166,0.25)" }}
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <Zap className="w-3.5 h-3.5" /> MỤC TIÊU 79+
+              </motion.div>
+
+              {/* top-right gold speaking chip */}
+              <motion.div
+                className="absolute top-5 right-5 z-20 flex flex-col items-center px-3 py-1.5 rounded-xl backdrop-blur-sm"
+                style={{ background: "rgba(250,199,117,0.12)", border: "1px solid rgba(250,199,117,0.45)", boxShadow: "0 0 16px rgba(250,199,117,0.2)" }}
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 4.5, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <span className="text-base font-black leading-none" style={{ color: GOLD }}>90/90</span>
+                <span className="text-[9px] font-bold tracking-wider mt-0.5" style={{ color: GOLD }}>SPEAKING</span>
+              </motion.div>
+
+              {/* name plate */}
+              <div className="absolute inset-x-0 bottom-0 z-20 p-5 pt-16 pointer-events-none"
+                style={{ background: "linear-gradient(to top, #0d0722 12%, rgba(13,7,34,0.7) 55%, transparent)" }}>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="h-[2px] w-6 rounded-full" style={{ background: PINK, boxShadow: "0 0 8px rgba(255,77,166,0.8)" }} />
+                  <span className="text-[10px] font-mono tracking-[0.2em] uppercase" style={{ color: PINK_TEXT }}>Giảng viên</span>
+                </div>
+                <p className="text-xl font-extrabold text-white leading-tight" style={{ textShadow: "0 0 20px rgba(255,77,166,0.4)" }}>
+                  Cô Nguyễn Thị Thuỷ
+                </p>
+                <p className="text-xs font-semibold mt-0.5" style={{ color: PINK_TEXT }}>
+                  Chuyên gia luyện thi PTE · 10 năm kinh nghiệm
+                </p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
