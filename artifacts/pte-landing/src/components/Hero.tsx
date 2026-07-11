@@ -121,8 +121,8 @@ export default function Hero() {
       <div className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
         style={{ background: `linear-gradient(90deg, transparent, ${PINK}, ${PINK_TEXT}, transparent)`, opacity: 0.75 }} />
 
-      <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-8 items-center">
+      <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-12 items-center">
 
           {/* ══ LEFT — course title block ══ */}
           <motion.div
@@ -325,7 +325,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: 40, scale: 0.96 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
-            className="relative w-full max-w-sm sm:max-w-md mx-auto lg:max-w-none"
+            className="relative w-full max-w-[360px] mx-auto lg:mx-0"
           >
             {/* offset frame accents */}
             <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 rounded-tl-3xl pointer-events-none z-20"
@@ -375,27 +375,6 @@ export default function Hero() {
                 className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[97%] w-auto object-contain object-bottom z-10"
                 style={{ filter: "drop-shadow(0 10px 34px rgba(255,77,166,0.35))" }}
               />
-
-              {/* top-left floating chip */}
-              <motion.div
-                className="absolute top-5 left-5 z-20 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold backdrop-blur-sm"
-                style={{ color: PINK_TEXT, background: "rgba(255,77,166,0.16)", border: "1px solid rgba(255,77,166,0.4)", boxShadow: "0 0 16px rgba(255,77,166,0.25)" }}
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <Zap className="w-3.5 h-3.5" /> MỤC TIÊU 79+
-              </motion.div>
-
-              {/* top-right gold speaking chip */}
-              <motion.div
-                className="absolute top-5 right-5 z-20 flex flex-col items-center px-3 py-1.5 rounded-xl backdrop-blur-sm"
-                style={{ background: "rgba(250,199,117,0.12)", border: "1px solid rgba(250,199,117,0.45)", boxShadow: "0 0 16px rgba(250,199,117,0.2)" }}
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 4.5, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <span className="text-base font-black leading-none" style={{ color: GOLD }}>90/90</span>
-                <span className="text-[9px] font-bold tracking-wider mt-0.5" style={{ color: GOLD }}>SPEAKING</span>
-              </motion.div>
 
               {/* name plate */}
               <div className="absolute inset-x-0 bottom-0 z-20 p-5 pt-16 pointer-events-none"
