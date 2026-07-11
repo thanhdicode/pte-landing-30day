@@ -99,17 +99,49 @@ export default function TeacherIntro() {
                 <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-900 to-transparent pointer-events-none" />
               </div>
 
-              {/* Education badges only */}
-              <div className="px-8 pb-8 pt-3 flex flex-col items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
-                  style={{ color: PINK_TEXT, background: "rgba(212,83,126,0.10)", border: "1px solid rgba(212,83,126,0.28)" }}>
-                  🎓 Đại Học Hà Nội
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
-                  style={{ color: PINK_TEXT, background: "rgba(212,83,126,0.10)", border: "1px solid rgba(212,83,126,0.28)" }}>
-                  📖 Chuyên ngành Ngôn Ngữ Anh
-                </span>
-                <p className="text-[11px] italic mt-0.5" style={{ color: GRAY }}>(Tiền thân Đại Học Ngoại Ngữ Hà Nội)</p>
+              {/* Full profile */}
+              <div className="px-6 pb-6 pt-3 flex flex-col gap-4">
+                {/* Name + title */}
+                <div className="text-center">
+                  <h3 className="text-2xl font-extrabold text-white" style={{ textShadow: "0 0 24px rgba(212,83,126,0.4)" }}>
+                    Cô Nguyễn Thị Thuỷ
+                  </h3>
+                  <p className="text-sm font-semibold mt-1" style={{ color: PINK_TEXT }}>Chuyên gia PTE Talents</p>
+                </div>
+
+                {/* Gold Speaking badge */}
+                <div className="flex items-center justify-between gap-3 rounded-xl px-4 py-3"
+                  style={{ background: "rgba(250,199,117,0.10)", border: "1px solid rgba(250,199,117,0.35)" }}>
+                  <span className="text-xs font-bold tracking-wider" style={{ color: GOLD }}>🏆 PTE SPEAKING</span>
+                  <span className="text-2xl font-black" style={{ color: GOLD, textShadow: "0 0 16px rgba(250,199,117,0.5)" }}>90/90</span>
+                </div>
+
+                {/* Stats — white numbers, gray labels */}
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { value: "10 NĂM", label: "Giảng dạy" },
+                    { value: "4 NĂM", label: "PTE" },
+                    { value: "500+", label: "Học viên" },
+                  ].map((item) => (
+                    <div key={item.label} className="flex flex-col items-center gap-1 py-3 px-2 rounded-xl bg-slate-800/60 border border-slate-700/50">
+                      <span className="text-white font-black text-sm font-mono">{item.value}</span>
+                      <span className="text-[10px] uppercase tracking-wider text-center" style={{ color: GRAY }}>{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Education badges */}
+                <div className="flex flex-col items-center gap-2 pt-1">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
+                    style={{ color: PINK_TEXT, background: "rgba(212,83,126,0.10)", border: "1px solid rgba(212,83,126,0.28)" }}>
+                    🎓 Đại Học Hà Nội
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
+                    style={{ color: PINK_TEXT, background: "rgba(212,83,126,0.10)", border: "1px solid rgba(212,83,126,0.28)" }}>
+                    📖 Chuyên ngành Ngôn Ngữ Anh
+                  </span>
+                  <p className="text-[11px] italic mt-0.5" style={{ color: GRAY }}>(Tiền thân Đại Học Ngoại Ngữ Hà Nội)</p>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -203,6 +235,15 @@ export default function TeacherIntro() {
                   </motion.div>
                 );
               })}
+            </div>
+
+            {/* Quote */}
+            <div className="mt-10 rounded-xl border border-slate-700/50 bg-slate-800/40 p-5">
+              <span className="text-4xl leading-none block -mb-2" style={{ color: PINK_TEXT, fontFamily: "Georgia, serif" }}>“</span>
+              <p className="text-base italic leading-relaxed font-medium text-slate-200" style={{ fontFamily: "Georgia, serif" }}>
+                Bạn không thiếu cố gắng — bạn chỉ thiếu lộ trình đúng.
+              </p>
+              <p className="text-right text-sm font-semibold mt-2" style={{ color: PINK_TEXT }}>— Cô Thuỷ</p>
             </div>
           </motion.div>
 
