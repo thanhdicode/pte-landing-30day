@@ -386,9 +386,6 @@ export default function Hero() {
                 <p className="text-xl font-extrabold text-white leading-tight" style={{ textShadow: "0 0 20px rgba(255,77,166,0.4)" }}>
                   Cô Nguyễn Thị Thuỷ
                 </p>
-                <p className="text-xs font-semibold mt-0.5" style={{ color: PINK_TEXT }}>
-                  Chuyên gia luyện thi PTE · 10 năm kinh nghiệm
-                </p>
               </div>
             </div>
           </motion.div>
