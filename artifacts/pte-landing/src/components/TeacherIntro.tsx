@@ -207,7 +207,7 @@ export default function TeacherIntro() {
               </div>
 
               {/* Main name */}
-              <h2 className="font-heading font-black leading-[0.95] mb-2" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <h2 className="font-heading font-black leading-[0.95] mb-2">
                 <span className="block text-5xl lg:text-6xl text-white tracking-tight"
                   style={{ textShadow: "0 0 40px rgba(255,77,166,0.2)" }}>
                   NGUYỄN

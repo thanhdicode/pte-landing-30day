@@ -7,3 +7,4 @@
 - [Cyberpunk portrait treatment](cyberpunk-portrait-treatment.md) — pte-landing teacher photos: rembg cutout + neon rim (cyan L/pink R) + bloom/scanlines + LIGHT bottom fade; keep hands/nails clear & face sharp unless heavy dissolve requested.
 - [PTE landing palette](pte-landing-palette.md) — strict 2-accent: PINK primary, GOLD value/achievement ONLY (never decoration), WHITE keywords, GRAY body; no cyan/mint/purple/green; use "mục tiêu PTE". Exception: WhoIsThisFor persona cards keep 4 colored badges (incl cyan) intentionally.
 - [JSX responsive <br> spacing](jsx-responsive-br-spacing.md) — two-line subtitles need an explicit {" "} before a hidden-on-mobile <br>, or sentences jam together on mobile.
+- [Vietnamese Google Fonts](vietnamese-google-fonts.md) — verify a font's `vietnamese` subset before use; Outfit lacks it (caused lỗi font), Be Vietnam Pro/Montserrat have it; also grep hardcoded fontFamily overrides on heading-font swaps.

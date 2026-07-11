@@ -10,9 +10,8 @@ const GOLD = "#FAC775";       // value / achievement only
 const GRAY = "#a99cc0";       // regular body text
 const MUTED = "#6e3a52";      // chevrons + neutral pill borders
 
-// Score journey — CON SỐ 0 first → 79+ last
+// Score journey — 24+ first → 79+ last
 const journey = [
-  { value: "CON SỐ 0", label: "Xuất phát", kind: "start" as const },
   { value: "24+", label: "Beginner", kind: "mid" as const },
   { value: "36+", label: "Elementary", kind: "mid" as const },
   { value: "50+", label: "Intermediate", kind: "mid" as const },
@@ -41,20 +40,19 @@ const panelParticles = [
 ];
 
 function JourneyPill({ p }: { p: (typeof journey)[number] }) {
-  const isStart = p.kind === "start";
   const isEnd = p.kind === "end";
-  const valColor = isStart ? PINK_TEXT : isEnd ? GOLD : "#ffffff";
+  const valColor = isEnd ? GOLD : "#ffffff";
   return (
     <div
       className="flex flex-col items-center px-3 py-1.5 rounded-xl border"
       style={{
-        borderColor: isStart ? "rgba(255,77,166,0.4)" : isEnd ? "rgba(250,199,117,0.4)" : MUTED,
-        background: isStart ? "rgba(255,77,166,0.10)" : isEnd ? "rgba(250,199,117,0.10)" : "transparent",
+        borderColor: isEnd ? "rgba(250,199,117,0.4)" : MUTED,
+        background: isEnd ? "rgba(250,199,117,0.10)" : "transparent",
       }}
     >
       <span
         className="font-black leading-none whitespace-nowrap"
-        style={{ color: valColor, fontSize: isStart ? "0.85rem" : "1.05rem", textShadow: isStart || isEnd ? `0 0 14px ${valColor}66` : "none" }}
+        style={{ color: valColor, fontSize: "1.05rem", textShadow: isEnd ? `0 0 14px ${valColor}66` : "none" }}
       >
         {p.value}
       </span>
@@ -146,12 +144,6 @@ export default function Hero() {
                     KHOÁ ĐỒNG HÀNH
                   </span>
                 </span>
-                <span
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border"
-                  style={{ color: GRAY, borderColor: "rgba(169,156,192,0.28)" }}
-                >
-                  🎥 Học qua video + Zoom hàng tuần
-                </span>
               </motion.div>
 
               {/* Row 2: "30 NGÀY" */}
@@ -225,7 +217,7 @@ export default function Hero() {
               style={{ color: GRAY }}
             >
               Từ mất gốc đến tự tin chinh phục mục tiêu PTE — cho{" "}
-              <span className="text-white font-semibold">visa · định cư · du học · tốt nghiệp</span>.
+              <span className="text-white font-semibold">visa · định cư · du học · tốt&nbsp;nghiệp</span>.
             </motion.p>
 
             {/* ── Learning-method lines ── */}
@@ -233,16 +225,16 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.85 }}
-              className="flex flex-col gap-2 max-w-xl -mt-2 mx-auto lg:mx-0"
+              className="flex flex-col gap-2.5 max-w-2xl -mt-2 mx-auto lg:mx-0"
             >
-              <p className="text-sm lg:text-[15px] leading-relaxed" style={{ color: GRAY }}>
+              <p className="text-base lg:text-lg leading-relaxed" style={{ color: GRAY }}>
                 🎥 <span className="text-white font-semibold">Học qua video theo lộ trình mỗi ngày</span>
                 <span style={{ color: MUTED }}> · </span>
                 📞 <span className="text-white font-semibold">1 buổi Zoom/tuần cùng cô Thuỷ</span>
                 <span style={{ color: MUTED }}> · </span>
                 ✍️ <span className="text-white font-semibold">Chữa bài 1-1</span>
               </p>
-              <p className="text-sm lg:text-[15px] leading-relaxed" style={{ color: GRAY }}>
+              <p className="text-base lg:text-lg leading-relaxed" style={{ color: GRAY }}>
                 📅 <span className="text-white font-semibold">Học 30 ngày — truy cập trọn 100 ngày.</span> Xem lại không giới hạn, ôn đến tận ngày thi.
               </p>
             </motion.div>
