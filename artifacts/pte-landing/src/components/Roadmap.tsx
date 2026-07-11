@@ -1,5 +1,20 @@
+import { useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
-import { Check, Sparkles, Target, ChevronRight, CheckCircle2, Trophy, Video, RotateCcw, PenLine } from "lucide-react";
+import {
+  Check,
+  Sparkles,
+  Target,
+  ChevronRight,
+  ChevronDown,
+  CornerDownRight,
+  CheckCircle2,
+  Trophy,
+  Video,
+  RotateCcw,
+  PenLine,
+} from "lucide-react";
+
+const GOLD = "#FAC775"; // value / achievement only
 
 type PhaseItem = { text: string; sub?: string[] };
 type PhaseGroup = { heading?: string; cols?: number; items: PhaseItem[] };
@@ -8,47 +23,58 @@ type Phase = {
   title: string;
   objective: string;
   groups: PhaseGroup[];
+  details?: string[];
   results: string[];
+  resultMilestone?: string;
 };
+
+// Render **bold** segments as white emphasis; everything else stays body gray.
+function renderRich(text: string): ReactNode {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
+    part.startsWith("**") && part.endsWith("**") ? (
+      <strong key={i} className="text-white font-semibold">
+        {part.slice(2, -2)}
+      </strong>
+    ) : (
+      <span key={i}>{part}</span>
+    ),
+  );
+}
 
 const phases: Phase[] = [
   {
     day: "NGÀY 1–10",
     title: "Xây dựng nền tảng phát âm & phản xạ",
     objective:
-      "Xây dựng nền tảng phát âm chuẩn, tạo tiền đề vững chắc cho việc chinh phục PTE Speaking.",
+      "Xây nền phát âm chuẩn và độ trôi chảy — tiền đề vững chắc để chinh phục PTE Speaking.",
     groups: [
       {
-        heading: "Thư viện phát âm độc quyền",
         items: [
-          { text: "50 câu Read Aloud trọng điểm cùng video đọc rõ khẩu hình miệng và audio." },
-          { text: "Học IPA tinh gọn và mẹo phát âm." },
-          { text: "Khắc phục các lỗi phát âm phổ biến: âm cuối, nối âm, trọng âm và ngữ điệu." },
-          { text: "Rèn kỹ thuật lấy hơi và điều tiết hơi thở để duy trì độ trôi chảy theo tiêu chí Pearson." },
-          { text: "Luyện nghe và shadowing liên tục trong 10 ngày để hình thành phản xạ nhìn từ, đọc đúng và nói tự nhiên hơn." },
-          { text: "Làm quen với cách đặt và điều chỉnh micro trong bài thi PTE." },
+          {
+            text: "**Hơn 50 câu Read Aloud trọng điểm** — mỗi câu có video khẩu hình chậm, audio chuẩn đi thi, transcript và hướng dẫn ngắt nhịp.",
+          },
+          {
+            text: "Học **IPA tinh gọn** — khắc phục 4 lỗi phát âm phổ biến của người Việt: âm cuối, nối âm, trọng âm, ngữ điệu.",
+          },
+          {
+            text: "**Luyện nghe & shadowing 10 ngày liên tục** — hình thành phản xạ nhìn từ là đọc đúng, nói tự nhiên.",
+          },
+          {
+            text: "**Ghi âm, nộp bài và nhận chữa bài** từ team cô Thuỷ.",
+          },
         ],
       },
-      {
-        heading: "Mỗi câu Read Aloud bao gồm",
-        cols: 2,
-        items: [
-          { text: "Video khẩu hình chậm." },
-          { text: "Audio đọc chuẩn đi thi." },
-          { text: "Transcript." },
-          { text: "Hướng dẫn ngắt nhịp." },
-          { text: "Ghi âm và nộp bài để nhận phản hồi." },
-        ],
-      },
+    ],
+    details: [
+      "Rèn kỹ thuật lấy hơi và điều tiết hơi thở để duy trì độ trôi chảy theo tiêu chí Pearson.",
+      "Làm quen cách đặt và điều chỉnh micro trong bài thi PTE.",
     ],
     results: [
-      "Phát âm rõ ràng, biết cách đặt khẩu hình và sửa những lỗi phát âm phổ biến của người Việt.",
-      "Biết cách lấy hơi, ngắt nhịp và duy trì độ trôi chảy.",
-      "Có thể nhìn phiên âm IPA và tự đọc, tự luyện các từ mới.",
-      "Qua việc nghe, đọc IPA và shadowing lặp lại ≥50 câu Read Aloud, dần hình thành phản xạ nhìn từ, đọc đúng và nói tự nhiên hơn.",
-      "Không còn sợ đọc tiếng Anh vì đã biết tự đọc, tự luyện và tự sửa lỗi phát âm qua video khẩu hình, audio và transcript.",
-      "Sẵn sàng bước vào giai đoạn làm chủ các dạng bài PTE Speaking.",
+      "Đọc được phiên âm IPA và tự sửa lỗi phát âm của chính mình.",
+      "Không còn sợ mở miệng đọc tiếng Anh — nhìn từ là đọc đúng.",
+      "Sẵn sàng bước vào luyện các dạng bài Speaking.",
     ],
+    resultMilestone: "Nền tảng tương đương band 24–36",
   },
   {
     day: "NGÀY 11–15",
@@ -161,6 +187,147 @@ const finalResults = [
   "Tự tin chinh phục mục tiêu PTE 24+ | 50+ | 65+ | 79+.",
 ];
 
+function PhaseCard({ phase, idx }: { phase: Phase; idx: number }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.5, delay: 0.05 }}
+      className="relative pl-8 md:pl-12 pb-12 md:pb-0"
+    >
+      {/* Timeline marker */}
+      <div
+        className="absolute left-[-22px] top-1 w-10 h-10 bg-slate-900 border-4 border-primary rounded-full flex items-center justify-center shadow-lg"
+        style={{ boxShadow: "0 0 10px hsl(330 100% 65% / 0.8)" }}
+      >
+        <span className="text-primary font-extrabold text-sm">{idx + 1}</span>
+      </div>
+
+      <div className="bg-slate-900/80 backdrop-blur-sm border border-primary/20 rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300 neon-border cyber-corner relative">
+        <div className="inline-block px-4 py-1.5 bg-primary/20 border border-primary/40 text-primary font-bold text-sm rounded-full mb-4">
+          GIAI ĐOẠN {idx + 1} · {phase.day}
+        </div>
+        <h3 className="text-2xl md:text-3xl font-extrabold mb-4 text-white">{phase.title}</h3>
+
+        {/* Objective */}
+        <div className="flex gap-3 mb-6 p-4 rounded-xl bg-primary/5 border border-primary/20">
+          <Target className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+          <p className="leading-snug">
+            <span className="text-primary font-bold">Mục tiêu: </span>
+            <span className="text-slate-300 font-medium">{phase.objective}</span>
+          </p>
+        </div>
+
+        {/* Content groups */}
+        {phase.groups.map((group, gIdx) => (
+          <div key={gIdx} className="mb-6">
+            {group.heading && (
+              <div className="flex items-center gap-2 mb-3">
+                <div
+                  className="w-1.5 h-4 bg-primary rounded-full"
+                  style={{ boxShadow: "0 0 6px hsl(330 100% 65% / 0.8)" }}
+                />
+                <h4 className="text-primary font-bold text-sm uppercase tracking-wide">
+                  {group.heading}
+                </h4>
+              </div>
+            )}
+            <ul
+              className={
+                group.cols === 2
+                  ? "list-none grid sm:grid-cols-2 gap-x-6 gap-y-2.5"
+                  : "list-none space-y-2.5"
+              }
+            >
+              {group.items.map((item, iIdx) => (
+                <li key={iIdx}>
+                  <div className="flex gap-3 text-slate-300">
+                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <span>{renderRich(item.text)}</span>
+                  </div>
+                  {item.sub && (
+                    <ul className="list-none ml-8 mt-2 space-y-1.5">
+                      {item.sub.map((s, sIdx) => (
+                        <li key={sIdx} className="flex gap-2 text-slate-400 text-sm">
+                          <ChevronRight className="w-4 h-4 text-primary/70 shrink-0 mt-0.5" />
+                          <span>{s}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+
+        {/* Expandable details */}
+        {phase.details && phase.details.length > 0 && (
+          <div className="-mt-2 mb-6">
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls={`phase-details-${idx}`}
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:opacity-80 transition-opacity"
+            >
+              {open ? "Thu gọn" : "Xem chi tiết"}
+              <ChevronDown
+                className={`w-4 h-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+              />
+            </button>
+            {open && (
+              <motion.ul
+                id={`phase-details-${idx}`}
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+                className="list-none space-y-1.5 mt-3"
+              >
+                {phase.details.map((d, dIdx) => (
+                  <li key={dIdx} className="flex gap-2 text-slate-400 text-sm">
+                    <CornerDownRight className="w-4 h-4 text-primary/70 shrink-0 mt-0.5" />
+                    <span>{d}</span>
+                  </li>
+                ))}
+              </motion.ul>
+            )}
+          </div>
+        )}
+
+        {/* Results */}
+        <div className="bg-primary/10 p-5 md:p-6 rounded-2xl border border-primary/30 mt-6">
+          <div className="flex items-center gap-2 mb-3">
+            <Sparkles className="w-5 h-5 text-primary" />
+            <div className="font-bold text-sm text-primary uppercase tracking-wide">
+              Thành quả sau giai đoạn {idx + 1}
+            </div>
+          </div>
+          <ul className="list-none space-y-2">
+            {phase.results.map((r, rIdx) => (
+              <li key={rIdx} className="flex gap-3 text-slate-200 text-sm md:text-base">
+                <Check className="w-4 h-4 text-primary shrink-0 mt-1" />
+                <span>{r}</span>
+              </li>
+            ))}
+          </ul>
+          {phase.resultMilestone && (
+            <div className="flex items-center gap-2 mt-4 pt-4 border-t border-primary/20">
+              <Target className="w-4 h-4 shrink-0" style={{ color: GOLD }} />
+              <span className="font-bold text-sm md:text-base" style={{ color: GOLD }}>
+                {phase.resultMilestone}
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Roadmap() {
   return (
     <section id="roadmap" className="py-24 bg-[#120A2E] cyber-grid-bg relative">
@@ -237,99 +404,7 @@ export default function Roadmap() {
             style={{ boxShadow: "0 0 8px hsl(330 100% 65% / 0.5)" }}
           />
           {phases.map((phase, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.5, delay: 0.05 }}
-              className="relative pl-8 md:pl-12 pb-12 md:pb-0"
-            >
-              {/* Timeline marker */}
-              <div
-                className="absolute left-[-22px] top-1 w-10 h-10 bg-slate-900 border-4 border-primary rounded-full flex items-center justify-center shadow-lg"
-                style={{ boxShadow: "0 0 10px hsl(330 100% 65% / 0.8)" }}
-              >
-                <span className="text-primary font-extrabold text-sm">{idx + 1}</span>
-              </div>
-
-              <div className="bg-slate-900/80 backdrop-blur-sm border border-primary/20 rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-xl transition-all duration-300 neon-border cyber-corner relative">
-                <div className="inline-block px-4 py-1.5 bg-primary/20 border border-primary/40 text-primary font-bold text-sm rounded-full mb-4">
-                  GIAI ĐOẠN {idx + 1} • {phase.day}
-                </div>
-                <h3 className="text-2xl md:text-3xl font-extrabold mb-4 text-white">{phase.title}</h3>
-
-                {/* Objective */}
-                <div className="flex gap-3 mb-6 p-4 rounded-xl bg-cyan-400/5 border border-cyan-400/20">
-                  <Target className="w-5 h-5 text-cyan-300 shrink-0 mt-0.5" />
-                  <p className="leading-snug">
-                    <span className="text-cyan-300 font-bold">Mục tiêu: </span>
-                    <span className="text-slate-300 font-medium">{phase.objective}</span>
-                  </p>
-                </div>
-
-                {/* Content groups */}
-                {phase.groups.map((group, gIdx) => (
-                  <div key={gIdx} className="mb-6">
-                    {group.heading && (
-                      <div className="flex items-center gap-2 mb-3">
-                        <div
-                          className="w-1.5 h-4 bg-cyan-400 rounded-full"
-                          style={{ boxShadow: "0 0 6px hsl(180 100% 60% / 0.8)" }}
-                        />
-                        <h4 className="text-cyan-300 font-bold text-sm uppercase tracking-wide">
-                          {group.heading}
-                        </h4>
-                      </div>
-                    )}
-                    <ul
-                      className={
-                        group.cols === 2
-                          ? "list-none grid sm:grid-cols-2 gap-x-6 gap-y-2.5"
-                          : "list-none space-y-2.5"
-                      }
-                    >
-                      {group.items.map((item, iIdx) => (
-                        <li key={iIdx}>
-                          <div className="flex gap-3 text-slate-300">
-                            <Check className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
-                            <span>{item.text}</span>
-                          </div>
-                          {item.sub && (
-                            <ul className="list-none ml-8 mt-2 space-y-1.5">
-                              {item.sub.map((s, sIdx) => (
-                                <li key={sIdx} className="flex gap-2 text-slate-400 text-sm">
-                                  <ChevronRight className="w-4 h-4 text-primary/70 shrink-0 mt-0.5" />
-                                  <span>{s}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-
-                {/* Results */}
-                <div className="bg-primary/10 p-5 md:p-6 rounded-2xl border border-primary/30 mt-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Sparkles className="w-5 h-5 text-primary" />
-                    <div className="font-bold text-sm text-primary uppercase tracking-wide">
-                      Thành quả sau giai đoạn {idx + 1}
-                    </div>
-                  </div>
-                  <ul className="list-none space-y-2">
-                    {phase.results.map((r, rIdx) => (
-                      <li key={rIdx} className="flex gap-3 text-slate-200 text-sm md:text-base">
-                        <Check className="w-4 h-4 text-primary shrink-0 mt-1" />
-                        <span>{r}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
+            <PhaseCard key={idx} phase={phase} idx={idx} />
           ))}
         </div>
 
