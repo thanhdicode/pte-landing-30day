@@ -104,9 +104,9 @@ const phases: Phase[] = [
       {
         text: "Làm quen hệ sinh thái học tập (sang giai đoạn 3 mới học thực chiến):",
         sub: [
-          "APEUni: bộ đề tủ cập nhật tỉ lệ trúng cao, giả lập phòng thi, chấm điểm chuẩn sát đề thi thật.",
-          "Web PTE Talents: chuyên \"mổ xẻ\" và chữa chi tiết toàn bộ đề tủ trọng tâm.",
-          "Skool Community: nơi học khoá \"30 Ngày Đồng Hành\", cung cấp template, mẹo làm bài và hỗ trợ 1-1 từ cô Thuỷ & trợ giảng.",
+          "**APEUni:** bộ đề tủ cập nhật tỉ lệ trúng cao, giả lập phòng thi, chấm điểm chuẩn sát đề thi thật.",
+          "**Web PTE Talents:** chuyên \"mổ xẻ\" và chữa chi tiết toàn bộ đề tủ trọng tâm.",
+          "**Skool Community:** nơi học khoá \"30 Ngày Đồng Hành\", cung cấp template, mẹo làm bài và hỗ trợ 1-1 từ cô Thuỷ & trợ giảng.",
         ],
       },
       { text: "Hướng dẫn gửi bài, nhận bài chữa và theo dõi tiến độ." },
@@ -294,15 +294,15 @@ function PhaseCard({ phase, idx }: { phase: Phase; idx: number }) {
               >
                 {phase.details.map((d, dIdx) => (
                   <li key={dIdx}>
-                    <div className="flex gap-2 text-slate-400 text-sm">
-                      <CornerDownRight className="w-4 h-4 text-primary/70 shrink-0 mt-0.5" />
+                    <div className="flex gap-2 text-slate-200 text-[15px] font-semibold leading-relaxed">
+                      <CornerDownRight className="w-4 h-4 text-primary/80 shrink-0 mt-1" />
                       <span>{renderRich(d.text)}</span>
                     </div>
                     {d.sub && (
-                      <ul className="list-none ml-6 mt-1.5 space-y-1.5">
+                      <ul className="list-none ml-6 mt-2 space-y-2">
                         {d.sub.map((s, sIdx) => (
-                          <li key={sIdx} className="flex gap-2 text-slate-500 text-sm">
-                            <ChevronRight className="w-4 h-4 text-primary/60 shrink-0 mt-0.5" />
+                          <li key={sIdx} className="flex gap-2 text-slate-300 text-[15px] font-medium leading-relaxed">
+                            <ChevronRight className="w-4 h-4 text-primary/70 shrink-0 mt-1" />
                             <span>{renderRich(s)}</span>
                           </li>
                         ))}
