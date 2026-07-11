@@ -4,6 +4,7 @@ import {
   Check,
   Sparkles,
   Target,
+  Lightbulb,
   ChevronRight,
   ChevronDown,
   CornerDownRight,
@@ -22,8 +23,9 @@ type Phase = {
   day: string;
   title: string;
   objective: string;
+  note?: string;
   groups: PhaseGroup[];
-  details?: string[];
+  details?: PhaseItem[];
   results: string[];
   resultMilestone?: string;
 };
@@ -66,8 +68,8 @@ const phases: Phase[] = [
       },
     ],
     details: [
-      "Rèn kỹ thuật lấy hơi và điều tiết hơi thở để duy trì độ trôi chảy theo tiêu chí Pearson.",
-      "Làm quen cách đặt và điều chỉnh micro trong bài thi PTE.",
+      { text: "Rèn kỹ thuật lấy hơi và điều tiết hơi thở để duy trì độ trôi chảy theo tiêu chí Pearson." },
+      { text: "Làm quen cách đặt và điều chỉnh micro trong bài thi PTE." },
     ],
     results: [
       "Đọc được phiên âm IPA và tự sửa lỗi phát âm của chính mình.",
@@ -80,40 +82,42 @@ const phases: Phase[] = [
     day: "NGÀY 11–15",
     title: "Hiểu PTE & xây dựng chiến lược học đúng",
     objective:
-      "Hiểu toàn diện về kỳ thi PTE, cơ chế tính điểm của Pearson và phương pháp học để tối ưu điểm số.",
+      "Hiểu toàn diện kỳ thi PTE, cơ chế tính điểm của Pearson và phương pháp học để tối ưu điểm số.",
+    note:
+      "Vì sao học phát âm trước, chiến lược sau? Nền tảng phát âm cần thời gian \"ngấm\" nhất — đi trước 10 ngày giúp bạn có phản xạ sẵn trước khi vào luyện đề thực chiến.",
     groups: [
       {
         heading: "Nội dung chính",
         items: [
-          { text: "PTE là gì? Vì sao ngày càng nhiều người lựa chọn PTE?" },
-          { text: "Cấu trúc bài thi và format của từng kỹ năng." },
+          { text: "Ôn tổng quan format đề thi, cấu trúc từng kỹ năng & những hiểu lầm phổ biến về PTE." },
           { text: "Hiểu rõ cách Pearson tính điểm và điểm chấm chéo giữa các kỹ năng." },
           { text: "Nhận diện các dạng bài trọng tâm chiếm nhiều điểm." },
-          { text: "Hiểu dạng nào được AI chấm hoàn toàn và dạng nào có yếu tố Human Check ở tiêu chí Content." },
+          { text: "Biết dạng nào được AI chấm hoàn toàn, dạng nào có Human Check ở tiêu chí Content — để biết dạng nào \"ăn điểm\" được bằng template, dạng nào cần viết thật." },
           {
             text: "Xây dựng chiến lược học theo mục tiêu:",
             sub: ["PTE 24 → 50+", "PTE 50 → 65+", "PTE 65 → 79+"],
           },
-          {
-            text: "Hướng dẫn sử dụng hệ sinh thái học tập (sang giai đoạn 3 mới học thực chiến):",
-            sub: [
-              "APEUni: cập nhật tủ tỉ lệ trúng cao, phần mềm giả lập phòng thi và chấm điểm chuẩn, sát với đề thi thật.",
-              "PTE Talents: website chuyên \"mổ xẻ\" và chữa chi tiết toàn bộ đề tủ trọng tâm.",
-              "Skool Community: nơi học khóa \"30 ngày đồng hành chinh phục mục tiêu PTE\", cung cấp template, mẹo làm bài và hỗ trợ 1-1 từ team cô Thuỷ.",
-            ],
-          },
-          { text: "Hướng dẫn gửi bài, nhận bài chữa và theo dõi tiến độ." },
-          { text: "Xây dựng phương pháp ôn luyện chủ động." },
         ],
       },
     ],
-    results: [
-      "Hiểu rõ PTE và biết nên học gì trước, học gì sau.",
-      "Hiểu cơ chế tính điểm của Pearson.",
-      "Biết dạng bài nào cần ưu tiên để đạt mục tiêu.",
-      "Biết cách sử dụng website, APEUni và cộng đồng học tập.",
-      "Hình thành phương pháp tự học có hệ thống và tự theo dõi tiến độ.",
+    details: [
+      {
+        text: "Làm quen hệ sinh thái học tập (sang giai đoạn 3 mới học thực chiến):",
+        sub: [
+          "APEUni: bộ đề tủ cập nhật tỉ lệ trúng cao, giả lập phòng thi, chấm điểm chuẩn sát đề thi thật.",
+          "Web PTE Talents: chuyên \"mổ xẻ\" và chữa chi tiết toàn bộ đề tủ trọng tâm.",
+          "Skool Community: nơi học khoá \"30 Ngày Đồng Hành\", cung cấp template, mẹo làm bài và hỗ trợ 1-1 từ cô Thuỷ & trợ giảng.",
+        ],
+      },
+      { text: "Hướng dẫn gửi bài, nhận bài chữa và theo dõi tiến độ." },
+      { text: "Xây dựng phương pháp ôn luyện chủ động." },
     ],
+    results: [
+      "Không còn học lan man — biết nên học gì trước, học gì sau cho đúng mục tiêu của mình.",
+      "Nhìn một dạng bài là biết nó đáng đầu tư bao nhiêu thời gian.",
+      "Thành thạo bộ 3 công cụ học – luyện – hỏi đáp, và tự theo dõi được tiến độ của chính mình.",
+    ],
+    resultMilestone: "Chỉ 5 ngày — nhưng tiết kiệm hàng tháng học sai trọng tâm",
   },
   {
     day: "NGÀY 16–26",
@@ -221,6 +225,14 @@ function PhaseCard({ phase, idx }: { phase: Phase; idx: number }) {
           </p>
         </div>
 
+        {/* Optional italic note under the objective */}
+        {phase.note && (
+          <div className="flex gap-2.5 -mt-3 mb-6 pl-1">
+            <Lightbulb className="w-4 h-4 shrink-0 mt-0.5 text-primary/70" />
+            <p className="text-slate-400 italic text-sm leading-relaxed">{phase.note}</p>
+          </div>
+        )}
+
         {/* Content groups */}
         {phase.groups.map((group, gIdx) => (
           <div key={gIdx} className="mb-6">
@@ -288,9 +300,21 @@ function PhaseCard({ phase, idx }: { phase: Phase; idx: number }) {
                 className="list-none space-y-1.5 mt-3"
               >
                 {phase.details.map((d, dIdx) => (
-                  <li key={dIdx} className="flex gap-2 text-slate-400 text-sm">
-                    <CornerDownRight className="w-4 h-4 text-primary/70 shrink-0 mt-0.5" />
-                    <span>{d}</span>
+                  <li key={dIdx}>
+                    <div className="flex gap-2 text-slate-400 text-sm">
+                      <CornerDownRight className="w-4 h-4 text-primary/70 shrink-0 mt-0.5" />
+                      <span>{renderRich(d.text)}</span>
+                    </div>
+                    {d.sub && (
+                      <ul className="list-none ml-6 mt-1.5 space-y-1.5">
+                        {d.sub.map((s, sIdx) => (
+                          <li key={sIdx} className="flex gap-2 text-slate-500 text-sm">
+                            <ChevronRight className="w-4 h-4 text-primary/60 shrink-0 mt-0.5" />
+                            <span>{renderRich(s)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </li>
                 ))}
               </motion.ul>
