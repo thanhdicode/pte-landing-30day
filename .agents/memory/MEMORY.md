@@ -5,3 +5,4 @@
 - [Non-ASCII upload filenames](nonascii-upload-filenames.md) — accented/Vietnamese uploads may be NFD on disk; don't hardcode the name in Python — glob by the ASCII timestamp suffix.
 - [PTE landing URLs & deployments](pte-landing-urls.md) — live preview vs stale publish (thuys-30-day) vs separate external checkout (landing-page-sync); re-Publish to sync, don't assume lost content.
 - [Cyberpunk portrait treatment](cyberpunk-portrait-treatment.md) — pte-landing teacher photos: rembg cutout + neon rim (cyan L/pink R) + bloom/scanlines + LIGHT bottom fade; keep hands/nails clear & face sharp unless heavy dissolve requested.
+- [PTE landing palette](pte-landing-palette.md) — strict 2-accent: PINK primary, GOLD value/achievement ONLY (never decoration), WHITE keywords, GRAY body; no cyan/mint/purple/green; use "mục tiêu PTE".
