@@ -185,7 +185,7 @@ const finalResults = [
 ];
 
 function PhaseCard({ phase, idx }: { phase: Phase; idx: number }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <motion.div
@@ -277,7 +277,7 @@ function PhaseCard({ phase, idx }: { phase: Phase; idx: number }) {
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-controls={`phase-details-${idx}`}
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:opacity-80 transition-opacity"
+              className="inline-flex items-center gap-1.5 text-base font-bold text-primary hover:opacity-80 transition-opacity"
             >
               {open ? "Thu gọn" : "Xem chi tiết"}
               <ChevronDown
