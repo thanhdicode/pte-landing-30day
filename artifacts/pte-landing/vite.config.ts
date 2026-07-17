@@ -43,7 +43,10 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname),
   build: {
-    outDir: path.resolve(import.meta.dirname, 'dist/public'),
+    outDir: path.resolve(
+      import.meta.dirname,
+      process.env.VERCEL ? 'dist' : 'dist/public',
+    ),
     emptyOutDir: true,
   },
   server: {
