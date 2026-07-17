@@ -1,401 +1,283 @@
-import { ArrowRight, Play, Zap } from "lucide-react";
-import { motion } from "framer-motion";
-import { CHECKOUT_URL } from "@/lib/links";
-import teacherCyber from "@assets/teacher-hero-cyber.png";
+import { ArrowRight, MessageCircle, Star, ShieldCheck, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { siteConfig, navLinks, pricing } from "../data/course-content";
 
-// ── 2-color accent system (unified with sections below) ──
-const PINK = "#FF4DA6";       // primary buttons / strong pink  (hsl 330 100% 65%)
-const PINK_TEXT = "#FF87C7";  // pink text accents
-const GOLD = "#FAC775";       // value / achievement only
-const GRAY = "#a99cc0";       // regular body text
-const MUTED = "#6e3a52";      // chevrons + neutral pill borders
+// Import teacher photos for the slideshow
+import teacher1 from "@assets/teacher-hero-cyber.png";
+import teacher2 from "@assets/teacher-formal-nobg.png";
+import teacher3 from "@assets/teacher-welcome-formal-nobg.png";
+import teacher4 from "@assets/teacher-welcome-cyber-nobg.png";
+import teacher5 from "@assets/teacher-nobg.png";
+import teacher6 from "@assets/teacher-clean-crop.png";
 
-// Score journey — 24+ first → 79+ last
-const journey = [
-  { value: "CON SỐ 0", label: "XUẤT PHÁT", kind: "start" as const },
-  { value: "24+", label: "Beginner", kind: "mid" as const },
-  { value: "36+", label: "Elementary", kind: "mid" as const },
-  { value: "50+", label: "Intermediate", kind: "mid" as const },
-  { value: "65+", label: "Upper-Int", kind: "mid" as const },
-  { value: "79+", label: "Advanced", kind: "end" as const },
+const teacherImages = [
+  { src: teacher1, alt: "Cô Nguyễn Thị Thuỷ — Sáng lập PTE Talents", label: "Sáng lập PTE Talents" },
+  { src: teacher2, alt: "Cô Nguyễn Thị Thuỷ — Giảng viên chuyên môn", label: "Chuyên gia PTE" },
+  { src: teacher3, alt: "Cô Nguyễn Thị Thuỷ — Speaking 90/90", label: "Speaking 90/90" },
+  { src: teacher4, alt: "Cô Nguyễn Thị Thuỷ — Đồng hành 1-1", label: "Đồng hành 1-1 hàng ngày" },
+  { src: teacher5, alt: "Cô Nguyễn Thị Thuỷ — Lớp học Zalo sửa bài", label: "Lớp học Zalo thực chiến" },
+  { src: teacher6, alt: "Cô Nguyễn Thị Thuỷ — Cam kết lộ trình", label: "Cam kết tiến bộ 30 ngày" },
 ];
 
-// Ambient floating particles — pink & gold only
-const particles = [
-  { left: "12%", top: "30%", size: 6, color: PINK, dur: 7, delay: 0 },
-  { left: "22%", top: "72%", size: 4, color: PINK_TEXT, dur: 9, delay: 1.5 },
-  { left: "44%", top: "18%", size: 5, color: PINK_TEXT, dur: 8, delay: 0.8 },
-  { left: "58%", top: "82%", size: 4, color: PINK, dur: 10, delay: 2 },
-  { left: "77%", top: "34%", size: 6, color: PINK, dur: 7.5, delay: 1 },
-  { left: "88%", top: "62%", size: 4, color: PINK_TEXT, dur: 9.5, delay: 0.4 },
-  { left: "34%", top: "88%", size: 5, color: PINK, dur: 8.5, delay: 2.5 },
-  { left: "67%", top: "14%", size: 4, color: PINK_TEXT, dur: 11, delay: 1.8 },
-];
-
-// Particles inside the portrait panel
-const panelParticles = [
-  { left: "16%", top: "24%", size: 4, color: PINK, dur: 6, delay: 0 },
-  { left: "80%", top: "36%", size: 5, color: PINK_TEXT, dur: 7.5, delay: 1 },
-  { left: "24%", top: "64%", size: 4, color: PINK, dur: 8, delay: 0.6 },
-  { left: "72%", top: "70%", size: 3, color: PINK_TEXT, dur: 9, delay: 1.8 },
-];
-
-function JourneyPill({ p }: { p: (typeof journey)[number] }) {
-  const isEnd = p.kind === "end";
-  const isStart = p.kind === "start";
-
-  if (isStart) {
-    return (
-      <div
-        className="flex flex-col items-center px-3 py-1.5 rounded-xl border"
-        style={{ borderColor: "rgba(255,77,166,0.45)", background: "rgba(255,77,166,0.12)" }}
-      >
-        <span className="text-[9px] font-semibold uppercase tracking-wider" style={{ color: GRAY }}>
-          {p.label}
-        </span>
-        <span
-          className="font-black leading-none whitespace-nowrap mt-1"
-          style={{ color: PINK_TEXT, fontSize: "1.05rem", textShadow: `0 0 14px ${PINK_TEXT}66` }}
-        >
-          {p.value}
-        </span>
-      </div>
-    );
-  }
-
-  const valColor = isEnd ? GOLD : "#ffffff";
-  return (
-    <div
-      className="flex flex-col items-center px-3 py-1.5 rounded-xl border"
-      style={{
-        borderColor: isEnd ? "rgba(250,199,117,0.4)" : MUTED,
-        background: isEnd ? "rgba(250,199,117,0.10)" : "transparent",
-      }}
-    >
-      <span
-        className="font-black leading-none whitespace-nowrap"
-        style={{ color: valColor, fontSize: "1.05rem", textShadow: isEnd ? `0 0 14px ${valColor}66` : "none" }}
-      >
-        {p.value}
-      </span>
-      <span className="text-[9px] font-semibold uppercase tracking-wider mt-1" style={{ color: GRAY }}>
-        {p.label}
-      </span>
-    </div>
-  );
-}
+const targetDetails: Record<string, { ielts: string; purpose: string; highlight: string }> = {
+  "24+": { ielts: "4.0 - 4.5", purpose: "Phù hợp cho Visa Lao động kết hợp (Úc 462), định cư diện lao động tay nghề thấp.", highlight: "Cần xây nền phát âm cơ bản & phản xạ nghe nói cốt lõi." },
+  "50+": { ielts: "6.0", purpose: "Đủ điều kiện xét tốt nghiệp Đại học, nộp hồ sơ du học nghề, Visa tốt nghiệp 485.", highlight: "Học sâu 3 dạng bài trọng tâm để tối ưu điểm số nhanh nhất." },
+  "65+": { ielts: "7.0", purpose: "Yêu cầu cho học Thạc sĩ nước ngoài, cộng 10 điểm hồ sơ định cư Úc/New Zealand.", highlight: "Luyện đề tủ chuyên sâu + tối ưu hóa thời gian làm bài." },
+  "79+": { ielts: "8.0", purpose: "Cộng tối đa 20 điểm hồ sơ định cư, xin học bổng toàn phần tại Úc/Anh/Mỹ.", highlight: "Khắc phục triệt để lỗi phát âm & tối ưu điểm chéo từ AI." },
+};
 
 export default function Hero() {
+  const [activeTarget, setActiveTarget] = useState<string>("50+");
+  const [currentImgIndex, setCurrentImgIndex] = useState<number>(0);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+
+  // Auto transition images every 5s
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setCurrentImgIndex((prev) => (prev + 1) % teacherImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isHovered]);
+
+  const handleNextImage = () => {
+    setCurrentImgIndex((prev) => (prev + 1) % teacherImages.length);
+  };
+
+  const handlePrevImage = () => {
+    setCurrentImgIndex((prev) => (prev - 1 + teacherImages.length) % teacherImages.length);
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-[#120A2E]">
-      {/* ── Background layers ── */}
-      <div className="absolute inset-0 cyber-grid-bg opacity-40 pointer-events-none" />
-      {/* Radial glow blobs — gentle breathing (pink) */}
-      <motion.div
-        className="absolute top-1/4 left-1/3 w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none"
-        style={{ background: "rgba(255,77,166,0.10)" }}
-        animate={{ scale: [1, 1.18, 1], opacity: [0.55, 1, 0.55] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-0 w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none"
-        style={{ background: "rgba(255,77,166,0.08)" }}
-        animate={{ scale: [1, 1.22, 1], opacity: [0.45, 0.9, 0.45] }}
-        transition={{ duration: 10, delay: 1, repeat: Infinity, ease: "easeInOut" }}
-      />
-      {/* Floating neon particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {particles.map((p, i) => (
-          <motion.span
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              left: p.left,
-              top: p.top,
-              width: p.size,
-              height: p.size,
-              background: p.color,
-              boxShadow: `0 0 ${p.size * 2}px ${p.color}`,
-            }}
-            animate={{ y: [0, -26, 0], opacity: [0, 0.7, 0] }}
-            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
-          />
-        ))}
+    <section className="relative min-h-[94dvh] flex items-center pt-28 pb-16 overflow-hidden bg-gradient-to-br from-slate-50 via-slate-50/40 to-white">
+      
+      {/* ══ Background Editorial Hairlines (Prevents plain sides) ══ */}
+      <div className="absolute inset-y-0 left-[8%] border-l border-slate-200/25 pointer-events-none z-0" />
+      <div className="absolute inset-y-0 right-[8%] border-r border-slate-200/25 pointer-events-none z-0" />
+      <div className="absolute inset-y-0 left-[50%] border-l border-slate-200/10 pointer-events-none z-0 hidden lg:block" />
+
+      {/* Floating typography markers on the sides */}
+      <div className="absolute left-[2.5%] top-[35%] -rotate-90 origin-left text-[9px] tracking-[0.3em] font-mono text-slate-350 uppercase select-none pointer-events-none hidden xl:block">
+        PTE 30-DAY INTENSIVE TRAINING
       </div>
-      {/* Scanline sweep */}
-      <motion.div
-        className="absolute left-0 right-0 h-[2px] pointer-events-none z-10"
-        style={{ background: `linear-gradient(90deg, transparent, ${PINK}b3, transparent)` }}
-        initial={{ top: "-2px" }}
-        animate={{ top: "110%" }}
-        transition={{ duration: 6, delay: 0.8, repeat: Infinity, ease: "linear" }}
-      />
-      {/* HUD corner brackets (pink) */}
-      <div className="absolute top-24 left-6 w-12 h-12 border-t-2 border-l-2"
-        style={{ borderColor: "rgba(255,77,166,0.6)", boxShadow: "0 0 12px rgba(255,77,166,0.4)" }} />
-      <div className="absolute top-24 right-6 w-12 h-12 border-t-2 border-r-2"
-        style={{ borderColor: "rgba(255,77,166,0.5)", boxShadow: "0 0 12px rgba(255,77,166,0.3)" }} />
-      <div className="absolute bottom-6 left-6 w-12 h-12 border-b-2 border-l-2" style={{ borderColor: "rgba(255,77,166,0.4)" }} />
-      <div className="absolute bottom-6 right-6 w-12 h-12 border-b-2 border-r-2" style={{ borderColor: "rgba(255,77,166,0.4)" }} />
-      {/* ── Top neon line ── */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
-        style={{ background: `linear-gradient(90deg, transparent, ${PINK}, ${PINK_TEXT}, transparent)`, opacity: 0.75 }} />
+      <div className="absolute right-[2.5%] bottom-[35%] rotate-90 origin-right text-[9px] tracking-[0.3em] font-mono text-slate-350 uppercase select-none pointer-events-none hidden xl:block">
+        PEARSON CURRICULUM ALIGNED
+      </div>
 
-      <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-12 items-center">
+      {/* Background gradients */}
+      <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] pointer-events-none bg-blue-100/25 z-0" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none bg-amber-100/15 z-0" />
 
-          {/* ══ LEFT — course title block ══ */}
+      {/* Main container — widened to max-w-[1360px] to occupy more screen real estate */}
+      <div className="max-w-[1360px] mx-auto px-8 w-full relative z-10">
+        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center">
+
+          {/* ══ LEFT — Content Block ══ */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="flex flex-col gap-6 items-center text-center lg:items-start lg:text-left max-w-2xl mx-auto lg:mx-0"
+            transition={{ duration: 0.5 }}
+            className="flex flex-col gap-6 items-center text-center lg:items-start lg:text-left max-w-3xl mx-auto lg:mx-0"
           >
-            {/* ── Main title ── */}
-            <div className="flex flex-col gap-1">
-              {/* Row 1: badges */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25, duration: 0.6 }}
-                className="flex items-center justify-center lg:justify-start flex-wrap gap-3 mb-1"
-              >
-                <span className="inline-flex items-center gap-2">
-                  <span className="text-3xl" style={{ filter: "drop-shadow(0 0 16px rgba(255,77,166,0.7))" }}>🚀</span>
-                  <span className="text-sm font-bold tracking-[0.25em] uppercase" style={{ color: PINK_TEXT }}>
-                    KHOÁ ĐỒNG HÀNH
-                  </span>
-                </span>
-              </motion.div>
+            {/* Title block */}
+            <div className="flex flex-col gap-3">
+              <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary">
+                {navLinks[0].label === "Về Cô Thuỷ" ? "KHOÁ ĐỒNG HÀNH 30 NGÀY" : "PTE TALENTS"}
+              </span>
 
-              {/* Row 2: "30 NGÀY" */}
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.35, duration: 0.6 }}
-                className="relative"
-              >
-                <motion.h1
-                  className="text-[3.5rem] sm:text-[5rem] lg:text-[4.5rem] xl:text-[5.5rem] font-black leading-none tracking-tight text-white"
-                  animate={{
-                    textShadow: [
-                      "0 0 60px rgba(255,77,166,0.45)",
-                      "0 0 90px rgba(255,77,166,0.8)",
-                      "0 0 60px rgba(255,77,166,0.45)",
-                    ],
-                  }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  30 <span className="font-thin text-primary-foreground">NGÀY</span>
-                </motion.h1>
-                {/* pink underline bar */}
-                <div className="h-[3px] w-3/4 mt-1 mx-auto lg:mx-0"
-                  style={{ background: `linear-gradient(90deg, transparent, ${PINK}, transparent)`, boxShadow: "0 0 10px rgba(255,77,166,0.6)" }} />
-              </motion.div>
-
-              {/* Row 3: "CHINH PHỤC MỤC TIÊU PTE" — only PTE pink */}
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.45, duration: 0.6 }}
-                className="mt-1"
-              >
-                <h2 className="text-[1.5rem] sm:text-[2rem] lg:text-[1.95rem] xl:text-[2.4rem] font-extrabold leading-[1.15] tracking-tight flex flex-wrap justify-center lg:justify-start items-baseline gap-x-3">
-                  <span className="text-white/95">CHINH PHỤC MỤC TIÊU</span>
-                  <span className="relative inline-block">
-                    <span className="font-black" style={{ color: PINK_TEXT, filter: "drop-shadow(0 0 22px rgba(255,77,166,0.55))" }}>
-                      PTE
-                    </span>
-                    <span className="absolute -bottom-1.5 left-0 h-[3px] w-full rounded-full"
-                      style={{ background: PINK, boxShadow: "0 0 10px rgba(255,77,166,0.75)" }} />
-                  </span>
-                </h2>
-              </motion.div>
-
-              {/* Row 4: score journey */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.55, duration: 0.6 }}
-                className="flex flex-wrap justify-center lg:justify-start items-center gap-x-1.5 gap-y-2.5 mt-3"
-              >
-                {journey.map((p, i) => (
-                  <div key={p.value} className="flex items-center gap-x-1.5">
-                    <JourneyPill p={p} />
-                    {i < journey.length - 1 && (
-                      <span className="text-lg font-bold select-none" style={{ color: MUTED }}>›</span>
-                    )}
-                  </div>
-                ))}
-              </motion.div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-slate-900">
+                30 Ngày Chinh Phục <br className="hidden sm:inline" />
+                Mục Tiêu <span className="text-gradient">PTE</span>
+              </h1>
             </div>
 
-            {/* ── Subheadline ── */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="text-base lg:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0 lg:border-l-2 lg:pl-4"
-              style={{ color: GRAY, borderColor: PINK }}
-            >
-              Từ mất gốc đến tự tin chinh phục mục tiêu PTE —<br />
-              cho <span className="text-white font-semibold">visa · định cư · du học · tốt&nbsp;nghiệp</span>.
-            </motion.p>
+            {/* Subheadline */}
+            <p className="text-base sm:text-lg leading-relaxed text-slate-650 max-w-xl">
+              Lộ trình đồng hành cá nhân hóa giúp bạn lấy lại nền tảng phát âm chuẩn xác, làm chủ Pearson AI để đạt điểm số mong muốn trong thời gian ngắn nhất.
+            </p>
 
-            {/* ── CTA block ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 }}
-              className="flex flex-col gap-4 items-center lg:items-start"
-            >
-              {/* CTA row: button + price */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-center lg:justify-start gap-x-5 gap-y-3">
-                <a
-                  href={CHECKOUT_URL}
-                  className="group relative inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-black text-base sm:text-lg text-white overflow-hidden transition-all hover:-translate-y-1 cursor-pointer w-full sm:w-auto"
-                  style={{
-                    background: `linear-gradient(135deg, ${PINK}, ${PINK_TEXT})`,
-                    boxShadow: "0 0 0 1px rgba(255,77,166,0.5), 0 8px 32px rgba(255,77,166,0.4)",
-                  }}
+            {/* Interactive Target Selector (Prep.vn Style) */}
+            <div className="w-full max-w-xl bg-white border border-slate-200/80 rounded-2xl p-5 text-left shadow-sm">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-3">
+                CHỌN TARGET ĐỂ XEM LỘ TRÌNH PHÙ HỢP:
+              </span>
+              <div className="grid grid-cols-4 gap-2 mb-4">
+                {Object.keys(targetDetails).map((target) => {
+                  const isActive = activeTarget === target;
+                  return (
+                    <button
+                      key={target}
+                      type="button"
+                      onClick={() => setActiveTarget(target)}
+                      className={`py-2.5 rounded-xl text-sm font-black transition-all cursor-pointer relative ${
+                        isActive
+                          ? "bg-primary text-white shadow-sm"
+                          : "bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/50"
+                      }`}
+                    >
+                      {isActive && (
+                        <motion.span
+                          layoutId="activeHeroPill"
+                          className="absolute inset-0 bg-primary rounded-xl -z-10"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                      PTE {target}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Target info container */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTarget}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.18 }}
+                  className="space-y-2"
                 >
-                  <Zap className="w-5 h-5" />
-                  <span>Đăng Ký Ngay</span>
-                  <span className="font-extrabold whitespace-nowrap">– 5.999.000đ</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span className="text-xs font-bold text-slate-700">Tương đương:</span>
+                    <span className="text-xs font-black text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200/60">
+                      IELTS {targetDetails[activeTarget].ielts}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 leading-relaxed">
+                    {targetDetails[activeTarget].purpose}
+                  </p>
+                  <div className="flex items-start gap-2 pt-2 border-t border-slate-100 mt-2 text-xs text-slate-700 font-semibold">
+                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                    <span>{targetDetails[activeTarget].highlight}</span>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* CTA block */}
+            <div className="flex flex-col gap-4 w-full sm:w-auto items-center lg:items-start">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-center lg:justify-start gap-x-6 gap-y-4 w-full sm:w-auto">
+                <a
+                  href="#enroll"
+                  className="btn-primary gap-2.5 px-8 py-4 text-base w-full sm:w-auto hover:-translate-y-0.5"
+                >
+                  <MessageCircle className="w-5 h-5 fill-current" />
+                  <span>Nhận tư vấn lộ trình</span>
+                  <ArrowRight className="w-4 h-4" />
                 </a>
 
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm" style={{ color: GRAY }}>
-                    Giá gốc{" "}
-                    <span className="line-through decoration-2" style={{ color: "rgba(169,156,192,0.55)", textDecorationColor: "rgba(255,77,166,0.7)" }}>10.500.000đ</span>
+                <div className="flex flex-col text-xs text-slate-500 text-left">
+                  <span>
+                    Ưu đãi tháng này: <span className="font-bold text-slate-800 text-sm">{pricing.currentPrice}</span> (Giá gốc: <span className="line-through">{pricing.originalPrice}</span>)
                   </span>
-                  <span className="text-sm" style={{ color: GRAY }}>
-                    Tiết kiệm <span className="text-white font-bold">4.501.000đ (43%)</span>
+                  <span>
+                    Tiết kiệm ngay <span className="text-emerald-600 font-semibold">{pricing.savings}</span>
                   </span>
                 </div>
               </div>
 
-              {/* Gift line (gold) */}
-              <p className="flex items-start justify-center lg:justify-start gap-1.5 text-sm font-medium" style={{ color: GOLD }}>
-                <span className="shrink-0">🎁</span>
-                <span>Đăng ký trong tháng 7 — tặng quyền truy cập web chữa bộ tủ PTE Talents, dùng không giới hạn 90 ngày (trị giá 2.999.000đ)</span>
-              </p>
+              {/* Gift bonus */}
+              <div className="flex items-start gap-2 max-w-xl text-slate-600 text-xs text-left bg-amber-50 border border-amber-200/60 rounded-xl p-3 mt-1">
+                <span className="text-amber-500 font-bold shrink-0">🎁 Quà tặng:</span>
+                <span>{pricing.giftDesc}</span>
+              </div>
+            </div>
 
-              {/* Secondary button — cyberpunk neon with blinking glow */}
-              <motion.a
-                href="#roadmap"
-                className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-base text-white overflow-hidden self-center lg:self-start cursor-pointer"
-                style={{
-                  background: "linear-gradient(135deg, rgba(255,77,166,0.14), rgba(255,77,166,0.03))",
-                  border: `1.5px solid ${PINK}`,
-                  textShadow: "0 0 8px rgba(255,77,166,0.45)",
-                }}
-                animate={{
-                  boxShadow: [
-                    "0 0 5px rgba(255,77,166,0.3), inset 0 0 6px rgba(255,77,166,0.10)",
-                    "0 0 28px rgba(255,77,166,0.85), inset 0 0 16px rgba(255,77,166,0.32)",
-                    "0 0 5px rgba(255,77,166,0.3), inset 0 0 6px rgba(255,77,166,0.10)",
-                  ],
-                }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                whileHover={{ scale: 1.04 }}
-              >
-                <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                <Play className="w-4 h-4 relative" style={{ color: PINK_TEXT }} />
-                <span className="relative">Xem lộ trình 30 ngày</span>
-              </motion.a>
-            </motion.div>
-
-            {/* ── Trust bar ── */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-              className="flex items-center justify-center lg:justify-start flex-wrap gap-x-4 gap-y-2 pt-4 border-t border-white/10 text-sm w-full max-w-xl"
-            >
-              <span>
-                <span className="text-white font-bold">500+</span> <span style={{ color: GRAY }}>học viên</span>
+            {/* Trust highlights */}
+            <div className="flex items-center justify-center lg:justify-start flex-wrap gap-x-5 gap-y-2 pt-4 border-t border-slate-100 text-xs text-slate-500 w-full max-w-xl">
+              <span className="flex items-center gap-1">
+                <span className="font-bold text-slate-800">500+</span> học viên ôn luyện
               </span>
-              <span style={{ color: MUTED }}>·</span>
-              <span>
-                ⭐ <span className="text-white font-bold">4.9</span> <span style={{ color: GRAY }}>đánh giá</span>
+              <span className="text-slate-200">|</span>
+              <span className="flex items-center gap-1">
+                <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                <span className="font-bold text-slate-800">4.9</span> đánh giá chất lượng
               </span>
-              <span style={{ color: MUTED }}>·</span>
-              <span style={{ color: GRAY }}>
-                Hỗ trợ <span className="text-white font-bold">24/7</span> qua Zalo
+              <span className="text-slate-200">|</span>
+              <span className="flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5 text-primary" />
+                Hỗ trợ chuyên môn 1-1 qua Zalo
               </span>
-            </motion.div>
+            </div>
           </motion.div>
 
-          {/* ══ RIGHT — cyberpunk portrait panel ══ */}
+          {/* ══ RIGHT — Teacher Slideshow Card (Transitions every 4-6s) ══ */}
           <motion.div
-            initial={{ opacity: 0, x: 40, scale: 0.96 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
-            className="relative w-full max-w-[360px] mx-auto lg:mx-0"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="relative w-full max-w-[370px] mx-auto lg:mx-0 z-10"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
-            {/* offset frame accents */}
-            <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 rounded-tl-3xl pointer-events-none z-20"
-              style={{ borderColor: "rgba(255,77,166,0.55)", boxShadow: "0 0 16px rgba(255,77,166,0.3)" }} />
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 rounded-br-3xl pointer-events-none z-20"
-              style={{ borderColor: "rgba(255,77,166,0.5)", boxShadow: "0 0 16px rgba(255,77,166,0.28)" }} />
+            {/* Shadow decorative layers */}
+            <div className="absolute top-4 -left-4 w-full h-full rounded-[2rem] bg-slate-100/90 -z-10" />
+            <div className="absolute -bottom-4 right-4 w-full h-full rounded-[2rem] border border-slate-200/60 -z-10" />
 
-            <div className="relative w-full h-[320px] lg:h-[460px] rounded-[2rem] overflow-hidden neon-border cyber-corner"
-              style={{ background: "#0d0722", border: "1px solid rgba(255,77,166,0.25)" }}>
-              {/* grid */}
-              <div className="absolute inset-0 cyber-grid-bg opacity-60 pointer-events-none" />
-              {/* radial glow */}
-              <motion.div
-                className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[380px] h-[380px] rounded-full blur-[90px] pointer-events-none"
-                style={{ background: "rgba(255,77,166,0.28)" }}
-                animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-              />
+            {/* Main Image Slider Frame */}
+            <div className="relative w-full h-[350px] lg:h-[450px] rounded-[2rem] overflow-hidden bg-slate-100 shadow-md border border-slate-250 flex items-end group">
+              
+              {/* Slideshow image container */}
+              <div className="relative w-full h-full overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentImgIndex}
+                    src={teacherImages[currentImgIndex].src}
+                    alt={teacherImages[currentImgIndex].alt}
+                    initial={{ opacity: 0, x: 15 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -15 }}
+                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                    className="w-full h-full object-cover object-top absolute inset-0"
+                  />
+                </AnimatePresence>
+              </div>
 
-              {/* floating particles */}
-              {panelParticles.map((p, i) => (
-                <motion.span
-                  key={i}
-                  className="absolute rounded-full pointer-events-none z-10"
-                  style={{
-                    left: p.left, top: p.top, width: p.size, height: p.size,
-                    background: p.color, boxShadow: `0 0 ${p.size * 2}px ${p.color}`,
-                  }}
-                  animate={{ y: [0, -20, 0], opacity: [0, 0.8, 0] }}
-                  transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
-                />
-              ))}
+              {/* Navigation Arrows (Visible on hover) */}
+              <button
+                type="button"
+                onClick={handlePrevImage}
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white border border-slate-200 flex items-center justify-center text-slate-700 shadow-sm cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={handleNextImage}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white border border-slate-200 flex items-center justify-center text-slate-700 shadow-sm cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
 
-              {/* scanline sweep */}
-              <motion.div
-                className="absolute left-0 right-0 h-[2px] pointer-events-none z-20"
-                style={{ background: `linear-gradient(90deg, transparent, ${PINK}cc, transparent)` }}
-                initial={{ top: "0%" }}
-                animate={{ top: "100%" }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}
-              />
+              {/* Glassmorphic Active Tag (Credential info display) */}
+              <div className="absolute bottom-4 left-4 right-4 bg-white/85 backdrop-blur-md border border-slate-200/60 rounded-xl px-3 py-2 flex items-center justify-between shadow-sm">
+                <div className="flex flex-col text-left">
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">GIẢNG VIÊN ĐỒNG HÀNH</span>
+                  <span className="text-xs font-black text-slate-800 mt-0.5">Cô Nguyễn Thị Thuỷ</span>
+                </div>
+                <span className="text-[10px] font-bold text-primary bg-blue-50 border border-blue-100/50 px-2.5 py-1 rounded-lg">
+                  {teacherImages[currentImgIndex].label}
+                </span>
+              </div>
 
-              {/* portrait — tight crop, fills width */}
-              <img
-                src={teacherCyber}
-                alt="Cô Nguyễn Thị Thuỷ — chuyên gia luyện thi PTE"
-                className="absolute inset-0 w-full h-full object-cover object-top z-10"
-                style={{ filter: "drop-shadow(0 10px 34px rgba(255,77,166,0.35))" }}
-              />
+              {/* Slide Progress Dots */}
+              <div className="absolute top-4 right-4 flex gap-1 bg-slate-950/20 backdrop-blur-xs px-2 py-1.5 rounded-full">
+                {teacherImages.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setCurrentImgIndex(idx)}
+                    className={`w-1.5 h-1.5 rounded-full transition-all cursor-pointer ${
+                      currentImgIndex === idx ? "bg-white w-3" : "bg-white/55 hover:bg-white/80"
+                    }`}
+                  />
+                ))}
+              </div>
 
             </div>
 
-            {/* name below photo */}
-            <div className="mt-6 text-center lg:text-left">
-              <span className="text-[11px] font-mono font-semibold tracking-[0.25em] uppercase" style={{ color: PINK_TEXT }}>
-                — Giảng viên
-              </span>
-              <p className="text-2xl font-extrabold text-white leading-tight mt-1" style={{ textShadow: "0 0 20px rgba(255,77,166,0.4)" }}>
-                Cô Nguyễn Thị Thuỷ
-              </p>
-            </div>
           </motion.div>
         </div>
       </div>

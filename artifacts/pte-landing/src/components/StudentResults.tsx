@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
-import { Quote, TrendingUp, ArrowRight, CheckCircle2, GraduationCap, ShieldCheck } from "lucide-react";
-import { CHECKOUT_URL } from "@/lib/links";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Quote, TrendingUp, ArrowRight, CheckCircle2, GraduationCap, ShieldCheck, FileText, MessageSquare, Video, Users, ChevronDown } from "lucide-react";
 
 // Featured testimonial (uploaded — Griffith University, Úc)
 import heroScore from "@assets/image_1783658727180.png";
@@ -48,9 +48,6 @@ import poster1 from "@assets/result-video-1-poster.jpg";
 import poster2 from "@assets/result-video-2-poster.jpg";
 import poster3 from "@assets/result-video-3-poster.jpg";
 
-const PINK = "hsl(330 100% 65%)";
-const CYAN = "hsl(180 100% 60%)";
-
 const heroSkills = [
   { skill: "Listening", val: "52" },
   { skill: "Reading", val: "55" },
@@ -86,9 +83,9 @@ const stories = [
 ];
 
 const videos = [
-  { src: video1, poster: poster1 },
-  { src: video2, poster: poster2 },
-  { src: video3, poster: poster3 },
+  { src: video1, poster: poster1, name: "Học viên Nguyễn Văn Hải", score: "PTE 50+", case: "Mất gốc cấp tốc" },
+  { src: video2, poster: poster2, name: "Học viên Trần Thị Hồng", score: "PTE 65+", case: "Cần nộp hồ sơ định cư" },
+  { src: video3, poster: poster3, name: "Học viên Lê Hoàng Nam", score: "PTE 79+", case: "Đạt học bổng toàn phần" },
 ];
 
 const beforeAfter = [
@@ -109,367 +106,340 @@ const feedback = [
 ];
 const classShots = [class1, class2, class3, class4, class5];
 
-/* ── Small mono block header ── */
-function BlockLabel({ tag, title, subtitle }: { tag: string; title: string; subtitle?: string }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="mb-8"
-    >
-      <div className="flex items-center gap-2 mb-2">
-        <span className="text-slate-500 text-[11px] font-mono tracking-widest">{tag}</span>
-        <span className="h-px flex-1 max-w-[80px]" style={{ background: `linear-gradient(90deg, ${PINK}, transparent)` }} />
-      </div>
-      <h3 className="text-2xl md:text-3xl font-extrabold text-white">{title}</h3>
-      {subtitle && <p className="text-slate-400 text-sm mt-2 max-w-2xl">{subtitle}</p>}
-    </motion.div>
-  );
-}
-
-/* ── Result frame (letterboxed on black so no crop) ── */
 function ProofImg({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
   return (
     <img
       src={src}
       alt={alt}
       loading="lazy"
-      className={`w-full object-contain bg-black ${className}`}
+      className={`w-full object-contain bg-slate-50 border border-slate-100 ${className}`}
     />
   );
 }
 
-/* ── Student story quote card ── */
-function StoryCard({ story, index }: { story: (typeof stories)[number]; index: number }) {
+interface StoryCardProps {
+  story: {
+    name: string;
+    meta: string;
+    chip: string;
+    thumb: string;
+    quote: string;
+  };
+  index: number;
+}
+
+function StoryCard({ story, index }: StoryCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="rounded-2xl p-6 flex flex-col"
-      style={{ background: "hsl(222 47% 7%)", border: "1px solid hsl(330 100% 65% / 0.22)" }}
-    >
-      <Quote className="w-7 h-7 mb-3" style={{ color: PINK, filter: "drop-shadow(0 0 8px hsl(330 100% 65% / 0.5))" }} />
-      <p className="text-slate-100 leading-relaxed mb-5 flex-1">“{story.quote}”</p>
-      <div className="rounded-xl overflow-hidden border border-white/10 mb-4">
-        <img src={story.thumb} alt={`Minh chứng của ${story.name}`} loading="lazy" className="w-full max-h-56 object-contain bg-black" />
-      </div>
-      <div className="flex items-center justify-between gap-2 mt-auto">
-        <div>
-          <div className="font-bold text-white text-sm">{story.name}</div>
-          <div className="text-[11px] text-slate-500">{story.meta}</div>
+    <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow transition-shadow duration-300 flex flex-col justify-between">
+      <div>
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+          <div className="flex flex-col text-left">
+            <span className="font-extrabold text-slate-800 text-sm">{story.name}</span>
+            <span className="text-[10px] text-slate-400 font-semibold mt-0.5">{story.meta}</span>
+          </div>
+          <span className="text-[10px] font-black text-primary bg-blue-50 px-2 py-0.5 rounded border border-blue-150">{story.chip}</span>
         </div>
-        <span className="inline-flex items-center gap-1.5 text-xs font-extrabold font-mono px-3 py-1 rounded-full whitespace-nowrap"
-          style={{ color: CYAN, background: "hsl(180 100% 60% / 0.1)", border: "1px solid hsl(180 100% 60% / 0.3)" }}>
-          {story.chip}
-        </span>
+        <Quote className="w-6 h-6 text-primary/10 mb-2" />
+        <p className="text-xs sm:text-sm text-slate-650 italic leading-relaxed text-left">{story.quote}</p>
       </div>
-    </motion.div>
+      {story.thumb && (
+        <div className="mt-4 rounded-xl overflow-hidden border border-slate-100 bg-slate-50 aspect-video flex items-center justify-center">
+          <img src={story.thumb} alt={story.name} className="w-full h-full object-cover" />
+        </div>
+      )}
+    </div>
   );
 }
 
 export default function StudentResults() {
+  const [activeTab, setActiveTab] = useState<"scores" | "chats" | "videos" | "atmosphere">("scores");
+  const [expandChats, setExpandChats] = useState(false);
+
+  const tabItems = [
+    { id: "scores" as const, label: "Bảng điểm thực tế", icon: <FileText className="w-4 h-4" /> },
+    { id: "chats" as const, label: "Nhận xét Zalo/FB", icon: <MessageSquare className="w-4 h-4" /> },
+    { id: "videos" as const, label: "Video chia sẻ", icon: <Video className="w-4 h-4" /> },
+    { id: "atmosphere" as const, label: "Tương tác lớp học", icon: <Users className="w-4 h-4" /> },
+  ];
+
   return (
-    <section id="results" className="py-28 bg-[#120A2E] text-white relative overflow-hidden cyber-grid-bg">
-      {/* Glow blobs */}
-      <motion.div className="absolute top-[5%] left-[-6%] rounded-full pointer-events-none"
-        style={{ width: 460, height: 460, background: "hsl(330 100% 65% / 0.1)", filter: "blur(110px)" }}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.9, 0.5] }}
-        transition={{ duration: 6, repeat: Infinity }} />
-      <motion.div className="absolute bottom-[8%] right-[-6%] rounded-full pointer-events-none"
-        style={{ width: 420, height: 420, background: "hsl(180 100% 60% / 0.08)", filter: "blur(90px)" }}
-        animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.8, 0.4] }}
-        transition={{ duration: 7, repeat: Infinity, delay: 1 }} />
-
-      {/* Top neon line */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
-        style={{ background: `linear-gradient(90deg, transparent, ${PINK}, ${CYAN}, transparent)`, boxShadow: "0 0 16px hsl(330 100% 65% / 0.6)" }} />
-
+    <section id="results" className="py-24 bg-slate-50 border-t border-slate-100 text-slate-800 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
 
-        {/* ── Section header ── */}
+        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <span className="text-slate-400 text-xs font-mono tracking-widest">▶ PROOF.LOG</span>
-            <motion.span className="w-2 h-2 rounded-full bg-primary"
-              animate={{ opacity: [1, 0, 1], scale: [1, 1.4, 1] }}
-              transition={{ duration: 1.2, repeat: Infinity }}
-              style={{ boxShadow: "0 0 8px hsl(330 100% 65%)" }} />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-200 bg-blue-50 text-primary text-xs font-bold mb-5 tracking-wide uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            Minh chứng chất lượng đào tạo
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-3">
-            <motion.span
-              style={{
-                background: `linear-gradient(90deg, ${PINK}, ${CYAN}, ${PINK})`,
-                backgroundSize: "200% auto",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                filter: "drop-shadow(0 0 20px hsl(330 100% 65% / 0.5))",
-                display: "inline-block",
-              }}
-              animate={{ backgroundPosition: ["0% center", "200% center"] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-            >
-              Kết quả thật từ học viên
-            </motion.span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-slate-900">
+            Kết Quả Đồng Hành Từ Học Viên
           </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Điểm số thật, feedback thật từ Zalo &amp; Facebook — không phải lời quảng cáo.
+          <p className="text-slate-650 text-base max-w-2xl mx-auto">
+            Học viên thật, bảng điểm thật và các cuộc hội thoại báo điểm chân thực. Chúng tôi tin rằng kết quả của người học là thước đo năng lực giảng dạy uy tín nhất.
           </p>
         </motion.div>
 
-        {/* ── Featured testimonial ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative rounded-3xl overflow-hidden mb-16"
-          style={{
-            background: "hsl(222 47% 7%)",
-            border: `1px solid ${PINK.replace(")", " / 0.3)")}`,
-            boxShadow: "0 0 50px hsl(330 100% 65% / 0.12)",
-          }}
-        >
-          {/* corner brackets */}
-          <div className="absolute top-3 left-3 w-5 h-5 border-t border-l pointer-events-none z-10" style={{ borderColor: CYAN, opacity: 0.6 }} />
-          <div className="absolute bottom-3 right-3 w-5 h-5 border-b border-r pointer-events-none z-10" style={{ borderColor: PINK, opacity: 0.6 }} />
+        {/* Tab switcher (Prep.vn/Edmicro style) */}
+        <div className="flex justify-center mb-12">
+          <div className="flex flex-wrap md:flex-nowrap gap-1.5 p-1 bg-white border border-slate-200 rounded-2xl shadow-sm">
+            {tabItems.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 px-5 py-3.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer relative ${
+                    isActive ? "text-primary" : "text-slate-500 hover:text-slate-800"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="activeResultsPill"
+                      className="absolute inset-0 bg-blue-50/80 border border-blue-100/50 rounded-xl"
+                      transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                    />
+                  )}
+                  <span className="relative z-10">{tab.icon}</span>
+                  <span className="relative z-10">{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-          <div className="grid lg:grid-cols-2 gap-0">
-            {/* Left: score screenshot */}
-            <div className="relative flex items-center justify-center p-8 lg:p-10"
-              style={{ background: "radial-gradient(circle at 50% 40%, hsl(330 100% 65% / 0.12), transparent 70%)" }}>
-              <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl max-w-[320px]"
-                style={{ boxShadow: "0 0 40px hsl(180 100% 60% / 0.18)" }}>
-                <img src={heroScore} alt="Kết quả PTE học viên tại Griffith University, tất cả kỹ năng trên 50 điểm" loading="lazy" className="w-full block" />
+        {/* Tab Content Panels */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.22 }}
+          >
+            {/* ══ TAB 1: SCORES (BẢNG ĐIỂM) ══ */}
+            {activeTab === "scores" && (
+              <div className="space-y-12">
+                {/* Featured case study (Griffith University) */}
+                <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+                  <div className="grid lg:grid-cols-2 gap-0">
+                    <div className="relative flex items-center justify-center p-8 bg-slate-50/50">
+                      <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-md max-w-[280px] bg-white">
+                        <img src={heroScore} alt="Kết quả PTE học viên tại Griffith University" loading="lazy" className="w-full block" />
+                      </div>
+                    </div>
+                    <div className="p-8 lg:p-12 flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-slate-200">
+                      <div className="flex items-center gap-2 mb-4">
+                        <span className="text-[10px] font-bold tracking-wider px-2.5 py-1 rounded-full bg-blue-50 text-primary border border-blue-100 uppercase">
+                          HV TIÊU BIỂU · OUTCOME
+                        </span>
+                        <span className="inline-flex items-center gap-1 text-xs text-slate-500 font-semibold">
+                          <GraduationCap className="w-3.5 h-3.5" /> Griffith University · Úc
+                        </span>
+                      </div>
+                      <Quote className="w-8 h-8 mb-3 text-primary/10" />
+                      <p className="text-base sm:text-lg leading-relaxed text-slate-700 font-semibold mb-6">
+                        “Vừa đi làm vừa ôn thi ở tuổi không còn trẻ, mình từng kẹt mãi ở 48-52 điểm, thiếu chuẩn nộp hồ sơ PR. Nhờ sự kèm cặp tận tâm của cô Thuỷ, mình đã bứt phá đạt kết quả vượt mong đợi — tất cả các kỹ năng đều trên 50!”
+                      </p>
+                      <div className="grid grid-cols-4 gap-2 mb-6">
+                        {heroSkills.map((s) => (
+                          <div key={s.skill} className="rounded-xl px-2 py-2 text-center bg-slate-50 border border-slate-200/60">
+                            <div className="text-lg font-black text-slate-800">{s.val}</div>
+                            <div className="text-[9px] text-slate-500 tracking-wider uppercase mt-0.5 font-bold">{s.skill}</div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                          <CheckCircle2 className="w-3.5 h-3.5" /> Mọi kỹ năng &gt; 50đ
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-blue-50 text-primary border border-blue-200">
+                          <ShieldCheck className="w-3.5 h-3.5" /> Đạt chuẩn nộp hồ sơ PR Úc
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Before/After panel & Individual cards */}
+                <div className="grid lg:grid-cols-2 gap-8">
+                  {beforeAfter.map((r, i) => (
+                    <div key={r.name} className="rounded-3xl p-6 bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
+                      <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+                        <span className="font-extrabold text-slate-800 text-base">{r.name}</span>
+                        <span className="inline-flex items-center gap-1 text-xs font-black px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-100">
+                          <TrendingUp className="w-3.5 h-3.5" /> Tăng vọt: {r.from} → {r.to}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <figure className="text-center">
+                          <div className="rounded-xl overflow-hidden border border-slate-150 shadow-inner bg-slate-50">
+                            <img src={r.before} alt="Trước" className="w-full h-36 object-contain" />
+                          </div>
+                          <figcaption className="text-[10px] text-slate-400 font-bold mt-2 uppercase tracking-wide">Điểm đầu vào · {r.from}đ</figcaption>
+                        </figure>
+                        <figure className="text-center">
+                          <div className="rounded-xl overflow-hidden border border-slate-150 shadow-inner bg-slate-50">
+                            <img src={r.after} alt="Sau" className="w-full h-36 object-contain" />
+                          </div>
+                          <figcaption className="text-[10px] text-emerald-600 font-bold mt-2 uppercase tracking-wide">Kết quả thi thật · {r.to}đ</figcaption>
+                        </figure>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Grid scorecards */}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {scoreCards.map((c) => (
+                    <div key={c.name} className="rounded-2xl p-4 bg-white border border-slate-200 shadow-sm flex flex-col">
+                      <div className="rounded-xl overflow-hidden border border-slate-100 mb-3 bg-slate-50 flex items-center justify-center" style={{ height: "180px" }}>
+                        <img src={c.img} alt={c.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="mt-auto pl-1">
+                        <span className="font-extrabold text-slate-800 text-sm block">{c.name}</span>
+                        <span className="text-xs font-bold text-primary block mt-0.5">{c.label}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Batch EMG Collage */}
+                <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm">
+                  <div className="flex items-center gap-2 mb-4 border-b border-slate-100 pb-3">
+                    <span className="w-1.5 h-3.5 bg-primary rounded-full" />
+                    <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">HÌNH ẢNH BẢNG ĐIỂM HỌC VIÊN TẬP THỂ TẠI EMG</span>
+                  </div>
+                  <div className="rounded-xl overflow-hidden bg-slate-50 max-h-[500px] flex items-center justify-center border border-slate-100">
+                    <img src={collageEmg} alt="Học viên EMG" className="w-full object-contain object-top" />
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* Right: quote */}
-            <div className="p-8 lg:p-12 flex flex-col justify-center">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-[11px] font-mono tracking-widest px-2 py-0.5 rounded-full"
-                  style={{ color: CYAN, background: "hsl(180 100% 60% / 0.1)", border: `1px solid ${CYAN.replace(")", " / 0.35)")}` }}>
-                  EVIDENCE_01
-                </span>
-                <span className="inline-flex items-center gap-1 text-[11px] font-mono tracking-wider text-slate-400">
-                  <GraduationCap className="w-3.5 h-3.5" /> Griffith University · Úc
-                </span>
+            {/* ══ TAB 2: CHATS (TIN NHẮN ZALO) ══ */}
+            {activeTab === "chats" && (
+              <div className="space-y-8">
+                {/* Student Story Quote Cards */}
+                <div className="grid md:grid-cols-3 gap-6">
+                  {stories.map((s, i) => (
+                    <StoryCard key={s.name} story={s} index={i} />
+                  ))}
+                </div>
+
+                {/* Expandable chat screenshot gallery (UX improvement!) */}
+                <div className="relative">
+                  <div
+                    className={`transition-all duration-500 overflow-hidden ${
+                      expandChats ? "max-h-[3000px]" : "max-h-[600px]"
+                    }`}
+                  >
+                    <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]">
+                      {feedback.map((src, i) => (
+                        <div key={i} className="mb-5 rounded-2xl overflow-hidden border border-slate-200 bg-white p-2 shadow-sm break-inside-avoid">
+                          <img src={src} alt={`Zalo feedback ${i}`} className="w-full rounded-xl block" />
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Gradient overlay when collapsed */}
+                    {!expandChats && (
+                      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-slate-50 via-slate-50/80 to-transparent pointer-events-none" />
+                    )}
+                  </div>
+
+                  {/* Show more button */}
+                  <div className="flex justify-center mt-6 relative z-10">
+                    <button
+                      type="button"
+                      onClick={() => setExpandChats(!expandChats)}
+                      className="btn-secondary py-3 px-8 text-sm gap-2 border border-slate-250 hover:bg-slate-50 flex items-center font-bold"
+                    >
+                      <span>{expandChats ? "Thu gọn bớt tin nhắn" : "Xem tất cả tin nhắn Zalo báo điểm"}</span>
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${expandChats ? "rotate-180" : ""}`} />
+                    </button>
+                  </div>
+                </div>
               </div>
+            )}
 
-              <Quote className="w-9 h-9 mb-3" style={{ color: PINK, filter: "drop-shadow(0 0 10px hsl(330 100% 65% / 0.6))" }} />
-              <p className="text-lg md:text-xl leading-relaxed text-slate-100 font-medium mb-6">
-                “Vừa đi làm vừa ôn thi ở tuổi không còn trẻ, mình từng kẹt mãi ở 48-52 điểm, thiếu chuẩn PR.
-                Nhờ khoá Speaking của cô Thuỷ, mình đạt kết quả vượt mong đợi — tất cả kỹ năng đều trên 50,
-                đủ điều kiện nộp hồ sơ PR!”
-              </p>
-
-              {/* Score chips */}
-              <div className="grid grid-cols-4 gap-2 mb-6">
-                {heroSkills.map((s) => (
-                  <div key={s.skill} className="rounded-xl px-2 py-2 text-center"
-                    style={{ background: "hsl(222 47% 10%)", border: "1px solid hsl(330 100% 65% / 0.2)" }}>
-                    <div className="text-xl font-extrabold font-mono" style={{ color: CYAN }}>{s.val}</div>
-                    <div className="text-[9px] text-slate-500 tracking-wider uppercase mt-0.5">{s.skill}</div>
+            {/* ══ TAB 3: VIDEOS ══ */}
+            {activeTab === "videos" && (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {videos.map((v, i) => (
+                  <div key={i} className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div className="flex items-center gap-2 px-5 py-4 border-b border-slate-100 bg-slate-50/50">
+                      <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+                      <span className="text-[10px] font-mono text-slate-500 tracking-wider font-bold">HV_VIDEO_0{i + 1}.MP4</span>
+                    </div>
+                    <div className="relative aspect-[9/16] bg-slate-900 flex items-center">
+                      <video
+                        src={v.src}
+                        poster={v.poster}
+                        controls
+                        preload="none"
+                        playsInline
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-4 border-t border-slate-100 bg-white">
+                      <div className="font-extrabold text-sm text-slate-800">{v.name}</div>
+                      <div className="flex justify-between items-center mt-1">
+                        <span className="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200/50">{v.score}</span>
+                        <span className="text-[10px] text-slate-400 font-semibold">{v.case}</span>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
+            )}
 
-              {/* Badges */}
-              <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full"
-                  style={{ color: "hsl(142 70% 70%)", background: "hsl(142 70% 45% / 0.12)", border: "1px solid hsl(142 70% 55% / 0.35)" }}>
-                  <CheckCircle2 className="w-3.5 h-3.5" /> Tất cả kỹ năng &gt; 50
-                </span>
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full"
-                  style={{ color: PINK, background: "hsl(330 100% 65% / 0.1)", border: `1px solid ${PINK.replace(")", " / 0.35)")}` }}>
-                  <ShieldCheck className="w-3.5 h-3.5" /> Đủ điều kiện nộp hồ sơ PR
-                </span>
+            {/* ══ TAB 4: ATMOSPHERE (HOẠT ĐỘNG LỚP HỌC) ══ */}
+            {activeTab === "atmosphere" && (
+              <div className="space-y-6">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {classShots.map((src, i) => (
+                    <div key={i} className="rounded-2xl overflow-hidden border border-slate-200 bg-white p-2.5 shadow-sm">
+                      <div className="rounded-xl overflow-hidden bg-slate-50 h-80 flex items-center justify-center">
+                        <img src={src} alt={`Class atmosphere ${i}`} className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] font-bold text-slate-400 text-center block mt-3 uppercase tracking-wider">
+                        Tương tác bài giảng lớp Zalo Cô Thủy #{i + 1}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </div>
-        </motion.div>
+            )}
+          </motion.div>
+        </AnimatePresence>
 
-        {/* ── Student stories ── */}
-        <div className="mb-24">
-          <BlockLabel tag="▶ STORY.LOG" title="Học viên kể lại hành trình" subtitle="Những chia sẻ thật, bằng chính lời của học viên đã đồng hành cùng cô Thuỷ." />
-          <div className="grid md:grid-cols-3 gap-6">
-            {stories.map((s, i) => (
-              <StoryCard key={s.name} story={s} index={i} />
-            ))}
-          </div>
-        </div>
-
-        {/* ── Videos ── */}
-        <div className="mb-24">
-          <BlockLabel tag="▶ VIDEO.FEED" title="Video minh chứng thật từ học viên" subtitle="Học viên tự quay, chia sẻ trực tiếp về hành trình và kết quả của mình." />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {videos.map((v, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="relative rounded-2xl overflow-hidden"
-                style={{ border: `1px solid ${CYAN.replace(")", " / 0.3)")}`, background: "hsl(222 47% 6%)", boxShadow: "0 0 24px hsl(180 100% 60% / 0.1)" }}
-              >
-                <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/5">
-                  <span className="w-2 h-2 rounded-full" style={{ background: PINK, boxShadow: `0 0 6px ${PINK}` }} />
-                  <span className="text-[11px] font-mono text-slate-400 tracking-wider">HV_0{i + 1}.MP4</span>
-                </div>
-                <video
-                  src={v.src}
-                  poster={v.poster}
-                  controls
-                  preload="none"
-                  playsInline
-                  className="w-full aspect-[9/16] object-cover bg-black"
-                />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Before / after scores ── */}
-        <div className="mb-24">
-          <BlockLabel tag="▶ SCORE.DELTA" title="Điểm số trước &amp; sau khi học" subtitle="Kết quả thi thật của học viên — bằng chứng rõ ràng về mức tăng điểm." />
-
-          <div className="grid md:grid-cols-2 gap-6 mb-6">
-            {beforeAfter.map((r, i) => (
-              <motion.div
-                key={r.name}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="rounded-2xl p-5"
-                style={{ background: "hsl(222 47% 7%)", border: "1px solid hsl(330 100% 65% / 0.22)" }}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <span className="font-bold text-white">{r.name}</span>
-                  <span className="inline-flex items-center gap-1.5 text-sm font-extrabold font-mono px-3 py-1 rounded-full"
-                    style={{ color: "hsl(142 70% 70%)", background: "hsl(142 70% 45% / 0.12)", border: "1px solid hsl(142 70% 55% / 0.3)" }}>
-                    <TrendingUp className="w-4 h-4" /> {r.from} → {r.to}
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <figure>
-                    <ProofImg src={r.before} alt={`Điểm PTE ${r.name} trước khi học`} className="h-48 rounded-lg" />
-                    <figcaption className="text-center text-[11px] text-slate-500 mt-2 tracking-wider uppercase">Trước · {r.from}</figcaption>
-                  </figure>
-                  <figure>
-                    <ProofImg src={r.after} alt={`Điểm PTE ${r.name} sau khi học`} className="h-48 rounded-lg" />
-                    <figcaption className="text-center text-[11px] font-semibold mt-2 tracking-wider uppercase" style={{ color: "hsl(142 70% 70%)" }}>Sau · {r.to}</figcaption>
-                  </figure>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {scoreCards.map((c, i) => (
-              <motion.div
-                key={c.name}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="rounded-2xl p-4 flex flex-col"
-                style={{ background: "hsl(222 47% 7%)", border: "1px solid hsl(180 100% 60% / 0.2)" }}
-              >
-                <ProofImg src={c.img} alt={`Kết quả PTE ${c.name}`} className="h-60 rounded-lg mb-3" />
-                <div className="mt-auto">
-                  <div className="font-semibold text-white text-sm">{c.name}</div>
-                  <div className="text-xs font-mono mt-0.5" style={{ color: CYAN }}>{c.label}</div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Collage: many students ── */}
+        {/* Closing CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-24"
+          className="text-center rounded-3xl p-10 bg-gradient-to-br from-primary via-primary/95 to-blue-900 text-white shadow-lg mt-16 relative overflow-hidden"
         >
-          <BlockLabel tag="▶ BATCH.RESULTS" title="Hàng loạt học viên đạt điểm" subtitle="Không chỉ 1-2 trường hợp cá biệt — kết quả thật của nhiều học viên tại EMG Hồ Chí Minh." />
-          <div className="rounded-2xl overflow-hidden p-4" style={{ background: "hsl(222 47% 7%)", border: "1px solid hsl(330 100% 65% / 0.2)" }}>
-            <ProofImg src={collageEmg} alt="Bộ sưu tập điểm thi PTE của nhiều học viên" className="max-h-[620px] rounded-lg" />
-          </div>
-        </motion.div>
+          <div className="absolute -top-24 -right-24 w-60 h-60 bg-white/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-60 h-60 bg-amber-400/5 rounded-full blur-3xl pointer-events-none" />
 
-        {/* ── Feedback gallery ── */}
-        <div className="mb-24">
-          <BlockLabel tag="▶ INBOX.LOG" title="Học viên nhắn gì cho cô Thuỷ?" subtitle="Feedback thật từ Zalo &amp; Facebook của học viên." />
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]">
-            {feedback.map((src, i) => (
-              <motion.img
-                key={i}
-                src={src}
-                alt={`Feedback học viên số ${i + 1}`}
-                loading="lazy"
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4 }}
-                className="w-full mb-5 rounded-xl border border-white/10 break-inside-avoid"
-                style={{ boxShadow: "0 0 20px rgba(0,0,0,0.4)" }}
-              />
-            ))}
-          </div>
-        </div>
+          <h4 className="text-xl md:text-2xl font-extrabold mb-2 text-white">Bạn sẽ là câu chuyện thành công tiếp theo?</h4>
+          <p className="text-xs sm:text-sm text-slate-200 max-w-md mx-auto mb-6">Đồng hành sát sao từng ngày, kiểm soát chặt chẽ tiến độ để đảm bảo học viên cán đích.</p>
 
-        {/* ── Class atmosphere ── */}
-        <div className="mb-20">
-          <BlockLabel tag="▶ LIVE.CLASS" title="Không khí lớp học thật" subtitle="Bình luận trực tiếp của học viên ngay trong buổi học trên Zalo." />
-          <div className="flex gap-4 overflow-x-auto pb-4 snap-x -mx-1 px-1">
-            {classShots.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt={`Không khí lớp học số ${i + 1}`}
-                loading="lazy"
-                className="h-[420px] w-auto rounded-xl border border-white/10 shrink-0 snap-start bg-black object-contain"
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* ── Closing CTA ── */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="text-center rounded-3xl px-6 py-12 relative overflow-hidden"
-          style={{ background: "radial-gradient(circle at 50% 0%, hsl(330 100% 65% / 0.12), transparent 70%), hsl(222 47% 7%)", border: "1px solid hsl(330 100% 65% / 0.25)" }}
-        >
-          <p className="text-slate-300 text-lg mb-1">Và còn <span className="font-bold text-white">hàng trăm minh chứng khác</span> từ học viên.</p>
-          <p className="text-slate-500 text-sm mb-7">Bạn sẽ là kết quả tiếp theo?</p>
-          <motion.a
-            href={CHECKOUT_URL}
-            className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-extrabold text-base relative overflow-hidden group"
-            style={{ background: `linear-gradient(135deg, ${PINK}, hsl(310 100% 60%))`, color: "#fff", letterSpacing: "0.04em" }}
-            animate={{ boxShadow: ["0 0 20px hsl(330 100% 65% / 0.35)", "0 0 32px hsl(330 100% 65% / 0.5)", "0 0 20px hsl(330 100% 65% / 0.35)"] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            whileHover={{ scale: 1.06 }}
-            whileTap={{ scale: 0.97 }}
+          <a
+            href="#enroll"
+            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white text-primary hover:bg-slate-50 font-bold rounded-full text-sm sm:text-base shadow-md transition-all cursor-pointer hover:scale-102"
           >
-            <motion.div className="absolute inset-0 pointer-events-none"
-              style={{ background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%)" }}
-              animate={{ x: ["-100%", "200%"] }}
-              transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }} />
-            <span className="relative z-10">Đăng ký ngay</span>
-            <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-2 transition-transform" />
-          </motion.a>
+            <span>Đăng ký nhận tư vấn ngay</span>
+            <ArrowRight className="w-4 h-4 text-primary" />
+          </a>
         </motion.div>
 
       </div>

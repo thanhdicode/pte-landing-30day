@@ -12,9 +12,11 @@ import WhoIsThisFor from './components/WhoIsThisFor';
 import Roadmap from './components/Roadmap';
 import TargetScores from './components/TargetScores';
 import StudentResults from './components/StudentResults';
+import FAQ from './components/FAQ';
 import FooterCTA from './components/FooterCTA';
 import Footer from './components/Footer';
 import FloatingCTA from './components/FloatingCTA';
+import Ecosystem from './components/Ecosystem';
 
 const queryClient = new QueryClient();
 
@@ -27,8 +29,10 @@ function LandingPage() {
         <TeacherIntro />
         <WhoIsThisFor />
         <Roadmap />
+        <Ecosystem />
         <TargetScores />
         <StudentResults />
+        <FAQ />
         <FooterCTA />
       </main>
       <Footer />

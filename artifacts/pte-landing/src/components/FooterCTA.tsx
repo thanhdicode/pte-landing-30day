@@ -1,344 +1,206 @@
-import { motion, animate } from "framer-motion";
-import { ArrowRight, Zap, Shield, Star } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { CHECKOUT_URL } from "@/lib/links";
-
-/* ── Floating particle ── */
-function Particle({ x, y, size, color, duration, delay }: {
-  x: number; y: number; size: number; color: string; duration: number; delay: number;
-}) {
-  return (
-    <motion.div
-      className="absolute rounded-full pointer-events-none"
-      style={{ left: `${x}%`, top: `${y}%`, width: size, height: size, background: color,
-               boxShadow: `0 0 ${size * 3}px ${color}`, opacity: 0 }}
-      animate={{ y: [-20, 20, -20], opacity: [0, 0.8, 0], scale: [0.6, 1.2, 0.6] }}
-      transition={{ duration, delay, repeat: Infinity, ease: "easeInOut" }}
-    />
-  );
-}
-
-/* ── Typewriter ── */
-function Typewriter({ text, className, style }: { text: string; className?: string; style?: React.CSSProperties }) {
-  const [displayed, setDisplayed] = useState("");
-  const [started, setStarted] = useState(false);
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setStarted(true); }, { threshold: 0.5 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!started) return;
-    let i = 0;
-    setDisplayed("");
-    const interval = setInterval(() => {
-      setDisplayed(text.slice(0, i + 1));
-      i++;
-      if (i >= text.length) clearInterval(interval);
-    }, 55);
-    return () => clearInterval(interval);
-  }, [started, text]);
-
-  return (
-    <span ref={ref} className={className} style={style}>
-      {displayed}
-      <motion.span
-        animate={{ opacity: [1, 0] }}
-        transition={{ duration: 0.5, repeat: Infinity }}
-        style={{ borderRight: "3px solid currentColor", marginLeft: 2 }}
-      />
-    </span>
-  );
-}
-
-/* ── Animated counter ── */
-function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
-  const [val, setVal] = useState(0);
-  const [started, setStarted] = useState(false);
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setStarted(true); }, { threshold: 0.5 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!started) return;
-    const controls = animate(0, to, { duration: 1.8, ease: "easeOut", onUpdate: v => setVal(Math.round(v)) });
-    return controls.stop;
-  }, [started, to]);
-
-  return <span ref={ref}>{val}{suffix}</span>;
-}
-
-const particles = Array.from({ length: 20 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 5 + 2,
-  color: i % 2 === 0 ? "hsl(180 100% 60%)" : "hsl(205 95% 66%)",
-  duration: Math.random() * 4 + 3,
-  delay: Math.random() * 3,
-}));
-
-const urgencyItems = [
-  { icon: <Shield className="w-4 h-4" />, text: "Cam kết đầu ra" },
-  { icon: <Star className="w-4 h-4" />, text: "Hơn 500+ học viên" },
-];
+import { motion } from "framer-motion";
+import { ArrowRight, Send, ShieldCheck, Gift, Users } from "lucide-react";
+import { useState } from "react";
+import { siteConfig, pricing } from "../data/course-content";
+import { useToast } from "../hooks/use-toast";
 
 export default function FooterCTA() {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    target: "50+",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.phone) {
+      toast({
+        variant: "destructive",
+        title: "Thiếu thông tin",
+        description: "Vui lòng nhập đầy đủ họ tên và số điện thoại liên hệ.",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      toast({
+        title: "Đăng ký thành công! 🎉",
+        description: "Cô Thuỷ đã nhận được thông tin và sẽ liên hệ tư vấn trực tiếp cho bạn qua Zalo/SĐT trong vòng 24h.",
+      });
+      setFormData({ name: "", phone: "", target: "50+", message: "" });
+    }, 1000);
+  };
+
   return (
-    <>
-    <section id="enroll" className="py-32 relative overflow-hidden bg-[#120A2E] text-white text-center cyber-scanlines">
+    <section id="enroll" className="py-24 bg-slate-50 border-t border-slate-200/50 relative overflow-hidden">
+      {/* Visual background details */}
+      <div className="absolute inset-0 opacity-[0.01] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]" />
 
-      {/* Floating particles */}
-      {particles.map(p => <Particle key={p.id} {...p} />)}
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
 
-      {/* Cyber grid */}
-      <div className="absolute inset-0 cyber-grid-bg opacity-50 pointer-events-none" />
-
-      {/* Neon blobs — animated */}
-      <motion.div
-        className="absolute top-[-15%] left-1/2 -translate-x-1/2 rounded-full pointer-events-none"
-        style={{ width: 700, height: 400, background: "hsl(200 100% 60% / 0.14)", filter: "blur(90px)" }}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-[-10%] left-[5%] rounded-full pointer-events-none"
-        style={{ width: 300, height: 300, background: "hsl(180 100% 60% / 0.14)", filter: "blur(70px)" }}
-        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.9, 0.5] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-      />
-      <motion.div
-        className="absolute bottom-[-10%] right-[5%] rounded-full pointer-events-none"
-        style={{ width: 300, height: 300, background: "hsl(190 100% 60% / 0.10)", filter: "blur(70px)" }}
-        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.9, 0.5] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-      />
-
-      {/* Animated scanline sweep */}
-      <motion.div
-        className="absolute left-0 right-0 h-[2px] pointer-events-none"
-        style={{ background: "linear-gradient(90deg, transparent, hsl(180 100% 60% / 0.7), hsl(200 100% 65% / 0.5), transparent)" }}
-        animate={{ top: ["0%", "100%"] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-      />
-
-      {/* Top neon line */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
-        style={{ background: "linear-gradient(90deg, transparent, hsl(180 100% 60%), hsl(200 100% 65%), hsl(180 100% 60%), transparent)", boxShadow: "0 0 20px hsl(190 100% 60% / 0.6)" }} />
-
-      {/* Corner brackets */}
-      {[
-        "top-6 left-6 border-t-2 border-l-2 border-cyan-400/50",
-        "top-6 right-6 border-t-2 border-r-2 border-cyan-400/50",
-        "bottom-6 left-6 border-b-2 border-l-2 border-cyan-400/50",
-        "bottom-6 right-6 border-b-2 border-r-2 border-cyan-400/50",
-      ].map((cls, i) => (
-        <motion.div key={i} className={`absolute w-16 h-16 pointer-events-none ${cls}`}
-          animate={{ opacity: [0.4, 1, 0.4] }}
-          transition={{ duration: 2, repeat: Infinity, delay: i * 0.4 }} />
-      ))}
-
-      <div className="max-w-5xl mx-auto px-6 relative z-10">
-
-        {/* System tag */}
-        <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center justify-center gap-3 mb-6"
-        >
-          <span className="text-slate-500 text-xs font-mono tracking-widest">▶ SYSTEM.ENROLL</span>
-          <motion.span
-            className="w-2 h-2 rounded-full bg-cyan-400"
-            animate={{ opacity: [1, 0, 1], scale: [1, 1.4, 1] }}
-            transition={{ duration: 1.2, repeat: Infinity }}
-            style={{ boxShadow: "0 0 8px hsl(180 100% 60%)" }}
-          />
-          <span className="text-slate-500 text-xs font-mono tracking-widest">SỐ LƯỢNG GIỚI HẠN</span>
-        </motion.div>
-
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-cyan-400/40 mb-10"
-          style={{ background: "hsl(190 100% 60% / 0.08)", boxShadow: "0 0 20px hsl(190 100% 60% / 0.15)" }}
-        >
-          <motion.div animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-            <Zap className="w-4 h-4 text-cyan-300" style={{ filter: "drop-shadow(0 0 6px hsl(190 100% 60%))" }} />
-          </motion.div>
-          <span className="text-cyan-200 font-semibold text-sm tracking-wide">Đăng ký ngay hôm nay</span>
-        </motion.div>
-
-        {/* Main heading — staggered lines */}
-        <div className="mb-6">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-6xl font-extrabold leading-[1.15] text-white block"
-          >
-            Sẵn sàng
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.12 }}
-            className="text-4xl md:text-6xl font-extrabold leading-[1.15] block"
-            style={{
-              background: "linear-gradient(90deg, hsl(185 100% 62%), hsl(205 100% 70%))",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              color: "transparent",
-            }}
-          >
-            BỨT PHÁ PTE
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.24 }}
-            className="text-4xl md:text-6xl font-extrabold leading-[1.15] text-white block"
-          >
-            trong <span className="text-cyan-300">30 ngày?</span>
-          </motion.div>
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-200 bg-blue-50 text-primary text-xs font-bold mb-5 tracking-wide uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            Nhận tư vấn miễn phí
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">
+            Bứt Phá Điểm Số PTE Ngay Hôm Nay
+          </h2>
+          <p className="text-slate-650 text-base max-w-xl mx-auto">
+            Để lại thông tin, cô Thuỷ sẽ trực tiếp liên hệ, kiểm tra trình độ và tư vấn lộ trình học phù hợp nhất cho bạn.
+          </p>
         </div>
 
-        {/* Emotional copy */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mb-12"
-        >
-          <p className="text-lg md:text-xl text-slate-300 mb-2 max-w-2xl mx-auto leading-relaxed">
-            Đừng để tiếng Anh là rào cản ngăn bạn đến với ước mơ —
-          </p>
-          <p className="text-xl md:text-2xl font-bold text-white max-w-2xl mx-auto leading-relaxed">
-            visa · định cư · tốt nghiệp đang chờ bạn phía trước.
-          </p>
-        </motion.div>
+        <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-8 items-start max-w-5xl mx-auto">
 
-        {/* Animated stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.45 }}
-          className="flex justify-center gap-10 mb-12"
-        >
-          {[
-            { to: 500, suffix: "+", label: "Học viên" },
-            { to: 30,  suffix: " ngày", label: "Lộ trình" },
-            { to: 4.9, suffix: "★", label: "Đánh giá", isFloat: true },
-          ].map((s, i) => (
-            <div key={i} className="text-center">
-              <div className="text-3xl font-extrabold text-cyan-300"
-                style={{ textShadow: "0 0 16px hsl(190 100% 60% / 0.5)" }}>
-                {s.isFloat
-                  ? <span>4.9★</span>
-                  : <Counter to={s.to} suffix={s.suffix} />}
+          {/* ── Left: Consultation Form ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-sm"
+          >
+            <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+              <Send className="w-4 h-4 text-primary" />
+              <span>Thông tin đăng ký tư vấn</span>
+            </h3>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="name" className="block text-xs font-bold text-slate-600 uppercase mb-2">Họ và tên *</label>
+                <input
+                  type="text"
+                  id="name"
+                  required
+                  placeholder="Ví dụ: Nguyễn Văn A"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl border border-slate-250 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-slate-800 text-sm"
+                />
               </div>
-              <div className="text-xs text-slate-500 mt-1 tracking-widest uppercase">{s.label}</div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="phone" className="block text-xs font-bold text-slate-600 uppercase mb-2">Số điện thoại (có Zalo) *</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    required
+                    placeholder="Ví dụ: 0357930867"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl border border-slate-250 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-slate-800 text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="target" className="block text-xs font-bold text-slate-600 uppercase mb-2">Mục tiêu PTE cần đạt</label>
+                  <select
+                    id="target"
+                    value={formData.target}
+                    onChange={(e) => setFormData({ ...formData, target: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl border border-slate-250 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-slate-800 text-sm cursor-pointer"
+                  >
+                    <option value="24+">Target 24+ (Visa 462 / Du học nghề)</option>
+                    <option value="50+">Target 50+ (Đại học / Tốt nghiệp)</option>
+                    <option value="65+">Target 65+ (Thạc sĩ / Định cư)</option>
+                    <option value="79+">Target 79+ (Cộng tối đa điểm định cư)</option>
+                    <option value="Khác">Chưa xác định mục tiêu</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-xs font-bold text-slate-600 uppercase mb-2">Chia sẻ thêm về khó khăn của bạn (nếu có)</label>
+                <textarea
+                  id="message"
+                  rows={3}
+                  placeholder="Ví dụ: Mình mất gốc phát âm hoàn toàn, cần thi gấp trước tháng 10..."
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl border border-slate-250 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-slate-800 text-sm resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full btn-primary py-3.5 text-sm sm:text-base mt-2 gap-2 cursor-pointer shadow-md hover:shadow-lg disabled:opacity-50"
+              >
+                <span>{isSubmitting ? "Đang gửi thông tin..." : "Gửi yêu cầu tư vấn miễn phí"}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </form>
+          </motion.div>
+
+          {/* ── Right: Pricing and Course Highlights ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="flex flex-col gap-6"
+          >
+            {/* Price information card */}
+            <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-sm">
+              <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 border-b border-slate-100 pb-3">Học phí & Ưu đãi</h4>
+
+              <div className="mb-4">
+                <span className="text-xs font-semibold text-slate-400">Học phí trọn khóa đồng hành:</span>
+                <div className="flex items-baseline gap-2.5 mt-1">
+                  <span className="text-3xl font-extrabold text-slate-900">{pricing.currentPrice}</span>
+                  <span className="text-sm line-through text-slate-450">{pricing.originalPrice}</span>
+                </div>
+                <p className="text-xs font-bold text-emerald-600 mt-1">Tiết kiệm {pricing.savings} học phí</p>
+              </div>
+
+              <div className="bg-amber-50/50 border border-amber-200/50 rounded-2xl p-4.5">
+                <div className="flex items-center gap-2 mb-2 text-amber-800 font-bold text-xs uppercase">
+                  <Gift className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span>{pricing.giftTitle}</span>
+                </div>
+                <p className="text-slate-650 text-xs leading-relaxed">{pricing.giftDesc}</p>
+              </div>
             </div>
-          ))}
-        </motion.div>
 
-        {/* CTA buttons */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
-        >
-          <motion.a
-            href={CHECKOUT_URL}
-            className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-extrabold text-base whitespace-nowrap relative overflow-hidden group cursor-pointer"
-            style={{
-              background: "linear-gradient(135deg, hsl(330 100% 65%), hsl(310 100% 60%))",
-              color: "#fff",
-              letterSpacing: "0.05em",
-            }}
-            animate={{ boxShadow: ["0 0 20px hsl(330 100% 65% / 0.35)", "0 0 32px hsl(330 100% 65% / 0.5)", "0 0 20px hsl(330 100% 65% / 0.35)"] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            whileHover={{ scale: 1.07 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            {/* Shimmer */}
-            <motion.div
-              className="absolute inset-0 pointer-events-none"
-              style={{ background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%)" }}
-              animate={{ x: ["-100%", "200%"] }}
-              transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }}
-            />
-            <span className="relative z-10">Đăng ký ngay</span>
-            <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-2 transition-transform" />
-          </motion.a>
+            {/* Program Highlights */}
+            <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-sm">
+              <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 border-b border-slate-100 pb-3">Đặc quyền học viên</h4>
 
-          <motion.a
-            href="#roadmap"
-            className="inline-flex items-center gap-2 px-8 py-5 rounded-full font-semibold text-base transition-all duration-300"
-            style={{ border: "1.5px solid hsl(180 100% 60% / 0.5)", color: "hsl(180 100% 70%)", background: "hsl(180 100% 60% / 0.06)" }}
-            whileHover={{ scale: 1.04, boxShadow: "0 0 20px hsl(180 100% 60% / 0.4)", borderColor: "hsl(180 100% 60%)" }}
-            whileTap={{ scale: 0.97 }}
-          >
-            Xem lộ trình chi tiết →
-          </motion.a>
-        </motion.div>
+              <div className="space-y-4">
+                {[
+                  {
+                    icon: <ShieldCheck className="w-5 h-5 text-primary shrink-0" />,
+                    title: "Cam kết học thuật đến khi đạt mục tiêu",
+                    desc: "Học viên được chữa bài, định hướng sát sao đến khi thi đạt."
+                  },
+                  {
+                    icon: <Users className="w-5 h-5 text-primary shrink-0" />,
+                    title: "Chữa bài chi tiết hàng ngày",
+                    desc: "Cô Thuỷ chấm điểm trực tiếp, sửa từng lỗi phát âm qua Zalo."
+                  }
+                ].map((item, idx) => (
+                  <div key={idx} className="flex gap-3 items-start">
+                    {item.icon}
+                    <div>
+                      <h5 className="font-extrabold text-xs text-slate-800">{item.title}</h5>
+                      <p className="text-slate-500 text-[11px] leading-relaxed mt-0.5">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
 
-        {/* Trust strip */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex flex-wrap items-center justify-center gap-8"
-        >
-          {urgencyItems.map((item, i) => (
-            <motion.div
-              key={i}
-              className="flex items-center gap-2"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 + i * 0.1 }}
-            >
-              <span className="text-cyan-400">{item.icon}</span>
-              <span className="text-slate-400 text-sm font-medium">{item.text}</span>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Bottom note */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-8 text-slate-400 text-xs font-mono tracking-wider"
-        >
-          ▶ Cô Thuỷ đã sẵn sàng đồng hành — bạn chỉ cần bước đầu tiên.
-        </motion.p>
+        </div>
       </div>
     </section>
-    </>
   );
 }
