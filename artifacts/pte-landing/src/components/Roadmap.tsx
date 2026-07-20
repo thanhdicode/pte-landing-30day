@@ -41,6 +41,27 @@ interface SkillGrid {
   note: string;
 }
 
+interface PronunciationLesson {
+  no: string;
+  title: string;
+  tag?: string;
+}
+
+interface PronunciationSection {
+  part: string;
+  lessons: PronunciationLesson[];
+}
+
+interface PronunciationModuleItem {
+  id: string;
+  title: string;
+  name: string;
+  badge: string;
+  description: string;
+  lessons?: PronunciationLesson[];
+  sections?: PronunciationSection[];
+}
+
 interface Phase {
   day: string;
   title: string;
@@ -52,6 +73,7 @@ interface Phase {
   detailsDefaultOpen?: boolean;
   results: string[];
   resultMilestone?: string;
+  pronunciationModules?: PronunciationModuleItem[];
 }
 
 function renderRich(text: string): ReactNode {
@@ -63,6 +85,133 @@ function renderRich(text: string): ReactNode {
     ) : (
       <span key={i}>{part}</span>
     ),
+  );
+}
+
+function PronunciationModuleViewer({ modules }: { modules: PronunciationModuleItem[] }) {
+  const [activeTab, setActiveTab] = useState<string>(modules[0]?.id || "mod-1");
+  const currentMod = modules.find((m) => m.id === activeTab) || modules[0];
+
+  return (
+    <div className="mt-6 pt-6 border-t border-slate-200/80 bg-blue-50/40 -mx-6 md:-mx-8 p-6 md:p-8 rounded-b-3xl">
+      <div className="flex items-center gap-2 mb-3">
+        <Video className="w-4 h-4 text-primary shrink-0" />
+        <h4 className="text-xs md:text-sm font-black text-slate-800 uppercase tracking-wider">
+          KHUNG CHƯƠNG TRÌNH 44+ BÀI HỌC PHÁT ÂM CHI TIẾT
+        </h4>
+      </div>
+      <p className="text-xs text-slate-600 mb-5 leading-relaxed">
+        Học viên được truy cập toàn bộ hệ thống video bài giảng trực quan, phân tích khẩu hình chuẩn và làm bài tập tương tác:
+      </p>
+
+      {/* Tabs */}
+      <div className="flex flex-wrap gap-2 mb-5">
+        {modules.map((mod) => {
+          const isActive = mod.id === activeTab;
+          return (
+            <button
+              key={mod.id}
+              type="button"
+              onClick={() => setActiveTab(mod.id)}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                isActive
+                  ? "bg-primary text-white shadow-sm ring-2 ring-primary/20"
+                  : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"
+              }`}
+            >
+              <span>{mod.title}: {mod.name}</span>
+              <span
+                className={`text-[10px] px-1.5 py-0.5 rounded-md ${
+                  isActive ? "bg-white/20 text-white font-extrabold" : "bg-slate-100 text-slate-500 font-medium"
+                }`}
+              >
+                {mod.badge}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Module Content */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentMod.id}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.2 }}
+          className="bg-white border border-slate-200/80 rounded-2xl p-4 md:p-5 shadow-sm space-y-4"
+        >
+          <div className="border-b border-slate-100 pb-3">
+            <div className="flex items-center justify-between gap-2">
+              <h5 className="font-extrabold text-sm text-slate-900">
+                {currentMod.title} – {currentMod.name}
+              </h5>
+              <span className="text-[11px] font-bold text-primary bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">
+                {currentMod.badge}
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mt-1 leading-relaxed">{currentMod.description}</p>
+          </div>
+
+          {/* Simple Lessons list */}
+          {currentMod.lessons && (
+            <div className="grid sm:grid-cols-2 gap-2.5">
+              {currentMod.lessons.map((lesson, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 p-2.5 bg-slate-50/80 hover:bg-blue-50/50 border border-slate-200/50 rounded-xl transition-colors text-xs"
+                >
+                  <span className="shrink-0 w-7 h-7 rounded-lg bg-blue-100/70 text-primary font-black flex items-center justify-center text-[11px]">
+                    {lesson.no}
+                  </span>
+                  <span className="text-slate-800 font-medium leading-snug flex-1">{lesson.title}</span>
+                  {lesson.tag && (
+                    <span className="shrink-0 text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded-md border border-amber-200/60">
+                      {lesson.tag}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Categorized Sections (Module 3) */}
+          {currentMod.sections && (
+            <div className="space-y-4">
+              {currentMod.sections.map((sec, sIdx) => (
+                <div key={sIdx} className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+                    <span className="text-xs font-black text-slate-700 uppercase tracking-wide">
+                      {sec.part}
+                    </span>
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-2">
+                    {sec.lessons.map((lesson, lIdx) => (
+                      <div
+                        key={lIdx}
+                        className="flex items-center gap-2.5 p-2.5 bg-slate-50/80 hover:bg-blue-50/50 border border-slate-200/50 rounded-xl transition-colors text-xs"
+                      >
+                        <span className="shrink-0 min-w-6 h-6 px-1 rounded-md bg-blue-100/70 text-primary font-black flex items-center justify-center text-[10px]">
+                          {lesson.no}
+                        </span>
+                        <span className="text-slate-800 font-medium leading-snug flex-1">{lesson.title}</span>
+                        {lesson.tag && (
+                          <span className="shrink-0 text-[10px] font-bold px-1.5 py-0.5 bg-amber-100 text-amber-800 rounded-md border border-amber-200/60">
+                            {lesson.tag}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -235,6 +384,11 @@ function PhaseCard({ phase, idx }: { phase: Phase; idx: number }) {
                   </div>
 
                 </div>
+
+                {/* Pronunciation Module Viewer for Phase 1 */}
+                {phase.pronunciationModules && phase.pronunciationModules.length > 0 && (
+                  <PronunciationModuleViewer modules={phase.pronunciationModules} />
+                )}
 
               </div>
             </motion.div>

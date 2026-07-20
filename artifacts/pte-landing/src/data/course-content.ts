@@ -147,6 +147,106 @@ export const roadmapPhases = [
       { text: "Rèn luyện kỹ thuật thở sâu, lấy hơi từ bụng để kéo dài câu dài mà không bị đứt quãng hoặc mất fluency." },
       { text: "Hướng dẫn cài đặt, căn chỉnh khoảng cách micro phù hợp để lọc tiếng ồn và ghi âm tốt nhất." }
     ],
+    pronunciationModules: [
+      {
+        id: "mod-1",
+        title: "Module 1",
+        name: "Tổng quan phát âm",
+        badge: "8 bài học",
+        description: "Định hướng & xây dựng tư duy phát âm chuẩn IPA, nhận diện âm vô thanh/hữu thanh và cách ghép âm đọc liền mạch.",
+        lessons: [
+          { no: "01", title: "Định hướng khóa học phát âm" },
+          { no: "02", title: "Phiên âm IPA và cách tra phiên âm" },
+          { no: "03", title: "Tổng quan 12 nguyên âm đơn" },
+          { no: "04", title: "Tổng quan 8 nguyên âm đôi" },
+          { no: "05", title: "Tổng quan 24 phụ âm" },
+          { no: "06", title: "Âm vô thanh, âm hữu thanh" },
+          { no: "07", title: "Cách tính âm tiết trong 1 từ" },
+          { no: "08", title: "Cách đọc đủ – rõ – liền mạch các âm tiết" }
+        ]
+      },
+      {
+        id: "mod-2",
+        title: "Module 2",
+        name: "Nguyên âm IPA",
+        badge: "12 bài học",
+        description: "Luyện khẩu hình chuẩn từng cặp nguyên âm ngắn/dài dễ nhầm lẫn và nguyên âm đôi trong đề thi PTE.",
+        lessons: [
+          { no: "09", title: "Phân biệt /æ/ và /e/" },
+          { no: "10", title: "Phân biệt /æ/, /ɑ:/ và /ʌ/" },
+          { no: "11", title: "Phân biệt /ɒ/ và /ɔ:/" },
+          { no: "12", title: "Phân biệt /ɪ/ và /i:/ (ee, ea)" },
+          { no: "13", title: "Âm /u:/, /ju:/ (oo, ew, u)" },
+          { no: "14", title: "Phân biệt /ʊ/ và /u:/" },
+          { no: "15", title: "Âm /ə/ và /ɜ:/ (er, ir, ur)" },
+          { no: "16", title: "Nguyên âm đôi /eɪ/ (ay, ai, a_e)" },
+          { no: "17", title: "Âm /əʊ/ (o, oa, ow, o_e)" },
+          { no: "18", title: "Âm /ɪə/ (ear, eer)" },
+          { no: "19", title: "Âm /eə/ (air, are, eir)" },
+          { no: "20", title: "Ôn tập nguyên âm – Mini Game", tag: "🎮 Game" }
+        ]
+      },
+      {
+        id: "mod-3",
+        title: "Module 3",
+        name: "Hệ thống Phụ âm",
+        badge: "17 bài học",
+        description: "Luyện âm cuối, âm chặn, hệ thống âm gió (/s/, /z/, /ʃ/, /tʃ/) và các phụ âm khó hay bị mất điểm.",
+        sections: [
+          {
+            part: "Part 3A: Âm cuối & Âm chặn",
+            lessons: [
+              { no: "21", title: "Âm cuối (ending sounds)" },
+              { no: "22", title: "Âm /t/ – đọc chuẩn" },
+              { no: "22.1", title: "Âm /t/ – Nuốt âm" },
+              { no: "23", title: "Âm /k/ – c, ck, x" },
+              { no: "24", title: "Âm /p/ và /ps/" },
+              { no: "25", title: "Âm chặn (stop sounds)" }
+            ]
+          },
+          {
+            part: "Part 3B: Âm gió & Âm bật hơi",
+            lessons: [
+              { no: "26", title: "Đọc âm /s/ (đặc biệt khi giữa từ)" },
+              { no: "26.1", title: "Phân biệt /s/ và /z/" },
+              { no: "27", title: "Âm /ʃ/ – sh, ti, ci" },
+              { no: "28", title: "Âm /tʃ/ – ch, -ture" },
+              { no: "29", title: "Âm /dʒ/ và /ʒ/ – j, ge, -sion" },
+              { no: "30", title: "Phụ âm bật hơi s, sh, ch, f, v, th, ge" },
+              { no: "31.1", title: "Các đuôi -age /ɪdʒ/" }
+            ]
+          },
+          {
+            part: "Part 3C: Các phụ âm khó & Sửa lỗi",
+            lessons: [
+              { no: "32", title: "Âm /θ/ và /ð/ – th" },
+              { no: "33", title: "Âm th đi với phụ âm khác" },
+              { no: "34", title: "Âm /l/ cuối từ – dark L" },
+              { no: "35", title: "Phụ âm kép" },
+              { no: "36", title: "Sửa âm r, cr, tr, str" },
+              { no: "37", title: "Ôn tập phụ âm – Mini Game", tag: "🎮 Game" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "mod-4",
+        title: "Module 4",
+        name: "Trọng âm & Ngữ điệu",
+        badge: "8 bài học",
+        description: "Bí quyết đọc đuôi -s/-ed, cụm âm chặn và nhịp điệu câu chuẩn tự nhiên giúp kéo điểm Oral Fluency.",
+        lessons: [
+          { no: "38", title: "Quy tắc đọc đuôi -s (/s/ – /z/ – /ɪz/)", tag: "🔥 Trọng tâm" },
+          { no: "39", title: "Quy tắc đọc đuôi -ed (/t/ – /d/ – /ɪd/)", tag: "🔥 Trọng tâm" },
+          { no: "40", title: "Cách đọc đuôi -se, -sed, -ze, -zed" },
+          { no: "41", title: "Cách đọc đuôi -s, -ce, -x" },
+          { no: "42", title: "Các đuôi -tion, -shion, -cion, -cient, -cian, -ciency" },
+          { no: "43", title: "Cụm âm chặn + /s/ (/ts/, /ks/, /ps/)" },
+          { no: "44", title: "Luyện tập câu với nhiều âm /s/" },
+          { no: "Tài liệu", title: "Bảng đuôi từ thường gặp", tag: "📚 Tài liệu" }
+        ]
+      }
+    ],
     results: [
       "Nắm vững bảng IPA, tự nhận diện và sửa lỗi phát âm của bản thân.",
       "Vượt qua nỗi sợ nói tiếng Anh, hình thành thói quen nói trôi chảy không ngập ngừng.",
